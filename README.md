@@ -1,9 +1,16 @@
-# NovaPlay v18 — Casier de Trixis corrigé
+# NovaPlay v19 — Chemins GitHub corrigés
 
-Dernière correction ciblée :
+Cette version correspond exactement à la structure visible dans ton dépôt :
 
-- toute la grille du Casier de Trixis défile avec les ascenseurs ;
-- le bouton Retour est inclus dans le même bloc ;
-- l’ascenseur gauche et l’ascenseur droit ciblent automatiquement le Casier ;
-- la correction de l’écran « Choisir un Trixi » reste active ;
-- le gameplay, les graphismes et le format restent inchangés.
+- `Jeux/Itrixi/index.html`
+- `Jeux/Collectrix/index.html`
+
+Les correctifs des ascenseurs sont maintenant placés dans le vrai fichier
+`Jeux/Itrixi/index.html`.
+
+## Installation
+1. Décompresse le ZIP.
+2. Téléverse tous les fichiers à la racine du dépôt.
+3. Vérifie que GitHub montre `Jeux/Itrixi/index.html` comme modifié récemment.
+4. Valide le commit.
+5. Recharge le site avec Ctrl + F5.

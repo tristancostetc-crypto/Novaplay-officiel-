@@ -1,17 +1,18 @@
 {
-  "novaplay": "18",
-  "itrixi": "original + ascenseurs corrigés",
+  "novaplay": "19",
+  "paths": {
+    "itrixi": "Jeux/Itrixi/index.html",
+    "collectrix": "Jeux/Collectrix/index.html"
+  },
   "fixes": [
-    "Casier de Trixis entièrement défilable",
-    "grille et bouton Retour dans le même bloc",
-    "ascenseurs ciblent toujours lockerScreen lorsqu'il est visible",
-    "sélection de Trixi toujours corrigée"
+    "chemin GitHub réel utilisé",
+    "ascenseurs du choix de Trixi",
+    "ascenseurs du Casier de Trixis"
   ],
   "unchanged": [
     "gameplay",
     "graphismes",
     "format",
-    "Trixis",
     "commandes"
   ]
 }
