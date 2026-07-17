@@ -1,18 +1,14 @@
 {
-  "novaplay": "19",
+  "novaplay": "20",
   "paths": {
     "itrixi": "Jeux/Itrixi/index.html",
     "collectrix": "Jeux/Collectrix/index.html"
   },
-  "fixes": [
-    "chemin GitHub réel utilisé",
-    "ascenseurs du choix de Trixi",
-    "ascenseurs du Casier de Trixis"
-  ],
-  "unchanged": [
-    "gameplay",
-    "graphismes",
-    "format",
-    "commandes"
+  "features": [
+    "ascenseur gauche sur l'accueil",
+    "ascenseur droit sur l'accueil",
+    "flèches haut et bas",
+    "curseur coulissant",
+    "ascenseurs Itrixi conservés"
   ]
 }

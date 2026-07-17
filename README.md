@@ -1,16 +1,12 @@
-# NovaPlay v19 — Chemins GitHub corrigés
+# NovaPlay v20 — Ascenseurs sur l'accueil
 
-Cette version correspond exactement à la structure visible dans ton dépôt :
+Ajout de deux ascenseurs sur la page d'accueil NovaPlay :
 
-- `Jeux/Itrixi/index.html`
-- `Jeux/Collectrix/index.html`
+- ascenseur à gauche ;
+- ascenseur à droite ;
+- flèche haut ;
+- flèche bas ;
+- curseur coulissant ;
+- appui prolongé pour faire défiler en continu.
 
-Les correctifs des ascenseurs sont maintenant placés dans le vrai fichier
-`Jeux/Itrixi/index.html`.
-
-## Installation
-1. Décompresse le ZIP.
-2. Téléverse tous les fichiers à la racine du dépôt.
-3. Vérifie que GitHub montre `Jeux/Itrixi/index.html` comme modifié récemment.
-4. Valide le commit.
-5. Recharge le site avec Ctrl + F5.
+Les ascenseurs d'Itrixi restent présents.

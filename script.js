@@ -255,3 +255,130 @@ if (forceUpdateButton) {
 }
 
 render();
+
+
+// ===== NovaPlay v20 : ascenseurs de l'accueil =====
+(() => {
+  const STEP = 100;
+  const elevators = [...document.querySelectorAll('.np-home-elevator')];
+
+  if (!elevators.length) return;
+
+  const getScrollElement = () => document.scrollingElement || document.documentElement;
+
+  function updateElevator(root) {
+    const scrollEl = getScrollElement();
+    const track = root.querySelector('.np-home-track');
+    const thumb = root.querySelector('.np-home-thumb');
+    if (!track || !thumb) return;
+
+    const maxScroll = Math.max(0, scrollEl.scrollHeight - window.innerHeight);
+    const trackHeight = track.clientHeight;
+    const visibleRatio = Math.min(1, window.innerHeight / Math.max(1, scrollEl.scrollHeight));
+    const thumbHeight = Math.max(38, Math.round(trackHeight * visibleRatio));
+    const travel = Math.max(0, trackHeight - thumbHeight);
+    const ratio = maxScroll ? window.scrollY / maxScroll : 0;
+
+    thumb.style.height = `${thumbHeight}px`;
+    thumb.style.transform = `translateY(${Math.round(travel * ratio)}px)`;
+    root.style.opacity = maxScroll > 0 ? '1' : '.4';
+  }
+
+  function updateAll() {
+    elevators.forEach(updateElevator);
+  }
+
+  function scrollByAmount(amount) {
+    window.scrollBy({ top: amount, behavior: 'smooth' });
+    setTimeout(updateAll, 100);
+  }
+
+  function setScrollRatio(ratio) {
+    const scrollEl = getScrollElement();
+    const maxScroll = Math.max(0, scrollEl.scrollHeight - window.innerHeight);
+    window.scrollTo({
+      top: Math.max(0, Math.min(maxScroll, ratio * maxScroll)),
+      behavior: 'auto'
+    });
+    updateAll();
+  }
+
+  elevators.forEach(root => {
+    const up = root.querySelector('.np-home-up');
+    const down = root.querySelector('.np-home-down');
+    const track = root.querySelector('.np-home-track');
+    const thumb = root.querySelector('.np-home-thumb');
+
+    let timer = null;
+
+    const stopHold = () => {
+      clearInterval(timer);
+      timer = null;
+    };
+
+    const startHold = amount => {
+      scrollByAmount(amount);
+      stopHold();
+      timer = setInterval(() => scrollByAmount(amount), 150);
+    };
+
+    up.addEventListener('pointerdown', event => {
+      event.preventDefault();
+      startHold(-STEP);
+    });
+
+    down.addEventListener('pointerdown', event => {
+      event.preventDefault();
+      startHold(STEP);
+    });
+
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(type => {
+      up.addEventListener(type, stopHold);
+      down.addEventListener(type, stopHold);
+    });
+
+    track.addEventListener('pointerdown', event => {
+      if (event.target === thumb) return;
+      const rect = track.getBoundingClientRect();
+      setScrollRatio((event.clientY - rect.top) / rect.height);
+    });
+
+    thumb.addEventListener('pointerdown', event => {
+      event.preventDefault();
+      thumb.classList.add('dragging');
+      thumb.setPointerCapture(event.pointerId);
+
+      const trackRect = track.getBoundingClientRect();
+      const thumbRect = thumb.getBoundingClientRect();
+      const offset = event.clientY - thumbRect.top;
+
+      const move = moveEvent => {
+        const travel = Math.max(1, trackRect.height - thumb.offsetHeight);
+        const y = Math.max(
+          0,
+          Math.min(travel, moveEvent.clientY - trackRect.top - offset)
+        );
+        setScrollRatio(y / travel);
+      };
+
+      const end = () => {
+        thumb.classList.remove('dragging');
+        thumb.removeEventListener('pointermove', move);
+        thumb.removeEventListener('pointerup', end);
+        thumb.removeEventListener('pointercancel', end);
+      };
+
+      thumb.addEventListener('pointermove', move);
+      thumb.addEventListener('pointerup', end);
+      thumb.addEventListener('pointercancel', end);
+    });
+  });
+
+  window.addEventListener('scroll', updateAll, { passive: true });
+  window.addEventListener('resize', updateAll, { passive: true });
+
+  new MutationObserver(() => requestAnimationFrame(updateAll))
+    .observe(document.body, { subtree: true, childList: true });
+
+  updateAll();
+})();
