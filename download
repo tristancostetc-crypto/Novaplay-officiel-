@@ -630,18 +630,257 @@ body::-webkit-scrollbar-thumb,
 #itrixi-version-badge{position:fixed;right:8px;bottom:8px;z-index:9999;padding:5px 8px;border-radius:999px;background:rgba(124,58,237,.85);color:white;font:700 11px system-ui;pointer-events:none;}
 
 
-/* ===== NovaPlay v13 : cadre 16:9 avec bandes décoratives ===== */
-html, body {
-  width: 100%; height: 100%; overflow: hidden !important;
-  background: radial-gradient(circle at 18% 18%, rgba(168,85,247,.45), transparent 30%), radial-gradient(circle at 82% 80%, rgba(37,99,235,.38), transparent 32%), linear-gradient(135deg, #32105f 0%, #6736aa 46%, #29104f 100%) !important;
+.np-side-elevator{
+  position:fixed;top:50%;transform:translateY(-50%);
+  width:40px;height:min(74vh,430px);z-index:99999;
+  display:flex;flex-direction:column;align-items:center;
+  padding:4px;border-radius:18px;
+  background:rgba(35,14,66,.88);
+  border:1px solid rgba(255,255,255,.28);
+  box-shadow:0 10px 28px rgba(0,0,0,.38);
+  backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+  user-select:none;touch-action:none
 }
-#app { position:fixed !important; inset:0 !important; width:100vw !important; height:100dvh !important; display:flex !important; align-items:center !important; justify-content:center !important; overflow:hidden !important; }
-#stage { position:relative !important; left:auto !important; top:auto !important; width:900px !important; height:506px !important; min-width:900px !important; min-height:506px !important; max-width:none !important; max-height:none !important; aspect-ratio:auto !important; transform-origin:center center !important; overflow:hidden !important; border-radius:16px !important; box-shadow:0 0 0 2px rgba(255,255,255,.15),0 24px 70px rgba(0,0,0,.45),0 0 60px rgba(124,58,237,.30) !important; }
-#game { position:absolute !important; inset:0 !important; width:900px !important; height:506px !important; object-fit:fill !important; }
-.overlay { position:absolute !important; inset:0 !important; width:900px !important; height:506px !important; min-height:0 !important; overflow-x:hidden !important; overflow-y:auto !important; -webkit-overflow-scrolling:touch; touch-action:pan-y; padding:18px 22px 28px !important; scrollbar-width:thin; scrollbar-color:rgba(196,181,253,.9) rgba(255,255,255,.08); }
-.overlay::-webkit-scrollbar{width:8px}.overlay::-webkit-scrollbar-track{background:rgba(255,255,255,.08)}.overlay::-webkit-scrollbar-thumb{background:linear-gradient(#d8b4fe,#7c3aed);border-radius:999px}
-.hud,.top-left-controls,#novaplay-return-button{position:absolute !important}
-@media (max-width:700px),(max-height:560px){#stage{border-radius:10px !important}}
+.np-side-elevator.left{left:max(4px,env(safe-area-inset-left))}
+.np-side-elevator.right{right:max(4px,env(safe-area-inset-right))}
+.np-elevator-arrow{
+  width:31px;height:35px;flex:0 0 35px;border:0;border-radius:11px;
+  background:linear-gradient(#a855f7,#6d28d9);color:#fff;
+  font-size:19px;font-weight:900;cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,.28)
+}
+.np-elevator-arrow:active{transform:scale(.92)}
+.np-elevator-track{
+  position:relative;width:12px;flex:1;margin:7px 0;
+  border-radius:999px;background:rgba(255,255,255,.15);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)
+}
+.np-elevator-thumb{
+  position:absolute;left:1px;top:0;width:10px;min-height:38px;
+  border-radius:999px;background:linear-gradient(#f0abfc,#8b5cf6,#4f46e5);
+  box-shadow:0 2px 10px rgba(168,85,247,.65);cursor:grab
+}
+.np-elevator-thumb.dragging{cursor:grabbing}
+
+
+/* ===== NovaPlay v15 : correction Casier + écran Jouer ===== */
+@media (max-width:700px), (orientation:portrait), (max-height:560px) {
+  /* Les éléments ne doivent plus se compresser pour rentrer artificiellement. */
+  #menuScreen > *,
+  #lockerScreen > * {
+    flex-shrink: 0 !important;
+  }
+
+  /* Ces deux écrans deviennent de vrais conteneurs défilables. */
+  #menuScreen,
+  #lockerScreen {
+    justify-content: flex-start !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    box-sizing: border-box !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+  }
+
+  #menuScreen {
+    padding-top: 78px !important;
+    padding-bottom: 115px !important;
+  }
+
+  #lockerScreen {
+    padding-top: 72px !important;
+    padding-bottom: 115px !important;
+  }
+
+  #lockerRow {
+    width: 100% !important;
+    flex: 0 0 auto !important;
+    min-height: max-content !important;
+    padding-bottom: 18px !important;
+  }
+
+  #menuScreen .menu-btns,
+  #menuScreen .logo,
+  #menuScreen .subtitle,
+  #menuScreen .level-tag {
+    flex: 0 0 auto !important;
+  }
+}
+
+
+/* ===== NovaPlay v16 : écran Choisir un Trixi défilable ===== */
+@media (max-width:700px), (orientation:portrait), (max-height:560px) {
+  #selectScreen {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    box-sizing: border-box !important;
+    padding-top: 72px !important;
+    padding-bottom: 130px !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+  }
+
+  #selectScreen.hidden {
+    display: none !important;
+  }
+
+  #selectScreen > * {
+    flex-shrink: 0 !important;
+  }
+
+  #trixiRow {
+    width: 100% !important;
+    min-height: max-content !important;
+    height: auto !important;
+    flex: 0 0 auto !important;
+    overflow: visible !important;
+    padding-bottom: 24px !important;
+  }
+
+  #selectBackBtn {
+    flex: 0 0 auto !important;
+    margin-bottom: 34px !important;
+  }
+
+  /* Les cartes restent cliquables pendant le défilement. */
+  #trixiRow,
+  #trixiRow * {
+    touch-action: manipulation !important;
+  }
+}
+
+
+/* ===== NovaPlay v17 : tout l'écran Choisir un Trixi défile ensemble ===== */
+#selectScreen {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+}
+
+#selectScrollContent {
+  width: 100% !important;
+  min-height: max-content !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex: 0 0 auto !important;
+  padding: 72px 18px 150px !important;
+  box-sizing: border-box !important;
+}
+
+#selectScrollContent > * {
+  flex: 0 0 auto !important;
+}
+
+#trixiRow {
+  width: 100% !important;
+  height: auto !important;
+  min-height: max-content !important;
+  overflow: visible !important;
+  flex: 0 0 auto !important;
+  margin-bottom: 28px !important;
+}
+
+#selectActions {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  min-height: 150px !important;
+  padding-bottom: 60px !important;
+  flex: 0 0 auto !important;
+}
+
+#selectActions .btn {
+  flex: 0 0 auto !important;
+  min-width: 180px !important;
+}
+
+@media (max-width:700px), (orientation:portrait), (max-height:560px) {
+  #selectScrollContent {
+    padding-top: 64px !important;
+    padding-bottom: 180px !important;
+  }
+
+  #trixiRow {
+    margin-bottom: 34px !important;
+  }
+
+  #selectActions {
+    min-height: 180px !important;
+    padding-bottom: 90px !important;
+  }
+}
+
+
+/* ===== NovaPlay v18 : Casier de Trixis entièrement défilable ===== */
+#lockerScreen {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+}
+
+#lockerScrollContent {
+  width: 100% !important;
+  min-height: max-content !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex: 0 0 auto !important;
+  padding: 72px 18px 180px !important;
+  box-sizing: border-box !important;
+}
+
+#lockerScrollContent > * {
+  flex: 0 0 auto !important;
+}
+
+#lockerRow {
+  width: 100% !important;
+  height: auto !important;
+  min-height: max-content !important;
+  overflow: visible !important;
+  flex: 0 0 auto !important;
+  margin-bottom: 34px !important;
+}
+
+#lockerBackBtn {
+  flex: 0 0 auto !important;
+  min-width: 180px !important;
+  margin-top: 16px !important;
+  margin-bottom: 100px !important;
+}
+
+@media (max-width:700px), (orientation:portrait), (max-height:560px) {
+  #lockerScrollContent {
+    padding-top: 64px !important;
+    padding-bottom: 220px !important;
+  }
+
+  #lockerBackBtn {
+    margin-bottom: 130px !important;
+  }
+}
 
 </style>
 </head>
@@ -714,9 +953,11 @@ html, body {
 
     <!-- Trixi locker / collection screen -->
     <div class="overlay hidden" id="lockerScreen">
-      <div class="subtitle">Casier de Trixis</div>
-      <div class="trixi-row" id="lockerRow"></div>
-      <button class="btn secondary" id="lockerBackBtn">Retour</button>
+      <div id="lockerScrollContent">
+        <div class="subtitle">Casier de Trixis</div>
+        <div class="trixi-row" id="lockerRow"></div>
+        <button class="btn secondary" id="lockerBackBtn">Retour</button>
+      </div>
     </div>
 
     <!-- Level select screen -->
@@ -728,11 +969,15 @@ html, body {
 
     <!-- Character select screen -->
     <div class="overlay hidden" id="selectScreen">
-      <div class="logo">ITRIXI</div>
-      <div class="subtitle">Choisis ton Trixi</div>
-      <div class="trixi-row" id="trixiRow"></div>
-      <button class="btn" id="startBtn" disabled>Jouer</button>
-      <button class="btn secondary" id="selectBackBtn" style="margin-top:10px;">Retour</button>
+      <div id="selectScrollContent">
+        <div class="logo">ITRIXI</div>
+        <div class="subtitle">Choisis ton Trixi</div>
+        <div class="trixi-row" id="trixiRow"></div>
+        <div id="selectActions">
+          <button class="btn" id="startBtn" disabled>Jouer</button>
+          <button class="btn secondary" id="selectBackBtn">Retour</button>
+        </div>
+      </div>
     </div>
 
     <!-- Game over screen -->
@@ -2162,17 +2407,271 @@ html, body {
 
 <script>
 (() => {
-  const LOGICAL_WIDTH = 900, LOGICAL_HEIGHT = 506, SAFE_MARGIN = 8;
-  function fitItrixiToScreen(){
-    const stage=document.getElementById('stage'); if(!stage) return;
-    const aw=Math.max(1,window.innerWidth-SAFE_MARGIN*2);
-    const ah=Math.max(1,window.innerHeight-SAFE_MARGIN*2);
-    stage.style.transform=`scale(${Math.min(aw/LOGICAL_WIDTH,ah/LOGICAL_HEIGHT)})`;
+  const STEP = 90;
+  const elevators = [];
+
+  function target() {
+    const locker = document.getElementById('lockerScreen');
+    if (locker && !locker.classList.contains('hidden')) {
+      return locker;
+    }
+
+    const select = document.getElementById('selectScreen');
+    if (select && !select.classList.contains('hidden')) {
+      return select;
+    }
+
+    const visibleOverlay = [...document.querySelectorAll('.overlay')].find(el => {
+      const s = getComputedStyle(el);
+      const r = el.getBoundingClientRect();
+      return !el.classList.contains('hidden') &&
+             s.display !== 'none' &&
+             s.visibility !== 'hidden' &&
+             r.width > 0 &&
+             r.height > 0;
+    });
+
+    return visibleOverlay || document.scrollingElement || document.documentElement;
   }
-  window.addEventListener('resize',fitItrixiToScreen,{passive:true});
-  window.addEventListener('orientationchange',()=>setTimeout(fitItrixiToScreen,120),{passive:true});
-  document.addEventListener('DOMContentLoaded',fitItrixiToScreen);
-  fitItrixiToScreen();
+
+  function updateOne(root) {
+    const el = target();
+    const track = root.querySelector('.np-elevator-track');
+    const thumb = root.querySelector('.np-elevator-thumb');
+    const max = Math.max(0, el.scrollHeight - el.clientHeight);
+    const h = track.clientHeight;
+    const th = Math.max(38, Math.round(h * Math.min(1, el.clientHeight / Math.max(1, el.scrollHeight))));
+    const travel = Math.max(0, h - th);
+    thumb.style.height = th + 'px';
+    thumb.style.transform = `translateY(${max ? travel * (el.scrollTop / max) : 0}px)`;
+    root.style.opacity = max ? '1' : '.4';
+  }
+
+  function updateAll(){ elevators.forEach(updateOne); }
+
+  function setRatio(ratio){
+    const el = target();
+    const max = Math.max(0, el.scrollHeight - el.clientHeight);
+    el.scrollTop = Math.max(0, Math.min(max, ratio * max));
+    updateAll();
+  }
+
+  function scrollByAmount(amount){
+    target().scrollBy({top: amount, behavior: 'smooth'});
+    setTimeout(updateAll, 100);
+  }
+
+  function make(side){
+    const root = document.createElement('div');
+    root.className = 'np-side-elevator ' + side;
+    root.innerHTML = `
+      <button class="np-elevator-arrow up" aria-label="Monter">▲</button>
+      <div class="np-elevator-track">
+        <div class="np-elevator-thumb"></div>
+      </div>
+      <button class="np-elevator-arrow down" aria-label="Descendre">▼</button>
+    `;
+    document.body.appendChild(root);
+    elevators.push(root);
+
+    const up = root.querySelector('.up');
+    const down = root.querySelector('.down');
+    const track = root.querySelector('.np-elevator-track');
+    const thumb = root.querySelector('.np-elevator-thumb');
+
+    let timer;
+    const stop = () => { clearInterval(timer); timer = null; };
+    const hold = amount => {
+      scrollByAmount(amount);
+      stop();
+      timer = setInterval(() => scrollByAmount(amount), 150);
+    };
+
+    up.addEventListener('pointerdown', e => { e.preventDefault(); hold(-STEP); });
+    down.addEventListener('pointerdown', e => { e.preventDefault(); hold(STEP); });
+    ['pointerup','pointercancel','pointerleave'].forEach(ev => {
+      up.addEventListener(ev, stop);
+      down.addEventListener(ev, stop);
+    });
+
+    track.addEventListener('pointerdown', e => {
+      if (e.target === thumb) return;
+      const r = track.getBoundingClientRect();
+      setRatio((e.clientY - r.top) / r.height);
+    });
+
+    thumb.addEventListener('pointerdown', e => {
+      e.preventDefault();
+      thumb.classList.add('dragging');
+      thumb.setPointerCapture(e.pointerId);
+      const tr = track.getBoundingClientRect();
+      const rr = thumb.getBoundingClientRect();
+      const offset = e.clientY - rr.top;
+
+      const move = ev => {
+        const travel = Math.max(1, tr.height - thumb.offsetHeight);
+        const y = Math.max(0, Math.min(travel, ev.clientY - tr.top - offset));
+        setRatio(y / travel);
+      };
+      const end = () => {
+        thumb.classList.remove('dragging');
+        thumb.removeEventListener('pointermove', move);
+        thumb.removeEventListener('pointerup', end);
+        thumb.removeEventListener('pointercancel', end);
+      };
+      thumb.addEventListener('pointermove', move);
+      thumb.addEventListener('pointerup', end);
+      thumb.addEventListener('pointercancel', end);
+    });
+  }
+
+  function init(){
+    make('left');
+    make('right');
+    document.addEventListener('scroll', updateAll, true);
+    window.addEventListener('resize', updateAll, {passive:true});
+    new MutationObserver(() => requestAnimationFrame(updateAll))
+      .observe(document.body,{subtree:true,childList:true,attributes:true});
+    updateAll();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init, {once:true});
+  } else {
+    init();
+  }
+})();
+</script>
+
+
+<script>
+(() => {
+  function resetScreenScroll(id) {
+    const el = document.getElementById(id);
+    if (el) requestAnimationFrame(() => { el.scrollTop = 0; });
+  }
+
+  document.addEventListener('click', (event) => {
+    const id = event.target && event.target.id;
+    if (id === 'menuLockerBtn') {
+      setTimeout(() => resetScreenScroll('lockerScreen'), 0);
+    }
+    if (id === 'menuPlayBtn') {
+      setTimeout(() => {
+        const visible = [...document.querySelectorAll('.overlay')]
+          .find(el => !el.classList.contains('hidden'));
+        if (visible) visible.scrollTop = 0;
+      }, 0);
+    }
+  }, true);
+})();
+</script>
+
+
+<script>
+(() => {
+  function prepareSelectScreen() {
+    const screen = document.getElementById('selectScreen');
+    if (!screen || screen.classList.contains('hidden')) return;
+
+    /* Revenir en haut à l'ouverture, puis recalculer les ascenseurs. */
+    screen.scrollTop = 0;
+    window.dispatchEvent(new Event('resize'));
+
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 80);
+  }
+
+  document.addEventListener('click', event => {
+    const button = event.target.closest && event.target.closest('#menuPlayBtn');
+    if (button) {
+      setTimeout(prepareSelectScreen, 0);
+      setTimeout(prepareSelectScreen, 120);
+    }
+  }, true);
+
+  /* Si l'écran est affiché par le code du jeu sans clic direct. */
+  const screen = document.getElementById('selectScreen');
+  if (screen) {
+    new MutationObserver(() => {
+      if (!screen.classList.contains('hidden')) {
+        requestAnimationFrame(prepareSelectScreen);
+      }
+    }).observe(screen, { attributes: true, attributeFilter: ['class'] });
+  }
+})();
+</script>
+
+
+<script>
+(() => {
+  const screen = document.getElementById('selectScreen');
+  if (!screen) return;
+
+  function refreshSelectionScroll() {
+    if (screen.classList.contains('hidden')) return;
+    screen.scrollTop = 0;
+    screen.style.overflowY = 'auto';
+
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new Event('resize'));
+      screen.dispatchEvent(new Event('scroll'));
+    });
+
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+      screen.dispatchEvent(new Event('scroll'));
+    }, 150);
+  }
+
+  new MutationObserver(refreshSelectionScroll).observe(screen, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+
+  document.addEventListener('click', event => {
+    if (event.target.closest && event.target.closest('#menuPlayBtn')) {
+      setTimeout(refreshSelectionScroll, 30);
+      setTimeout(refreshSelectionScroll, 180);
+    }
+  }, true);
+})();
+</script>
+
+
+<script>
+(() => {
+  const locker = document.getElementById('lockerScreen');
+  if (!locker) return;
+
+  function refreshLockerScroll() {
+    if (locker.classList.contains('hidden')) return;
+    locker.scrollTop = 0;
+    locker.style.overflowY = 'auto';
+
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new Event('resize'));
+      locker.dispatchEvent(new Event('scroll'));
+    });
+
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+      locker.dispatchEvent(new Event('scroll'));
+    }, 150);
+  }
+
+  new MutationObserver(refreshLockerScroll).observe(locker, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+
+  document.addEventListener('click', event => {
+    if (event.target.closest && event.target.closest('#menuLockerBtn')) {
+      setTimeout(refreshLockerScroll, 30);
+      setTimeout(refreshLockerScroll, 180);
+    }
+  }, true);
 })();
 </script>
 

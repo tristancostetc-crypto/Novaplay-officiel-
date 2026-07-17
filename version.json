@@ -1,6 +1,17 @@
 {
-  "novaplay": "13",
-  "itrixi": "original + cadre mobile 16:9",
-  "collectrix": "conservé",
-  "gameplay": "inchangé"
+  "novaplay": "18",
+  "itrixi": "original + ascenseurs corrigés",
+  "fixes": [
+    "Casier de Trixis entièrement défilable",
+    "grille et bouton Retour dans le même bloc",
+    "ascenseurs ciblent toujours lockerScreen lorsqu'il est visible",
+    "sélection de Trixi toujours corrigée"
+  ],
+  "unchanged": [
+    "gameplay",
+    "graphismes",
+    "format",
+    "Trixis",
+    "commandes"
+  ]
 }
