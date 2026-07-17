@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NovaPlay - Une plateforme de jeux simple et moderne." />
+  <title>NovaPlay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#accueil" aria-label="Accueil NovaPlay">
+        <span class="brand-icon">N</span>
+        <span>NovaPlay</span>
+      </a>
+
+      <div class="coin-box" title="Tes Nova Coins">
+        <span>🪙</span>
+        <strong id="coinCount">0</strong>
+        <span>Nova Coins</span>
+      </div>
+    </header>
+
+    <main>
+      <section id="accueil" class="hero section">
+        <div class="hero-copy">
+          <p class="eyebrow">TA NOUVELLE PLATEFORME</p>
+          <h1>Tous tes jeux.<br><span>Un seul endroit.</span></h1>
+          <p class="hero-text">
+            Choisis un jeu et commence à jouer. NovaPlay est conçue pour accueillir
+            facilement de nouveaux jeux plus tard.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#jeux">Voir les jeux</a>
+            <button id="continueButton" class="secondary-button" hidden>Continuer à jouer</button>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="controller">🎮</div>
+          <strong>2 jeux disponibles</strong>
+          <span>Itrixi & Collectrix</span>
+        </div>
+      </section>
+
+      <section id="jeux" class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">BIBLIOTHÈQUE</p>
+            <h2>Choisis ton jeu</h2>
+          </div>
+          <span class="small-badge">NovaPlay v3.0</span>
+        </div>
+
+        <div class="games-grid">
+          <article class="game-card game-one">
+            <div class="game-art">
+              <span class="game-symbol">🚀</span>
+            </div>
+            <div class="game-info">
+              <span class="status">Disponible</span>
+              <h3>Itrixi</h3>
+              <p>Entre dans l'univers d'Itrixi et relève de nouveaux défis.</p>
+              <div class="game-meta">
+                <span>⏱️ <strong id="itrixiTime">0 min</strong></span>
+                <span>Parties : <strong id="itrixiLaunches">0</strong></span>
+              </div>
+              <button class="play-button" data-game="Itrixi" data-key="itrixi" data-url="games/itrixi/index.html">
+                Jouer
+              </button>
+            </div>
+          </article>
+
+          <article class="game-card game-two">
+            <div class="game-art">
+              <span class="game-symbol">💎</span>
+            </div>
+            <div class="game-info">
+              <span class="status">Disponible</span>
+              <h3>Collectrix</h3>
+              <p>Collectionne, progresse et tente de battre ton meilleur score.</p>
+              <div class="game-meta">
+                <span>⏱️ <strong id="collectrixTime">0 min</strong></span>
+                <span>Parties : <strong id="collectrixLaunches">0</strong></span>
+              </div>
+              <button class="play-button" data-game="Collectrix" data-key="collectrix" data-url="games/collectrix/index.html">
+                Jouer
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="profil" class="section panel-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">JOUEUR</p>
+            <h2>Ton profil</h2>
+          </div>
+        </div>
+
+        <div class="profile-grid">
+          <div class="profile-card">
+            <div class="avatar">NP</div>
+            <div>
+              <label for="username">Pseudo</label>
+              <div class="username-row">
+                <input id="username" maxlength="18" value="Joueur Nova" />
+                <button id="saveUsername">Enregistrer</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <span>Niveau</span>
+            <strong id="levelValue">1</strong>
+          </div>
+
+          <div class="stat-card">
+            <span>Jeux lancés</span>
+            <strong id="gamesLaunched">0</strong>
+          </div>
+
+          <div class="stat-card">
+            <span>Succès</span>
+            <strong><span id="achievementCount">0</span>/7</strong>
+          </div>
+
+          <div class="stat-card">
+            <span>Temps total</span>
+            <strong id="totalPlayTime">0 min</strong>
+          </div>
+
+          <div class="stat-card">
+            <span>Jeu préféré</span>
+            <strong class="small-stat" id="favoriteGame">Aucun</strong>
+          </div>
+
+          <div class="stat-card">
+            <span>Dernier jeu</span>
+            <strong class="small-stat" id="lastGame">Aucun</strong>
+          </div>
+        </div>
+      </section>
+
+      <section id="succes" class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">PROGRESSION</p>
+            <h2>Succès NovaPlay</h2>
+          </div>
+        </div>
+
+        <div class="achievements-grid">
+          <article class="achievement" data-achievement="first-launch">
+            <span class="achievement-icon">🎉</span>
+            <div>
+              <h3>Premier lancement</h3>
+              <p>Lance ton premier jeu.</p>
+            </div>
+            <span class="lock">🔒</span>
+          </article>
+
+          <article class="achievement" data-achievement="itrixi-launch">
+            <span class="achievement-icon">🚀</span>
+            <div>
+              <h3>Explorateur Itrixi</h3>
+              <p>Lance Itrixi pour la première fois.</p>
+            </div>
+            <span class="lock">🔒</span>
+          </article>
+
+          <article class="achievement" data-achievement="collectrix-launch">
+            <span class="achievement-icon">💎</span>
+            <div>
+              <h3>Collectionneur</h3>
+              <p>Lance Collectrix pour la première fois.</p>
+            </div>
+            <span class="lock">🔒</span>
+          </article>
+
+          <article class="achievement" data-achievement="both-games">
+            <span class="achievement-icon">🎮</span>
+            <div>
+              <h3>Double joueur</h3>
+              <p>Lance Itrixi et Collectrix.</p>
+            </div>
+            <span class="lock">🔒</span>
+          </article>
+
+          <article class="achievement" data-achievement="five-launches">
+            <span class="achievement-icon">🔥</span>
+            <div>
+              <h3>Joueur régulier</h3>
+              <p>Lance cinq parties.</p>
+            </div>
+            <span class="lock">🔒</span>
+          </article>
+
+          <article class="achievement" data-achievement="one-hour">
+            <span class="achievement-icon">⏱️</span>
+            <div>
+              <h3>Une heure de jeu</h3>
+              <p>Passe une heure au total dans les jeux.</p>
+            </div>
+            <span class="lock">🔒</span>
+          </article>
+
+          <article class="achievement" data-achievement="daily-reward">
+            <span class="achievement-icon">🎁</span>
+            <div>
+              <h3>Premier cadeau</h3>
+              <p>Récupère une récompense quotidienne.</p>
+            </div>
+            <span class="lock">🔒</span>
+          </article>
+        </div>
+      </section>
+
+
+      <section id="recompense" class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">BONUS</p>
+            <h2>Récompense quotidienne</h2>
+          </div>
+        </div>
+
+        <article class="daily-card">
+          <div class="daily-gift">🎁</div>
+          <div>
+            <h3>Ton cadeau du jour</h3>
+            <p>Reviens chaque jour pour récupérer 50 Nova Coins.</p>
+            <small id="dailyStatus">Récompense disponible.</small>
+          </div>
+          <button id="dailyRewardButton" class="primary-button">Récupérer +50</button>
+        </article>
+      </section>
+
+      <section id="nouveautes" class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ACTUALITÉS</p>
+            <h2>Nouveautés</h2>
+          </div>
+        </div>
+
+        <article class="news-card">
+          <span class="news-date">VERSION 3.0</span>
+          <h3>Bienvenue sur NovaPlay</h3>
+          <p>
+            NovaPlay suit maintenant le temps passé dans chaque jeu, le dernier jeu lancé, le jeu préféré, les récompenses quotidiennes et de nouveaux succès.
+          </p>
+        </article>
+      </section>
+
+
+      <section id="aide" class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">GUIDE</p>
+            <h2>Aide</h2>
+          </div>
+        </div>
+
+        <div class="help-grid">
+          <article class="help-card">
+            <span>🚀</span>
+            <h3>Itrixi</h3>
+            <p>Évite les obstacles, récupère des pièces et améliore ton meilleur score.</p>
+          </article>
+          <article class="help-card">
+            <span>💎</span>
+            <h3>Collectrix</h3>
+            <p>Ouvre des boosters, découvre des cartes et complète ta collection.</p>
+          </article>
+          <article class="help-card">
+            <span>💾</span>
+            <h3>Sauvegarde</h3>
+            <p>La progression et le temps de jeu sont sauvegardés sur cet appareil.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="parametres" class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">RÉGLAGES</p>
+            <h2>Paramètres</h2>
+          </div>
+        </div>
+
+        <div class="settings-card">
+          <label class="setting-line">
+            <span>
+              <strong>Animations</strong>
+              <small>Active ou réduit les animations du site.</small>
+            </span>
+            <input id="animationsToggle" type="checkbox" checked />
+          </label>
+
+          <label class="setting-line">
+            <span>
+              <strong>Mode sombre</strong>
+              <small>Change l'apparence de NovaPlay.</small>
+            </span>
+            <input id="darkModeToggle" type="checkbox" checked />
+          </label>
+
+          <button id="resetProgress" class="danger-button">Réinitialiser la progression</button>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Navigation principale">
+      <a href="#accueil">🏠<span>Accueil</span></a>
+      <a href="#jeux">🎮<span>Jeux</span></a>
+      <a href="#profil">👤<span>Profil</span></a>
+      <a href="#succes">🏆<span>Succès</span></a>
+      <a href="#recompense">🎁<span>Bonus</span></a>
+      <a href="#aide">❓<span>Aide</span></a>
+      <a href="#parametres">⚙️<span>Réglages</span></a>
+    </nav>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
