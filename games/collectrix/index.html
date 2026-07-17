@@ -164,6 +164,88 @@ main{padding:24px;max-width:1450px;width:100%;margin:auto}
 .wheel{width:190px;height:190px;border-radius:50%;margin:12px auto;display:grid;place-items:center;font-size:54px;background:conic-gradient(#ffcf4a 0 16%,#7c5cff 16% 32%,#37ddff 32% 48%,#ff668a 48% 64%,#5ee6a8 64% 80%,#ff934a 80%);border:7px solid rgba(255,255,255,.75);box-shadow:0 0 35px rgba(124,92,255,.5);transition:transform 2.4s cubic-bezier(.15,.8,.2,1)}.wheel.spinning{transform:rotate(1440deg)}
 .opening-pack{cursor:pointer;user-select:none;touch-action:manipulation;pointer-events:auto;-webkit-tap-highlight-color:transparent}.tap-hint{color:#dfe4ff;font-weight:900;margin-top:13px;animation:pulseHint 1s ease-in-out infinite}@keyframes pulseHint{50%{opacity:.45}}
 @keyframes particleFall{to{transform:translateY(-90px) rotate(180deg);opacity:0}}
+
+/* ===== NovaPlay v7 : compatibilité mobile complète ===== */
+html, body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior-y: contain;
+  scrollbar-width: auto;
+  scrollbar-color: #7c5cff rgba(255,255,255,.10);
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+main::-webkit-scrollbar,
+.screen::-webkit-scrollbar,
+#openingOverlay::-webkit-scrollbar {
+  width: 10px;
+}
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+main::-webkit-scrollbar-track,
+.screen::-webkit-scrollbar-track,
+#openingOverlay::-webkit-scrollbar-track {
+  background: rgba(255,255,255,.08);
+}
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+main::-webkit-scrollbar-thumb,
+.screen::-webkit-scrollbar-thumb,
+#openingOverlay::-webkit-scrollbar-thumb {
+  background: linear-gradient(#37ddff,#7c5cff);
+  border: 2px solid rgba(7,9,21,.8);
+  border-radius: 999px;
+}
+#app, .layout, main, .screen {
+  min-height: 100%;
+}
+main, .screen, .panel, .hero, #openingOverlay {
+  overscroll-behavior-y: contain;
+}
+@media (max-width: 760px) {
+  html, body {
+    height: auto !important;
+    min-height: 100dvh !important;
+    overflow-y: auto !important;
+  }
+  #app, .layout {
+    height: auto !important;
+    min-height: 100dvh !important;
+    overflow: visible !important;
+  }
+  main {
+    height: auto !important;
+    min-height: calc(100dvh - 72px);
+    overflow-y: visible !important;
+    padding-bottom: 105px !important;
+  }
+  .screen.active {
+    display: block;
+    min-height: auto;
+    overflow-y: visible !important;
+    touch-action: pan-y;
+  }
+  .hero, .panel, .cards-grid, .action-grid,
+  .collection-toolbar, .daily-box, .opening-stage {
+    max-width: 100%;
+  }
+  #openingOverlay {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    align-items: flex-start;
+    padding-top: 28px;
+    padding-bottom: 100px;
+  }
+  button, input, select, textarea, .game-card, .pack-card, .nav-btn {
+    touch-action: manipulation;
+  }
+}
+
 </style>
 </head>
 <body>
