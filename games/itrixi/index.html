@@ -342,6 +342,63 @@
   #brightnessLayer{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:20}
   @media(max-width:620px){.top-left-controls{top:9px;left:9px}.corner-btn{width:46px;height:46px;border-radius:13px}.corner-btn .corner-icon{font-size:20px}.corner-btn span:last-child{font-size:7px}.settings-panel{padding:16px}}
 
+
+
+/* ===== Correctif NovaPlay mobile v6 : défilement visible ===== */
+#stage, canvas { touch-action: manipulation; }
+@media (max-width: 700px), (orientation: portrait) {
+  html, body { width:100%; height:100%; min-height:100dvh; overflow:hidden; }
+  #app {
+    width:100vw;
+    height:100dvh;
+    min-height:100dvh;
+    display:block;
+  }
+  #stage {
+    width:100vw;
+    height:100dvh;
+    max-width:none;
+    max-height:none;
+    aspect-ratio:auto;
+    border-radius:0;
+  }
+  .overlay {
+    justify-content:flex-start;
+    overflow-y:scroll;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-y;
+    scrollbar-width:auto;
+    scrollbar-color:#a78bfa rgba(255,255,255,.12);
+    padding:82px 18px 40px 14px;
+  }
+  .overlay::-webkit-scrollbar { width:10px; }
+  .overlay::-webkit-scrollbar-track {
+    background:rgba(255,255,255,.10);
+    border-radius:999px;
+  }
+  .overlay::-webkit-scrollbar-thumb {
+    background:linear-gradient(#c084fc,#7c3aed);
+    border:2px solid rgba(11,6,32,.75);
+    border-radius:999px;
+  }
+  .overlay::-webkit-scrollbar-thumb:active { background:#d8b4fe; }
+  #menuScreen, #gameOverScreen, #winScreen {
+    justify-content:center;
+  }
+  #selectScreen, #levelScreen, #lockerScreen, #shopScreen, #settingsScreen {
+    justify-content:flex-start;
+  }
+  .trixi-row { flex-wrap:wrap; margin-bottom:14px; }
+  .trixi-card { width:82px; padding:8px 4px; }
+  .btn { padding:13px 26px; }
+  #novaplay-return-button {
+    top:8px !important;
+    left:8px !important;
+    padding:10px 12px !important;
+  }
+}
+
 </style>
 </head>
 <body>
