@@ -1,38 +1,2149 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Itrixi v11</title>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Itrixi</title>
 <style>
-:root{--bg:#09031c;--panel:#17102e;--text:#fff;--muted:#aaa0c8;--accent:#8a5cff}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 0,#25105a,#09031c 55%);color:var(--text);font-family:Inter,system-ui,sans-serif}body{overflow-x:hidden}button{font:inherit}.top{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:12px;background:rgba(9,3,28,.86);backdrop-filter:blur(12px)}.back,.pill,.btn{border:1px solid #ffffff22;background:#ffffff12;color:#fff;border-radius:18px;padding:12px 16px;font-weight:800}.pill{padding:9px 13px}.shell{width:min(100%,1000px);margin:auto;padding:14px 14px 96px}.hero{text-align:center;padding:18px}.hero h1{font-size:clamp(2rem,8vw,4rem);margin:0}.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;position:sticky;top:68px;z-index:15;background:#0c0524dd;padding:8px;border-radius:18px}.tab.active{background:linear-gradient(135deg,#8a5cff,#4cc9f0)}.panel{display:none;margin-top:16px}.panel.active{display:block}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}.card{border:1px solid #ffffff18;background:linear-gradient(180deg,#ffffff0f,#ffffff06);border-radius:22px;padding:14px;min-height:185px;display:flex;flex-direction:column;gap:9px}.avatar{width:74px;height:74px;margin:auto;border-radius:28px;box-shadow:0 0 25px var(--glow);position:relative}.avatar:before,.avatar:after{content:'';position:absolute;top:27px;width:7px;height:10px;border-radius:50%;background:white}.avatar:before{left:24px}.avatar:after{right:24px}.name{text-align:center;font-weight:900}.rarity{text-align:center;color:var(--muted);font-size:.82rem}.buy{margin-top:auto;width:100%;border:0;border-radius:14px;padding:11px;background:linear-gradient(135deg,#ffd33d,#ff9f1c);font-weight:900}.buy:disabled{opacity:.45}.selected{outline:3px solid #fff;box-shadow:0 0 0 6px #8a5cff55}.gamewrap{display:grid;place-items:center;min-height:70vh}.gamebox{width:min(100%,960px);aspect-ratio:16/9;position:relative;background:#10082d;border:1px solid #ffffff20;border-radius:24px;overflow:hidden}canvas{width:100%;height:100%;display:block}.hud{position:absolute;inset:12px 12px auto;display:flex;justify-content:space-between;font-weight:900;pointer-events:none}.touch{position:absolute;inset:auto 12px 12px;display:flex;justify-content:space-between}.touch button{width:82px;height:56px;border:0;border-radius:18px;background:#ffffff22;color:#fff;font-size:1.5rem}.start{position:absolute;inset:0;display:grid;place-items:center;background:#08031db8}.start button{font-size:1.2rem;border:0;border-radius:20px;padding:16px 28px;background:linear-gradient(135deg,#8a5cff,#4cc9f0);color:#fff;font-weight:900}.hidden{display:none!important}.note{color:var(--muted);text-align:center}.version{position:fixed;right:8px;bottom:8px;z-index:50;background:#111029;color:#fff;padding:7px 10px;border-radius:10px;font-size:.75rem;border:1px solid #ffffff22}@media(max-width:650px){.tabs{grid-template-columns:repeat(2,1fr);top:66px}.shell{padding-inline:8px}.gamewrap{min-height:calc(100dvh - 165px);align-items:center}.gamebox{width:100%;aspect-ratio:16/9}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card{min-height:170px;padding:10px}.avatar{width:62px;height:62px;border-radius:23px}.avatar:before,.avatar:after{top:23px}.avatar:before{left:20px}.avatar:after{right:20px}}@media(orientation:landscape) and (max-height:600px){.top{position:fixed;left:0;right:0}.shell{padding-top:70px}.tabs{display:none}.gamewrap{min-height:calc(100dvh - 70px)}.gamebox{height:calc(100dvh - 82px);width:auto;max-width:100%;aspect-ratio:16/9}}
-</style></head><body>
-<div class="top"><button class="back" onclick="location.href='../../index.html'">← NovaPlay</button><div class="pill">🪙 <span id="coins">300</span></div></div>
-<main class="shell"><section class="hero"><h1>ITRIXI</h1><p class="note">Choisis, collectionne et cours.</p></section>
-<nav class="tabs"><button class="tab active" data-tab="play">Jouer</button><button class="tab" data-tab="collection">Collection</button><button class="tab" data-tab="shop">Boutique</button><button class="tab" data-tab="stats">Stats</button></nav>
-<section id="play" class="panel active"><div class="gamewrap"><div class="gamebox"><canvas id="game" width="960" height="540"></canvas><div class="hud"><span>Score : <b id="score">0</b></span><span>Record : <b id="best">0</b></span></div><div class="touch"><button id="jump">⬆️</button><button id="dash">⚡</button></div><div id="start" class="start"><button id="startBtn">Jouer avec <span id="chosen">Trixi Feu</span></button></div></div></div></section>
-<section id="collection" class="panel"><div id="collectionGrid" class="grid"></div></section>
-<section id="shop" class="panel"><h2>Boutique de Trixis</h2><p class="note">Achète les Trixis avec les pièces gagnées en jouant.</p><div id="shopGrid" class="grid"></div></section>
-<section id="stats" class="panel"><div class="card"><h2>Progression</h2><p>Parties : <b id="plays">0</b></p><p>Meilleur score : <b id="best2">0</b></p><p>Trixis possédés : <b id="ownedCount">3</b>/30</p><button class="btn" id="reset">Réinitialiser</button></div></section></main><div class="version">Itrixi v11</div>
-<script>
-const TRIXIS=[{"id": "feu", "name": "Trixi Feu", "rarity": "Commun", "a": "#ff7a18", "b": "#ff2d55", "price": 0}, {"id": "eau", "name": "Trixi Eau", "rarity": "Commun", "a": "#56e0ff", "b": "#1677ff", "price": 0}, {"id": "nature", "name": "Trixi Nature", "rarity": "Commun", "a": "#72f28b", "b": "#18864b", "price": 0}, {"id": "roche", "name": "Trixi Roche", "rarity": "Commun", "a": "#c5b7a5", "b": "#66574a", "price": 80}, {"id": "vent", "name": "Trixi Vent", "rarity": "Commun", "a": "#d8fff5", "b": "#51c7a6", "price": 100}, {"id": "electrique", "name": "Trixi Électrique", "rarity": "Rare", "a": "#fff36b", "b": "#f2a900", "price": 140}, {"id": "lune", "name": "Trixi Lune", "rarity": "Rare", "a": "#e6e8ff", "b": "#6563d9", "price": 170}, {"id": "soleil", "name": "Trixi Soleil", "rarity": "Rare", "a": "#fff6aa", "b": "#ff9f1c", "price": 200}, {"id": "glace", "name": "Trixi Glace", "rarity": "Rare", "a": "#e9fdff", "b": "#45b8ef", "price": 230}, {"id": "ombre", "name": "Trixi Ombre", "rarity": "Rare", "a": "#797d99", "b": "#17192d", "price": 250}, {"id": "lave", "name": "Trixi Lave", "rarity": "Épique", "a": "#ff9b4a", "b": "#8b1e13", "price": 300}, {"id": "chat", "name": "Trixi Chat", "rarity": "Épique", "a": "#ffd477", "b": "#a85f20", "price": 320}, {"id": "chien", "name": "Trixi Chien", "rarity": "Épique", "a": "#deb887", "b": "#6e401e", "price": 340}, {"id": "fantome", "name": "Trixi Fantôme", "rarity": "Épique", "a": "#ffffff", "b": "#a46aff", "price": 370}, {"id": "robot", "name": "Trixi Robot", "rarity": "Épique", "a": "#dbe5ef", "b": "#267c7a", "price": 390}, {"id": "ninja", "name": "Trixi Ninja", "rarity": "Épique", "a": "#667085", "b": "#060811", "price": 410}, {"id": "pirate", "name": "Trixi Pirate", "rarity": "Épique", "a": "#ffc857", "b": "#6d2e12", "price": 430}, {"id": "ocean", "name": "Trixi Océan", "rarity": "Épique", "a": "#31d7ea", "b": "#173b8f", "price": 460}, {"id": "dragon", "name": "Trixi Dragon", "rarity": "Légendaire", "a": "#ff6e6e", "b": "#7b1010", "price": 560}, {"id": "galaxie", "name": "Trixi Galaxie", "rarity": "Légendaire", "a": "#dc8cff", "b": "#312477", "price": 600}, {"id": "or", "name": "Trixi Or", "rarity": "Légendaire", "a": "#fff2a6", "b": "#c57b00", "price": 640}, {"id": "roi", "name": "Trixi Roi", "rarity": "Légendaire", "a": "#ffe58a", "b": "#7a3fd0", "price": 680}, {"id": "tempete", "name": "Trixi Tempête", "rarity": "Légendaire", "a": "#d8e0f0", "b": "#3f46a8", "price": 720}, {"id": "neon", "name": "Trixi Néon", "rarity": "Légendaire", "a": "#30f2ff", "b": "#ff36bd", "price": 760}, {"id": "cosmique", "name": "Trixi Cosmique", "rarity": "Mythique", "a": "#69f7ff", "b": "#8d35e8", "price": 850}, {"id": "diamant", "name": "Trixi Diamant", "rarity": "Mythique", "a": "#ffffff", "b": "#16a2c4", "price": 900}, {"id": "arcenciel", "name": "Trixi Arc-en-ciel", "rarity": "Mythique", "a": "#ff718d", "b": "#2ed4db", "price": 950}, {"id": "alien", "name": "Trixi Alien", "rarity": "Mythique", "a": "#c6ff5e", "b": "#527816", "price": 1000}, {"id": "bonbon", "name": "Trixi Bonbon", "rarity": "Mythique", "a": "#ffadd8", "b": "#d92a83", "price": 1050}, {"id": "nova", "name": "Trixi Nova", "rarity": "Mythique", "a": "#ffffff", "b": "#6b2be8", "price": 1200}];
-const KEY='itrixi-v11-state';
-let state={coins:300,owned:['feu','eau','nature'],selected:'feu',best:0,plays:0};
-try{state={...state,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{}
-state.owned=[...new Set(state.owned||['feu','eau','nature'])];
-const $=s=>document.querySelector(s), save=()=>localStorage.setItem(KEY,JSON.stringify(state));
-function sync(){ $('#coins').textContent=state.coins;$('#best').textContent=state.best;$('#best2').textContent=state.best;$('#plays').textContent=state.plays;$('#ownedCount').textContent=state.owned.length;const t=TRIXIS.find(x=>x.id===state.selected)||TRIXIS[0];$('#chosen').textContent=t.name;renderCollection();renderShop();save() }
-function avatar(t){return `<div class="avatar" style="background:radial-gradient(circle at 35% 25%,${t.a},${t.b});--glow:${t.a}"></div>`}
-function renderCollection(){const g=$('#collectionGrid');g.innerHTML='';TRIXIS.filter(t=>state.owned.includes(t.id)).forEach(t=>{const c=document.createElement('button');c.className='card '+(state.selected===t.id?'selected':'');c.innerHTML=avatar(t)+`<div class="name">${t.name}</div><div class="rarity">${t.rarity}</div>`;c.onclick=()=>{state.selected=t.id;sync();document.querySelector('[data-tab=play]').click()};g.append(c)})}
-function renderShop(){const g=$('#shopGrid');g.innerHTML='';TRIXIS.filter(t=>t.price>0).forEach(t=>{const own=state.owned.includes(t.id),c=document.createElement('article');c.className='card';c.innerHTML=avatar(t)+`<div class="name">${t.name}</div><div class="rarity">${t.rarity}</div><button class="buy" ${own||state.coins<t.price?'disabled':''}>${own?'Possédé':t.price+' 🪙'}</button>`;c.querySelector('button').onclick=()=>{if(!own&&state.coins>=t.price){state.coins-=t.price;state.owned.push(t.id);state.selected=t.id;sync()}};g.append(c)})}
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab,.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#'+b.dataset.tab).classList.add('active')});
-const cv=$('#game'),ctx=cv.getContext('2d');let running=false,score=0,speed=6,player={x:110,y:420,w:42,h:58,vy:0,on:true},obs=[],coins=[];
-function resizeCanvas(){const r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);cv.width=Math.max(320,Math.round(r.width*d));cv.height=Math.max(180,Math.round(r.height*d));ctx.setTransform(d,0,0,d,0,0)}addEventListener('resize',resizeCanvas);
-function current(){return TRIXIS.find(t=>t.id===state.selected)||TRIXIS[0]}
-function resetGame(){resizeCanvas();running=true;score=0;speed=6;player={x:70,y:cv.clientHeight-82,w:34,h:48,vy:0,on:true};obs=[];coins=[];$('#score').textContent=0;$('#start').classList.add('hidden');state.plays++;save()}
-function jump(){if(player.on){player.vy=-13;player.on=false}}function dash(){speed=Math.min(12,speed+2);setTimeout(()=>speed=Math.max(6,speed-2),700)}
-$('#jump').onclick=jump;$('#dash').onclick=dash;cv.addEventListener('pointerdown',jump);addEventListener('keydown',e=>{if(e.code==='Space'||e.code==='ArrowUp')jump()});$('#startBtn').onclick=resetGame;
-function spawn(){if(Math.random()<.018)obs.push({x:cv.clientWidth+30,y:cv.clientHeight-56,w:28,h:34});if(Math.random()<.012)coins.push({x:cv.clientWidth+20,y:100+Math.random()*(cv.clientHeight-220),r:9})}
-function hit(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y}
-function end(){running=false;state.best=Math.max(state.best,Math.floor(score));state.coins+=Math.floor(score/25);save();sync();$('#start').classList.remove('hidden');$('#startBtn').innerHTML=`Rejouer avec <span id="chosen">${current().name}</span>`}
-function loop(){const w=cv.clientWidth,h=cv.clientHeight;ctx.clearRect(0,0,w,h);let grad=ctx.createLinearGradient(0,0,0,h);grad.addColorStop(0,'#1c0d4c');grad.addColorStop(1,'#09031c');ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);ctx.fillStyle='#38217d';for(let i=0;i<4;i++){ctx.beginPath();ctx.ellipse((i*.31*w+score*-.15)% (w+180)-80,h*.35+(i%2)*80,55,150,0,0,7);ctx.fill()}ctx.fillStyle='#8c6cff';ctx.fillRect(0,h-28,w,5);
-if(running){score+=.12;$('#score').textContent=Math.floor(score);player.vy+=.72;player.y+=player.vy;if(player.y>=h-28-player.h){player.y=h-28-player.h;player.vy=0;player.on=true}spawn();obs.forEach(o=>o.x-=speed);coins.forEach(c=>c.x-=speed);obs=obs.filter(o=>o.x>-60);coins=coins.filter(c=>c.x>-30);for(const o of obs)if(hit(player,o))end();for(const c of coins){if(Math.hypot(player.x+player.w/2-c.x,player.y+player.h/2-c.y)<34){c.x=-99;state.coins++;$('#coins').textContent=state.coins}}
+  :root{
+    --bg-deep:#0b0620;
+    --bg-mid:#160b33;
+    --grid:#2a1b55;
+    --feu-a:#ff5e3a; --feu-b:#ff9d2f;
+    --eau-a:#1fb6ff; --eau-b:#7bf1ff;
+    --veg-a:#4ade80; --veg-b:#166534;
+    --roche-a:#9ca3af; --roche-b:#4b5563;
+    --elec-a:#fde047; --elec-b:#eab308;
+    --text:#f4f1ff;
+    --danger:#ff2d55;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+  html,body{
+    margin:0; padding:0; height:100%; overflow:hidden;
+    background:radial-gradient(ellipse at 50% -10%, var(--bg-mid), var(--bg-deep) 70%);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color:var(--text);
+    user-select:none;
+  }
+  #app{
+    position:relative;
+    width:100vw; height:100vh;
+    display:flex; align-items:center; justify-content:center;
+  }
+  #stage{
+    position:relative;
+    width:100%; max-width:900px; aspect-ratio: 16/9; max-height:100vh;
+    background:linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%);
+    border-radius:0;
+    overflow:hidden;
+    box-shadow: 0 0 80px rgba(120,70,255,0.25) inset;
+  }
+  canvas{
+    display:block; width:100%; height:100%;
+  }
+
+  .overlay{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    background:rgba(11,6,32,0.72);
+    backdrop-filter: blur(3px);
+    padding:20px;
+    z-index:5;
+  }
+  .hidden{display:none !important;}
+
+  .logo{
+    font-size:clamp(2.4rem, 8vw, 4rem);
+    font-weight:900;
+    letter-spacing:2px;
+    margin:0 0 4px 0;
+    background:linear-gradient(90deg, var(--eau-a), var(--feu-b), var(--veg-a));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    filter: drop-shadow(0 0 18px rgba(160,120,255,0.5));
+  }
+  .subtitle{
+    font-size:clamp(0.75rem, 2vw, 0.95rem);
+    color:#b8adf0;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:clamp(20px,4vw,36px);
+  }
+
+  .trixi-row{
+    display:flex; gap:clamp(10px,2.2vw,20px); flex-wrap:wrap; justify-content:center;
+    margin-bottom:22px;
+  }
+  .trixi-card{
+    width:clamp(72px,13vw,104px);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    cursor:pointer;
+    padding:10px 6px;
+    border-radius:16px;
+    border:2px solid rgba(255,255,255,0.08);
+    background:rgba(255,255,255,0.03);
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .trixi-card:not(.locked):hover{
+    transform:translateY(-4px);
+    background:rgba(255,255,255,0.08);
+  }
+  .trixi-card.selected{
+    border-color:#fff;
+    background:rgba(255,255,255,0.12);
+    box-shadow:0 0 22px rgba(255,255,255,0.25);
+  }
+  .trixi-card.locked{
+    opacity:0.45; cursor:not-allowed;
+  }
+  .trixi-avatar{
+    width:clamp(40px,7vw,56px); height:clamp(40px,7vw,56px);
+    border-radius:50%;
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .trixi-avatar .eye{
+    position:absolute; width:14%; height:14%; background:#0b0620; border-radius:50%; top:32%;
+  }
+  .trixi-avatar .eye.l{left:26%;} .trixi-avatar .eye.r{right:26%;}
+  .trixi-name{ font-size:clamp(0.6rem,1.6vw,0.78rem); font-weight:700; letter-spacing:0.5px;}
+  .lock-icon{font-size:1.1rem; opacity:0.9;}
+
+  .avatar-feu{ background:radial-gradient(circle at 35% 30%, var(--feu-b), var(--feu-a)); box-shadow:0 0 16px var(--feu-a);}
+  .avatar-eau{ background:radial-gradient(circle at 35% 30%, var(--eau-b), var(--eau-a)); box-shadow:0 0 16px var(--eau-a);}
+  .avatar-veg{ background:radial-gradient(circle at 35% 30%, var(--veg-a), var(--veg-b)); box-shadow:0 0 16px var(--veg-a);}
+  .avatar-roche{ background:radial-gradient(circle at 35% 30%, var(--roche-a), var(--roche-b)); box-shadow:0 0 16px var(--roche-a);}
+  .avatar-elec{ background:radial-gradient(circle at 35% 30%, var(--elec-b), var(--elec-a)); box-shadow:0 0 16px var(--elec-a);}
+  .avatar-lune{ background:radial-gradient(circle at 35% 30%, #e0e7ff, #6366f1); box-shadow:0 0 16px #818cf8;}
+  .avatar-soleil{ background:radial-gradient(circle at 35% 30%, #fef08a, #f59e0b); box-shadow:0 0 16px #fbbf24;}
+  .avatar-glace{ background:radial-gradient(circle at 35% 30%, #e0f7ff, #38bdf8); box-shadow:0 0 16px #7dd3fc;}
+  .avatar-lave{ background:radial-gradient(circle at 35% 30%, #fb923c, #7c2d12); box-shadow:0 0 16px #f97316;}
+  .avatar-chat{ background:radial-gradient(circle at 35% 30%, #fcd34d, #b45309); box-shadow:0 0 16px #f59e0b;}
+  .avatar-chien{ background:radial-gradient(circle at 35% 30%, #d6b58d, #7c4a20); box-shadow:0 0 16px #a97a45;}
+
+  .btn{
+    font-family:inherit;
+    font-weight:800;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-size:clamp(0.85rem,2vw,1.05rem);
+    padding:14px 38px;
+    border-radius:40px;
+    border:none;
+    cursor:pointer;
+    color:#0b0620;
+    background:linear-gradient(90deg, #fff, #d8cdff);
+    box-shadow:0 6px 0 rgba(0,0,0,0.25), 0 0 24px rgba(255,255,255,0.25);
+    transition:transform .1s ease, box-shadow .1s ease;
+  }
+  .btn:active{ transform:translateY(4px); box-shadow:0 2px 0 rgba(0,0,0,0.25);}
+  .btn:disabled{ opacity:0.35; cursor:not-allowed; box-shadow:none;}
+
+  .hud{
+    position:absolute; top:14px; left:0; right:0;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    padding:0 16px;
+    z-index:4;
+    pointer-events:none;
+    font-weight:800;
+  }
+  .hud .score{
+    font-size:clamp(1.1rem,3vw,1.6rem);
+    text-shadow:0 2px 8px rgba(0,0,0,0.6);
+  }
+  .hud .best{
+    font-size:clamp(0.65rem,1.8vw,0.8rem);
+    color:#b8adf0;
+    font-weight:600;
+  }
+
+  .go-title{
+    font-size:clamp(1.6rem,5vw,2.6rem);
+    font-weight:900;
+    color:var(--danger);
+    margin:0 0 6px 0;
+    text-shadow:0 0 20px rgba(255,45,85,0.6);
+  }
+  .go-score{ font-size:clamp(0.9rem,2.4vw,1.1rem); margin-bottom:20px; color:#e6e0ff;}
+  .go-score b{ color:#fff; font-size:1.3em;}
+
+  .win-title{
+    font-size:clamp(1.6rem,5vw,2.6rem);
+    font-weight:900;
+    color:#fde047;
+    margin:0 0 6px 0;
+    text-shadow:0 0 24px rgba(253,224,71,0.6);
+  }
+
+  #tapHint{
+    position:absolute; bottom:10%; left:0; right:0; text-align:center;
+    font-size:clamp(0.7rem,2vw,0.9rem);
+    color:rgba(255,255,255,0.55);
+    letter-spacing:1px;
+    z-index:4;
+    pointer-events:none;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:0.35;} 50%{opacity:0.85;} }
+
+  .menu-btns{ display:flex; flex-direction:column; gap:14px; align-items:center; width:100%; max-width:280px; }
+  .btn.secondary{
+    background:transparent;
+    color:#fff;
+    border:2px solid rgba(255,255,255,0.4);
+    box-shadow:none;
+  }
+  .btn.secondary:active{ transform:translateY(2px); }
+  .btn.wide{ width:100%; }
+
+  .level-tag{
+    font-size:clamp(0.65rem,1.6vw,0.78rem);
+    color:#b8adf0;
+    margin-bottom:18px;
+    letter-spacing:1px;
+  }
+
+  .level-row{
+    display:flex; flex-direction:column; gap:14px;
+    width:100%; max-width:340px;
+    margin-bottom:22px;
+  }
+  #levelScreen{
+    justify-content:flex-start;
+    padding-top:6%;
+  }
+  #levelScreen .subtitle{
+    margin-bottom:14px;
+  }
+  #levelScreen .level-row{
+    flex:1 1 auto;
+    min-height:0;
+    overflow-y:auto;
+    padding-right:12px;
+    margin-bottom:14px;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(167,139,250,0.6) rgba(255,255,255,0.06);
+  }
+  #levelScreen .level-row::-webkit-scrollbar{ width:7px; }
+  #levelScreen .level-row::-webkit-scrollbar-track{
+    background:rgba(255,255,255,0.06);
+    border-radius:4px;
+  }
+  #levelScreen .level-row::-webkit-scrollbar-thumb{
+    background:rgba(167,139,250,0.6);
+    border-radius:4px;
+  }
+  #levelScreen .level-row::-webkit-scrollbar-thumb:hover{
+    background:rgba(167,139,250,0.9);
+  }
+  .level-card{
+    display:flex; align-items:center; gap:14px;
+    padding:14px 18px;
+    border-radius:14px;
+    border:2px solid rgba(255,255,255,0.08);
+    background:rgba(255,255,255,0.03);
+    cursor:pointer;
+    text-align:left;
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .level-card:hover{ transform:translateX(4px); background:rgba(255,255,255,0.08); }
+  .level-card.active{ border-color:#fff; background:rgba(255,255,255,0.12); box-shadow:0 0 22px rgba(255,255,255,0.2); }
+  .level-dot{
+    width:38px; height:38px; min-width:38px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:900; font-size:1rem;
+    color:#0b0620;
+  }
+  .level-info .level-name{ font-weight:800; font-size:0.92rem; }
+  .level-info .level-desc{ font-size:0.72rem; color:#b8adf0; margin-top:2px; }
+
+  .trixi-card.readonly{ cursor:default; }
+  .trixi-card.readonly:hover{ transform:none; background:rgba(255,255,255,0.03); }
+
+  .xp-bar{
+    width:100%; height:6px; border-radius:4px;
+    background:rgba(255,255,255,0.1);
+    overflow:hidden;
+    margin-top:2px;
+  }
+  .xp-bar-fill{
+    height:100%;
+    background:linear-gradient(90deg, #7c3aed, #a78bfa);
+    border-radius:4px;
+  }
+  .xp-req{
+    font-size:0.58rem;
+    color:#b8adf0;
+    text-align:center;
+    letter-spacing:0.3px;
+  }
+  .menu-xp{
+    font-size:clamp(0.65rem,1.6vw,0.78rem);
+    color:#fde047;
+    margin-bottom:6px;
+    letter-spacing:1px;
+    font-weight:700;
+  }
+  .unlock-toast{
+    font-size:clamp(0.75rem,2vw,0.9rem);
+    color:#fde047;
+    font-weight:800;
+    margin-bottom:14px;
+    text-shadow:0 0 12px rgba(253,224,71,0.5);
+  }
+  .xp-gain{
+    font-size:clamp(0.8rem,2.1vw,0.95rem);
+    color:#a78bfa;
+    margin-bottom:6px;
+    font-weight:700;
+  }
+
+  /* ---------- Menu amélioré, boutique et monnaie ---------- */
+  .overlay::before{
+    content:""; position:absolute; inset:18px; border:1px solid rgba(255,255,255,.08);
+    border-radius:24px; pointer-events:none; box-shadow:inset 0 0 40px rgba(124,58,237,.08);
+  }
+  #mainMenu{ background:radial-gradient(circle at 50% 22%, rgba(124,58,237,.34), rgba(11,6,32,.90) 58%); }
+  .menu-stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:0 0 18px;z-index:1}
+  .stat-pill{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-size:.78rem;font-weight:800;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+  .coin-text{color:#fde047;text-shadow:0 0 10px rgba(253,224,71,.35)}
+  .shop-grid{width:min(760px,94%);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-height:58vh;overflow:auto;padding:4px 8px 12px;z-index:1}
+  .shop-card{background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.13);border-radius:18px;padding:15px;text-align:left;display:flex;gap:13px;align-items:center}
+  .shop-icon{width:52px;height:52px;min-width:52px;border-radius:16px;display:grid;place-items:center;font-size:1.7rem;background:rgba(255,255,255,.09)}
+  .shop-info{flex:1}.shop-name{font-weight:900}.shop-desc{font-size:.7rem;color:#c8c0ef;margin:3px 0 8px;line-height:1.35}.shop-owned{font-size:.66rem;color:#a78bfa;font-weight:800}
+  .buy-btn,.use-btn{border:0;border-radius:999px;padding:8px 12px;font-weight:900;cursor:pointer;background:#fde047;color:#21170a;white-space:nowrap}.buy-btn:disabled,.use-btn:disabled{opacity:.4;cursor:not-allowed}
+  .use-btn{background:#a78bfa;color:#130b2b;margin-left:5px}
+  .active-power{font-size:.7rem;color:#4ade80;font-weight:800;margin-top:4px}
+  .gameover-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;width:100%;max-width:440px}.gameover-actions .btn{flex:1;min-width:150px;padding-left:18px;padding-right:18px}
+  .hud-coin{font-size:clamp(.8rem,2vw,1rem);color:#fde047;text-shadow:0 2px 8px rgba(0,0,0,.65);margin-top:3px}
+  .music-on{border-color:rgba(74,222,128,.8)!important;background:rgba(74,222,128,.12)!important;color:#bbf7d0!important;box-shadow:0 0 18px rgba(74,222,128,.16)!important}
+  .toast-msg{position:absolute;top:78px;left:50%;transform:translateX(-50%);z-index:9;background:rgba(11,6,32,.9);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:9px 16px;font-weight:900;pointer-events:none;animation:toastOut 1.5s forwards}
+  @keyframes toastOut{0%{opacity:0;transform:translate(-50%,-8px)}15%,70%{opacity:1;transform:translate(-50%,0)}100%{opacity:0}}
+  @media(max-width:620px){.shop-grid{grid-template-columns:1fr;max-height:62vh}.shop-card{padding:11px}.shop-icon{width:44px;height:44px;min-width:44px}.overlay::before{inset:8px}}
+
+  /* ---------- Commandes rapides et écran Réglages ---------- */
+  .top-left-controls{position:absolute;top:18px;left:18px;display:flex;gap:9px;z-index:8}
+  .corner-btn{width:54px;height:54px;border-radius:16px;border:1px solid rgba(255,255,255,.28);background:rgba(15,8,40,.76);color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font:800 9px inherit;box-shadow:0 0 18px rgba(124,58,237,.3),inset 0 0 18px rgba(255,255,255,.05);backdrop-filter:blur(7px);transition:.15s transform,.15s border-color,.15s background}
+  .corner-btn:hover{transform:translateY(-2px);border-color:#c4b5fd;background:rgba(40,22,85,.9)}
+  .corner-btn:active{transform:translateY(1px)}
+  .corner-btn .corner-icon{font-size:24px;line-height:1}
+  .corner-btn.music-on{border-color:#4ade80!important;color:#dcfce7!important}
+  .settings-panel{width:min(520px,94%);padding:22px;border-radius:24px;background:linear-gradient(145deg,rgba(35,20,76,.96),rgba(9,5,28,.96));border:1px solid rgba(255,255,255,.18);box-shadow:0 22px 70px rgba(0,0,0,.45);z-index:1}
+  .settings-title{font-size:1.45rem;font-weight:900;margin-bottom:18px}
+  .setting-row{padding:16px 6px;border-bottom:1px solid rgba(255,255,255,.1)}
+  .setting-row:last-of-type{border-bottom:0}
+  .setting-head{display:flex;justify-content:space-between;align-items:center;font-weight:800;margin-bottom:10px}
+  .setting-value{color:#fde047;min-width:48px;text-align:right}
+  .setting-slider{width:100%;accent-color:#a78bfa;cursor:pointer}
+  .settings-actions{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+  .settings-actions .btn{padding:11px 22px;font-size:.82rem}
+  #brightnessLayer{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:20}
+  @media(max-width:620px){.top-left-controls{top:9px;left:9px}.corner-btn{width:46px;height:46px;border-radius:13px}.corner-btn .corner-icon{font-size:20px}.corner-btn span:last-child{font-size:7px}.settings-panel{padding:16px}}
+
+
+
+/* ===== Correctif NovaPlay mobile v6 : défilement visible ===== */
+#stage, canvas { touch-action: manipulation; }
+@media (max-width: 700px), (orientation: portrait) {
+  html, body { width:100%; height:100%; min-height:100dvh; overflow:hidden; }
+  #app {
+    width:100vw;
+    height:100dvh;
+    min-height:100dvh;
+    display:block;
+  }
+  #stage {
+    width:100vw;
+    height:100dvh;
+    max-width:none;
+    max-height:none;
+    aspect-ratio:auto;
+    border-radius:0;
+  }
+  .overlay {
+    justify-content:flex-start;
+    overflow-y:scroll;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-y;
+    scrollbar-width:auto;
+    scrollbar-color:#a78bfa rgba(255,255,255,.12);
+    padding:82px 18px 40px 14px;
+  }
+  .overlay::-webkit-scrollbar { width:10px; }
+  .overlay::-webkit-scrollbar-track {
+    background:rgba(255,255,255,.10);
+    border-radius:999px;
+  }
+  .overlay::-webkit-scrollbar-thumb {
+    background:linear-gradient(#c084fc,#7c3aed);
+    border:2px solid rgba(11,6,32,.75);
+    border-radius:999px;
+  }
+  .overlay::-webkit-scrollbar-thumb:active { background:#d8b4fe; }
+  #menuScreen, #gameOverScreen, #winScreen {
+    justify-content:center;
+  }
+  #selectScreen, #levelScreen, #lockerScreen, #shopScreen, #settingsScreen {
+    justify-content:flex-start;
+  }
+  .trixi-row { flex-wrap:wrap; margin-bottom:14px; }
+  .trixi-card { width:82px; padding:8px 4px; }
+  .btn { padding:13px 26px; }
+  #novaplay-return-button {
+    top:8px !important;
+    left:8px !important;
+    padding:10px 12px !important;
+  }
 }
-const t=current();ctx.fillStyle=t.b;ctx.shadowColor=t.a;ctx.shadowBlur=20;ctx.fillRect(player.x,player.y,player.w,player.h);ctx.shadowBlur=0;ctx.fillStyle='white';ctx.fillRect(player.x+9,player.y+15,5,8);ctx.fillRect(player.x+22,player.y+15,5,8);ctx.fillStyle='#ff4d4d';obs.forEach(o=>ctx.fillRect(o.x,o.y,o.w,o.h));ctx.fillStyle='#ffd528';coins.forEach(c=>{ctx.beginPath();ctx.arc(c.x,c.y,c.r,0,7);ctx.fill()});requestAnimationFrame(loop)}
-$('#reset').onclick=()=>{if(confirm('Réinitialiser Itrixi ?')){localStorage.removeItem(KEY);location.reload()}};sync();resizeCanvas();loop();
-</script></body></html>
+
+
+/* ===== NovaPlay v7 : compatibilité mobile complète ===== */
+html, body {
+  width: 100%;
+  min-height: 100%;
+  overscroll-behavior-y: contain;
+  scrollbar-width: auto;
+  scrollbar-color: #a78bfa rgba(255,255,255,.12);
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#app::-webkit-scrollbar,
+#stage::-webkit-scrollbar,
+.overlay::-webkit-scrollbar {
+  width: 10px;
+}
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+#app::-webkit-scrollbar-track,
+#stage::-webkit-scrollbar-track,
+.overlay::-webkit-scrollbar-track {
+  background: rgba(255,255,255,.10);
+}
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+#app::-webkit-scrollbar-thumb,
+#stage::-webkit-scrollbar-thumb,
+.overlay::-webkit-scrollbar-thumb {
+  background: linear-gradient(#c084fc,#7c3aed);
+  border: 2px solid rgba(11,6,32,.75);
+  border-radius: 999px;
+}
+@media (max-width: 700px), (orientation: portrait) {
+  html, body {
+    height: auto !important;
+    min-height: 100dvh !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+  #app {
+    width: 100%;
+    min-height: 100dvh;
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+  #stage {
+    width: 100%;
+    min-height: 100dvh;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    aspect-ratio: auto;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+  .overlay {
+    min-height: 100%;
+    height: auto;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
+    padding-bottom: 90px !important;
+  }
+  .hud, .top-left-controls, #novaplay-return-button {
+    position: fixed !important;
+  }
+  canvas {
+    min-height: 100dvh;
+    touch-action: manipulation;
+  }
+  button, .btn, .trixi-card, .level-card, .shop-card {
+    touch-action: manipulation;
+  }
+}
+
+
+/* ===== NovaPlay v8 : jeu mobile non étiré + menus défilables ===== */
+@media (max-width: 700px), (orientation: portrait) {
+  html, body {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100dvh !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    touch-action: manipulation;
+    background: #08031d;
+  }
+
+  #app, #stage {
+    position: relative !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    max-width: none !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    overflow: hidden !important;
+    display: block !important;
+    background: #08031d;
+  }
+
+  /* Le canvas garde son vrai format 16:9 au lieu d'être allongé verticalement. */
+  #game {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    display: block !important;
+    touch-action: manipulation !important;
+  }
+
+  /* Tous les menus restent défilables avec le doigt. */
+  .overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y !important;
+    overscroll-behavior-y: contain;
+    padding-top: 82px !important;
+    padding-bottom: 110px !important;
+  }
+
+  #menuScreen, #gameOverScreen, #winScreen {
+    justify-content: center !important;
+  }
+
+  #selectScreen, #levelScreen, #lockerScreen,
+  #shopScreen, #settingsScreen {
+    justify-content: flex-start !important;
+  }
+
+  .hud, .top-left-controls, #novaplay-return-button {
+    position: absolute !important;
+  }
+
+  #novaplay-return-button {
+    top: 8px !important;
+    left: 8px !important;
+    z-index: 100 !important;
+  }
+}
+
+/* Le mode paysage utilise presque tout l'écran et reste en 16:9. */
+@media (max-height: 500px) and (orientation: landscape) {
+  #app, #stage {
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-width: none !important;
+    max-height: none !important;
+  }
+  #game {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+}
+
+
+/* ===== NovaPlay v9 : boutique complète ===== */
+.trixi-rarity{
+  font-size:.58rem;
+  font-weight:900;
+  letter-spacing:.5px;
+  color:#d8d2ff;
+  opacity:.9;
+}
+.shop-grid{
+  width:min(900px,96%) !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  max-height:64vh !important;
+}
+.shop-card{
+  min-height:112px;
+}
+.shop-icon{
+  overflow:hidden;
+}
+@media(max-width:850px){
+  .shop-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+}
+@media(max-width:560px){
+  .shop-grid{grid-template-columns:1fr !important;max-height:68vh !important;}
+  .shop-card{min-height:98px;}
+}
+
+
+/* ===== Itrixi v10 : affichage mobile réellement 16:9 ===== */
+@media (max-width:700px) and (orientation:portrait){
+  html,body,#app{width:100%!important;height:100dvh!important;min-height:100dvh!important;overflow:hidden!important;background:#08031d!important;}
+  #stage{
+    position:absolute!important;
+    left:0!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+    width:100vw!important;
+    height:56.25vw!important;
+    min-height:0!important;
+    max-height:100dvh!important;
+    aspect-ratio:16/9!important;
+    overflow:hidden!important;
+  }
+  #game{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:fill!important;}
+  .overlay{
+    position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;
+    overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;
+    touch-action:pan-y!important;padding-top:100px!important;padding-bottom:120px!important;
+  }
+  .hud{position:fixed!important;top:12px!important;right:12px!important;z-index:80!important;}
+  #novaplay-return-button{position:fixed!important;top:12px!important;left:12px!important;z-index:100!important;}
+}
+#itrixi-version-badge{position:fixed;right:8px;bottom:8px;z-index:9999;padding:5px 8px;border-radius:999px;background:rgba(124,58,237,.85);color:white;font:700 11px system-ui;pointer-events:none;}
+
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stage">
+    <canvas id="game"></canvas>
+
+    <div class="hud" id="hud" style="display:none;">
+      <div>
+        <div class="score" id="scoreLabel">0 m</div>
+        <div class="hud-coin" id="runCoinLabel">🪙 0</div>
+      </div>
+      <div class="best" id="bestLabel">Meilleur : 0 m</div>
+    </div>
+
+    <div id="tapHint" class="hidden">Touche / Clique pour sauter</div>
+
+    <!-- Main menu -->
+    <div class="overlay" id="mainMenu">
+      <div class="top-left-controls">
+        <button class="corner-btn" id="menuMusicBtn" title="Changer la musique"><span class="corner-icon">🎵</span><span>Musique</span></button>
+        <button class="corner-btn" id="menuSettingsBtn" title="Ouvrir les réglages"><span class="corner-icon">⚙️</span><span>Réglages</span></button>
+      </div>
+      <div class="logo">ITRIXI</div>
+      <div class="menu-stats">
+        <div class="stat-pill" id="menuXpTag">✨ XP : 0</div>
+        <div class="stat-pill coin-text" id="menuCoinTag">🪙 Pièces : 0</div>
+      </div>
+      <div class="level-tag" id="menuLevelTag">Parcours : Niveau 1</div>
+      <div class="menu-btns">
+        <button class="btn wide" id="menuPlayBtn">Jouer</button>
+        <button class="btn secondary wide" id="menuShopBtn">🛒 Magasin</button>
+        <button class="btn secondary wide" id="menuLockerBtn">Casier de Trixis</button>
+        <button class="btn secondary wide" id="menuLevelsBtn">Niveaux</button>
+      </div>
+    </div>
+
+
+
+    <!-- Settings screen -->
+    <div class="overlay hidden" id="settingsScreen">
+      <div class="settings-panel">
+        <div class="settings-title">⚙️ Réglages</div>
+        <div class="setting-row">
+          <div class="setting-head"><span>☀️ Luminosité</span><span class="setting-value" id="brightnessValue">100 %</span></div>
+          <input class="setting-slider" id="brightnessSlider" type="range" min="35" max="100" value="100" step="1">
+        </div>
+        <div class="setting-row">
+          <div class="setting-head"><span>🔊 Volume de la musique</span><span class="setting-value" id="volumeValue">70 %</span></div>
+          <input class="setting-slider" id="volumeSlider" type="range" min="0" max="100" value="70" step="1">
+        </div>
+        <div class="settings-actions">
+          <button class="btn secondary" id="resetSettingsBtn">Réinitialiser</button>
+          <button class="btn" id="settingsBackBtn">Retour</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shop screen -->
+    <div class="overlay hidden" id="shopScreen">
+      <div class="subtitle">Magasin</div>
+      <div class="menu-stats">
+        <div class="stat-pill coin-text" id="shopCoinTag">🪙 Pièces : 0</div>
+        <div class="stat-pill" id="activePowerTag">Aucun pouvoir activé</div>
+      </div>
+      <div class="shop-grid" id="shopGrid"></div>
+      <button class="btn secondary" id="shopBackBtn" style="margin-top:10px;">Retour</button>
+    </div>
+
+    <!-- Trixi locker / collection screen -->
+    <div class="overlay hidden" id="lockerScreen">
+      <div class="subtitle">Casier de Trixis</div>
+      <div class="trixi-row" id="lockerRow"></div>
+      <button class="btn secondary" id="lockerBackBtn">Retour</button>
+    </div>
+
+    <!-- Level select screen -->
+    <div class="overlay hidden" id="levelScreen">
+      <div class="subtitle">Choisis un parcours</div>
+      <div class="level-row" id="levelRow"></div>
+      <button class="btn secondary" id="levelBackBtn">Retour</button>
+    </div>
+
+    <!-- Character select screen -->
+    <div class="overlay hidden" id="selectScreen">
+      <div class="logo">ITRIXI</div>
+      <div class="subtitle">Choisis ton Trixi</div>
+      <div class="trixi-row" id="trixiRow"></div>
+      <button class="btn" id="startBtn" disabled>Jouer</button>
+      <button class="btn secondary" id="selectBackBtn" style="margin-top:10px;">Retour</button>
+    </div>
+
+    <!-- Game over screen -->
+    <div class="overlay hidden" id="gameOverScreen">
+      <div class="go-title">Perdu !</div>
+      <div class="go-score">Distance : <b id="finalScore">0</b> m</div>
+      <div class="xp-gain" id="xpGainLabel">+0 XP</div>
+      <div class="unlock-toast hidden" id="unlockToast"></div>
+      <div class="gameover-actions">
+        <button class="btn" id="retryBtn">Rejouer</button>
+        <button class="btn" id="useLifeBtn">❤️ Utiliser une vie</button>
+        <button class="btn secondary" id="gameOverMenuBtn">Menu</button>
+      </div>
+    </div>
+
+    <!-- Victory screen -->
+    <div class="overlay hidden" id="victoryScreen">
+      <div class="win-title">🏁 Parcours terminé !</div>
+      <div class="go-score">Distance : <b id="winFinalScore">400</b> m</div>
+      <div class="xp-gain" id="winXpGainLabel">+0 XP</div>
+      <div class="unlock-toast hidden" id="winUnlockToast"></div>
+      <div class="menu-btns">
+        <button class="btn wide hidden" id="nextLevelBtn">Niveau suivant</button>
+        <button class="btn wide" id="winRetryBtn">Rejouer</button>
+        <button class="btn secondary wide" id="winMenuBtn">Menu</button>
+      </div>
+    </div>
+    <div id="brightnessLayer"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------- Trixi roster ----------
+  const TRIXIS = [
+    { id:"feu", name:"Trixi de Feu", rarity:"Commun", colorA:"#ff9d2f", colorB:"#ff5e3a", cls:"avatar-feu", unlocked:true, particle:"#ff8a3d", shopPrice:0 },
+    { id:"eau", name:"Trixi d'Eau", rarity:"Commun", colorA:"#7bf1ff", colorB:"#1fb6ff", cls:"avatar-eau", unlocked:true, particle:"#4fd6ff", shopPrice:0 },
+    { id:"veg", name:"Trixi Nature", rarity:"Commun", colorA:"#4ade80", colorB:"#166534", cls:"avatar-veg", unlocked:true, particle:"#4ade80", shopPrice:0 },
+
+    { id:"roche", name:"Trixi Roche", rarity:"Commun", colorA:"#cbd5e1", colorB:"#475569", cls:"avatar-roche", unlocked:false, particle:"#94a3b8", xpNeeded:800, shopPrice:90 },
+    { id:"elec", name:"Trixi Électrique", rarity:"Rare", colorA:"#fef08a", colorB:"#eab308", cls:"avatar-elec", unlocked:false, particle:"#fde047", xpNeeded:1300, shopPrice:130 },
+    { id:"lune", name:"Trixi Lune", rarity:"Rare", colorA:"#e0e7ff", colorB:"#6366f1", cls:"avatar-lune", unlocked:false, particle:"#c7d2fe", xpNeeded:1900, shopPrice:160 },
+    { id:"soleil", name:"Trixi Soleil", rarity:"Rare", colorA:"#fff7ae", colorB:"#f59e0b", cls:"avatar-soleil", unlocked:false, particle:"#fde68a", xpNeeded:2600, shopPrice:190 },
+    { id:"glace", name:"Trixi Glace", rarity:"Rare", colorA:"#ecfeff", colorB:"#38bdf8", cls:"avatar-glace", unlocked:false, particle:"#bae6fd", xpNeeded:3400, shopPrice:220 },
+    { id:"lave", name:"Trixi Lave", rarity:"Épique", colorA:"#fb923c", colorB:"#7c2d12", cls:"avatar-lave", unlocked:false, particle:"#f97316", xpNeeded:4300, shopPrice:270 },
+    { id:"chat", name:"Trixi Chat", rarity:"Épique", colorA:"#fcd34d", colorB:"#b45309", cls:"avatar-chat", unlocked:false, particle:"#fbbf24", xpNeeded:5300, shopPrice:300 },
+    { id:"chien", name:"Trixi Chien", rarity:"Épique", colorA:"#d6b58d", colorB:"#7c4a20", cls:"avatar-chien", unlocked:false, particle:"#c69c6d", xpNeeded:6400, shopPrice:320 },
+
+    { id:"vent", name:"Trixi Vent", rarity:"Commun", colorA:"#d1fae5", colorB:"#10b981", cls:"", unlocked:false, particle:"#6ee7b7", xpNeeded:7200, shopPrice:120 },
+    { id:"ombre", name:"Trixi Ombre", rarity:"Rare", colorA:"#64748b", colorB:"#111827", cls:"", unlocked:false, particle:"#94a3b8", xpNeeded:8100, shopPrice:210 },
+    { id:"fantome", name:"Trixi Fantôme", rarity:"Épique", colorA:"#f5f3ff", colorB:"#8b5cf6", cls:"", unlocked:false, particle:"#ddd6fe", xpNeeded:9000, shopPrice:340 },
+    { id:"robot", name:"Trixi Robot", rarity:"Épique", colorA:"#cbd5e1", colorB:"#0f766e", cls:"", unlocked:false, particle:"#5eead4", xpNeeded:10000, shopPrice:370 },
+    { id:"dragon", name:"Trixi Dragon", rarity:"Légendaire", colorA:"#f87171", colorB:"#7f1d1d", cls:"", unlocked:false, particle:"#ef4444", xpNeeded:11200, shopPrice:520 },
+    { id:"galaxie", name:"Trixi Galaxie", rarity:"Légendaire", colorA:"#c084fc", colorB:"#312e81", cls:"", unlocked:false, particle:"#a78bfa", xpNeeded:12500, shopPrice:560 },
+    { id:"cosmique", name:"Trixi Cosmique", rarity:"Mythique", colorA:"#67e8f9", colorB:"#7e22ce", cls:"", unlocked:false, particle:"#e879f9", xpNeeded:14000, shopPrice:750 },
+    { id:"or", name:"Trixi d'Or", rarity:"Légendaire", colorA:"#fef3c7", colorB:"#d97706", cls:"", unlocked:false, particle:"#fbbf24", xpNeeded:15600, shopPrice:600 },
+    { id:"diamant", name:"Trixi Diamant", rarity:"Mythique", colorA:"#ecfeff", colorB:"#0891b2", cls:"", unlocked:false, particle:"#a5f3fc", xpNeeded:17400, shopPrice:820 },
+    { id:"arcenciel", name:"Trixi Arc-en-ciel", rarity:"Mythique", colorA:"#fb7185", colorB:"#22d3ee", cls:"", unlocked:false, particle:"#f0abfc", xpNeeded:19400, shopPrice:900 },
+    { id:"ninja", name:"Trixi Ninja", rarity:"Épique", colorA:"#475569", colorB:"#020617", cls:"", unlocked:false, particle:"#94a3b8", xpNeeded:21600, shopPrice:390 },
+    { id:"pirate", name:"Trixi Pirate", rarity:"Épique", colorA:"#f59e0b", colorB:"#78350f", cls:"", unlocked:false, particle:"#fbbf24", xpNeeded:24000, shopPrice:410 },
+    { id:"roi", name:"Trixi Roi", rarity:"Légendaire", colorA:"#fde68a", colorB:"#7c3aed", cls:"", unlocked:false, particle:"#facc15", xpNeeded:26600, shopPrice:650 },
+    { id:"alien", name:"Trixi Alien", rarity:"Rare", colorA:"#bef264", colorB:"#3f6212", cls:"", unlocked:false, particle:"#a3e635", xpNeeded:29400, shopPrice:250 },
+    { id:"bonbon", name:"Trixi Bonbon", rarity:"Rare", colorA:"#f9a8d4", colorB:"#db2777", cls:"", unlocked:false, particle:"#fbcfe8", xpNeeded:32400, shopPrice:260 },
+    { id:"ocean", name:"Trixi Océan", rarity:"Épique", colorA:"#22d3ee", colorB:"#1e3a8a", cls:"", unlocked:false, particle:"#67e8f9", xpNeeded:35600, shopPrice:440 },
+    { id:"tempete", name:"Trixi Tempête", rarity:"Légendaire", colorA:"#cbd5e1", colorB:"#4338ca", cls:"", unlocked:false, particle:"#818cf8", xpNeeded:39000, shopPrice:690 },
+    { id:"neon", name:"Trixi Néon", rarity:"Légendaire", colorA:"#22d3ee", colorB:"#db2777", cls:"", unlocked:false, particle:"#2dd4bf", xpNeeded:42600, shopPrice:720 },
+    { id:"nova", name:"Trixi Nova", rarity:"Mythique", colorA:"#ffffff", colorB:"#6d28d9", cls:"", unlocked:false, particle:"#c4b5fd", xpNeeded:46500, shopPrice:1000 }
+  ];
+
+  let selectedTrixi = null;
+  let bestScore = 0;
+  let totalXP = 0;
+  let coins = 0;
+  let runCoins = 0;
+  let extraLives = 0;
+  let potion2 = 0;
+  let potion3 = 0;
+  let helmetOwned = false;
+  let queuedBoost = 1;
+  let purchasedTrixis = new Set();
+  let currentSpeedMultiplier = 1;
+  let deathSnapshot = null;
+
+  // ---------- Levels ----------
+  const LEVELS = [
+    { id:0,  name:"Niveau 0",  desc:"Infini — obstacles aléatoires ∞", speed:4.6, accent:"#facc15", xpMult:1.5, infinite:true, dotLabel:"∞" },
+    { id:1,  name:"Niveau 1",  desc:"Plaine — parcours simple",       speed:4.0, accent:"#4ade80", xpMult:1.0 },
+    { id:2,  name:"Niveau 2",  desc:"Collines — premiers pièges",     speed:4.6, accent:"#22d3ee", xpMult:1.2 },
+    { id:3,  name:"Niveau 3",  desc:"Grotte — rochers en approche",   speed:5.2, accent:"#60a5fa", xpMult:1.4 },
+    { id:4,  name:"Niveau 4",  desc:"Falaise — sauts rapprochés",     speed:5.8, accent:"#818cf8", xpMult:1.6 },
+    { id:5,  name:"Niveau 5",  desc:"Marécage — tous les pièges",     speed:6.4, accent:"#a78bfa", xpMult:1.8 },
+    { id:6,  name:"Niveau 6",  desc:"Ravin — cadence soutenue",       speed:7.0, accent:"#f472b6", xpMult:2.0 },
+    { id:7,  name:"Niveau 7",  desc:"Volcan — chaleur intense",       speed:7.6, accent:"#fb7185", xpMult:2.2 },
+    { id:8,  name:"Niveau 8",  desc:"Tempête — enchaînements serrés", speed:8.2, accent:"#ff5e3a", xpMult:2.4 },
+    { id:9,  name:"Niveau 9",  desc:"Abysse — rythme extrême",        speed:8.8, accent:"#f59e0b", xpMult:2.6 },
+    { id:10, name:"Niveau 10", desc:"Chaos — parcours ultime",        speed:9.4, accent:"#ef4444", xpMult:2.8 },
+  ];
+  let selectedLevel = LEVELS[1];
+
+  function getNextLevel(){
+    const idx = LEVELS.findIndex(l => l.id === selectedLevel.id);
+    if(idx === -1 || idx === LEVELS.length - 1) return null;
+    return LEVELS[idx + 1];
+  }
+
+  // ---------- Fixed level patterns (deterministic — same course every time) ----------
+  function P(type, gap, extra){ return Object.assign({ type, gap }, extra||{}); }
+
+  const LEVEL_PATTERNS = {
+    1: [ // simple mais varié : piques seules, piques doubles et petits trous
+      P("spike",430,{count:1}), P("spike",410,{count:1}), P("spike",420,{count:2}),
+      P("pit",400,{w:55}), P("spike",410,{count:1}), P("spike",430,{count:2}),
+      P("pit",410,{w:60}), P("spike",400,{count:1}), P("spike",420,{count:1}),
+      P("spike",410,{count:2}), P("pit",400,{w:55}), P("spike",420,{count:1}),
+    ],
+    2: [ // pièges de lave et trous, toujours en solo
+      P("spike",400,{count:1}), P("pit",380,{w:65}), P("spike",390,{count:1}),
+      P("lava",370,{w:60}), P("spike",400,{count:1}), P("spike",380,{count:2}),
+      P("pit",380,{w:70}), P("spike",390,{count:1}), P("lava",370,{w:65}),
+      P("spike",400,{count:1}),
+    ],
+    3: [ // les rochers font leur apparition
+      P("spike",360,{count:1}), P("lava",350,{w:65}), P("rock",340,{}),
+      P("spike",350,{count:1}), P("pit",340,{w:80}), P("spike",330,{count:2}),
+      P("rock",350,{}), P("lava",340,{w:70}), P("spike",350,{count:1}),
+      P("pit",330,{w:85}),
+    ],
+    4: [
+      P("spike",320,{count:2}), P("pit",310,{w:90}), P("spike",300,{count:1}),
+      P("rock",310,{}), P("lava",300,{w:75}), P("spike",310,{count:2}),
+      P("pit",300,{w:95}), P("rock",310,{}), P("spike",300,{count:1}),
+      P("lava",300,{w:80}),
+    ],
+    5: [ // tous les pièges se mélangent
+      P("spike",290,{count:2}), P("lava",280,{w:80}), P("rock",280,{}),
+      P("pit",290,{w:100}), P("spike",290,{count:3}), P("rock",270,{}),
+      P("lava",280,{w:85}), P("pit",280,{w:105}), P("spike",270,{count:2}),
+      P("rock",280,{}),
+    ],
+    6: [
+      P("spike",270,{count:3}), P("pit",260,{w:110}), P("lava",260,{w:90}),
+      P("rock",250,{}), P("spike",260,{count:2}), P("rock",250,{}),
+      P("pit",260,{w:115}), P("lava",250,{w:95}), P("spike",260,{count:3}),
+      P("rock",250,{}),
+    ],
+    7: [
+      P("spike",250,{count:3}), P("rock",240,{}), P("lava",240,{w:95}),
+      P("pit",250,{w:120}), P("spike",230,{count:2}), P("rock",240,{}),
+      P("spike",240,{count:3}), P("pit",230,{w:125}), P("lava",240,{w:100}),
+      P("rock",230,{}),
+    ],
+    8: [
+      P("spike",235,{count:4}), P("pit",225,{w:130}), P("rock",220,{}),
+      P("lava",225,{w:105}), P("spike",220,{count:3}), P("rock",220,{}),
+      P("pit",225,{w:135}), P("spike",220,{count:4}), P("lava",215,{w:110}),
+      P("rock",220,{}),
+    ],
+    9: [
+      P("spike",215,{count:4}), P("lava",210,{w:115}), P("rock",205,{}),
+      P("pit",210,{w:140}), P("spike",205,{count:3}), P("rock",205,{}),
+      P("spike",210,{count:4}), P("pit",205,{w:145}), P("lava",205,{w:120}),
+      P("rock",200,{}),
+    ],
+    10: [ // parcours ultime, cadence maximale
+      P("spike",200,{count:4}), P("rock",195,{}), P("pit",195,{w:150}),
+      P("lava",195,{w:125}), P("spike",195,{count:5}), P("rock",190,{}),
+      P("pit",195,{w:155}), P("spike",190,{count:4}), P("lava",190,{w:130}),
+      P("rock",190,{}), P("spike",195,{count:5}), P("pit",190,{w:150}),
+    ],
+  };
+
+  // ---------- Build select screen ----------
+  const trixiRow = document.getElementById("trixiRow");
+  function renderTrixiRow(){
+    trixiRow.innerHTML = "";
+    TRIXIS.forEach(t=>{
+      const card = document.createElement("div");
+      card.className = "trixi-card" + (t.unlocked?"":" locked");
+      card.innerHTML = `
+        <div class="trixi-avatar ${t.cls}" style="background:radial-gradient(circle at 35% 30%, ${t.colorA}, ${t.colorB});box-shadow:0 0 16px ${t.particle};">
+          ${t.unlocked ? '<div class="eye l"></div><div class="eye r"></div>' : '<span class="lock-icon">🔒</span>'}
+        </div>
+        <div class="trixi-name">${t.name}</div><div class="trixi-rarity rarity-${t.rarity.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}">${t.rarity}</div>
+      `;
+      if(t.unlocked){
+        if(selectedTrixi && selectedTrixi.id === t.id) card.classList.add("selected");
+        card.addEventListener("click", ()=>{
+          trixiRow.querySelectorAll(".trixi-card").forEach(c=>c.classList.remove("selected"));
+          card.classList.add("selected");
+          selectedTrixi = t;
+          document.getElementById("startBtn").disabled = false;
+          saveProgress();
+          // Sur mobile comme sur ordinateur : toucher le Trixi lance immédiatement la partie.
+          startGame();
+        });
+      }
+      trixiRow.appendChild(card);
+    });
+  }
+  renderTrixiRow();
+
+  // ---------- Build locker screen ----------
+  const lockerRow = document.getElementById("lockerRow");
+  function renderLockerRow(){
+    lockerRow.innerHTML = "";
+    TRIXIS.forEach(t=>{
+      const card = document.createElement("div");
+      card.className = "trixi-card readonly" + (t.unlocked?"":" locked");
+      const progressPct = t.unlocked ? 100 : Math.min(100, Math.floor((totalXP / t.xpNeeded)*100));
+      card.innerHTML = `
+        <div class="trixi-avatar ${t.cls}" style="background:radial-gradient(circle at 35% 30%, ${t.colorA}, ${t.colorB});box-shadow:0 0 16px ${t.particle};">
+          ${t.unlocked ? '<div class="eye l"></div><div class="eye r"></div>' : '<span class="lock-icon">🔒</span>'}
+        </div>
+        <div class="trixi-name">${t.name}</div><div class="trixi-rarity">${t.rarity}</div>
+        ${t.unlocked ? "" : `
+          <div class="xp-bar"><div class="xp-bar-fill" style="width:${progressPct}%;"></div></div>
+          <div class="xp-req">${Math.min(totalXP,t.xpNeeded)} / ${t.xpNeeded} XP</div>
+        `}
+      `;
+      lockerRow.appendChild(card);
+    });
+  }
+  renderLockerRow();
+
+  // ---------- XP / unlock system ----------
+  function checkUnlocks(){
+    const newlyUnlocked = [];
+    TRIXIS.forEach(t=>{
+      if(!t.unlocked && t.xpNeeded && totalXP >= t.xpNeeded){
+        t.unlocked = true;
+        newlyUnlocked.push(t);
+      }
+    });
+    if(newlyUnlocked.length){
+      renderTrixiRow();
+      renderLockerRow();
+    }
+    return newlyUnlocked;
+  }
+
+  // ---------- Build level screen ----------
+  const levelRow = document.getElementById("levelRow");
+  function renderLevelCards(){
+    levelRow.innerHTML = "";
+    LEVELS.forEach(lv=>{
+      const card = document.createElement("div");
+      card.className = "level-card" + (selectedLevel.id === lv.id ? " active" : "");
+      card.innerHTML = `
+        <div class="level-dot" style="background:${lv.accent};">${lv.dotLabel || lv.id}</div>
+        <div class="level-info">
+          <div class="level-name">${lv.name}</div>
+          <div class="level-desc">${lv.desc}</div>
+        </div>
+      `;
+      card.addEventListener("click", ()=>{
+        selectedLevel = lv;
+        document.getElementById("menuLevelTag").textContent = "Parcours : " + lv.name;
+        renderLevelCards();
+        saveProgress();
+        if(selectedTrixi){
+          startGame();
+        } else {
+          goSelect();
+        }
+      });
+      levelRow.appendChild(card);
+    });
+  }
+  renderLevelCards();
+
+  // ---------- Canvas setup ----------
+  const stage = document.getElementById("stage");
+  const canvas = document.getElementById("game");
+  const ctx = canvas.getContext("2d");
+  const W = 900, H = 506; // logical resolution (16:9)
+  canvas.width = W; canvas.height = H;
+
+  const GROUND_Y = H - 90;
+  const GRAVITY = 0.62;
+  const JUMP_VELOCITY = -12.4;
+  const WIN_DISTANCE = 400;
+  const BASE_SPEED = 4.6;
+
+  let state = "menu"; // menu | locker | levelSelect | select | playing | gameover
+  let speed = BASE_SPEED;
+  let distance = 0;
+  let elapsed = 0;
+  let bgOffset = 0;
+
+  // ---------- Player ----------
+  const player = {
+    x: 130, y: 0, size: 40,
+    vy: 0, onGround: true, jumping:false,
+    rot: 0
+  };
+
+  function resetPlayer(){
+    player.y = GROUND_Y - player.size;
+    player.vy = 0;
+    player.onGround = true;
+    player.rot = 0;
+  }
+
+  // ---------- Obstacles ----------
+  // types: spike, lava, pit, rock
+  let obstacles = [];
+  let particles = [];
+  let coinPickups = [];
+  let floatingPlatforms = [];
+  let nextPlatformX = W + 420;
+  let nextCoinX = W + 180;
+  let nextSpawnX = W + 200;
+  let patternQueue = [];
+
+  // distance (m) and pixel-scroll are linked by the same factor used in update(): distance += speed*(dt/16.67)*0.09
+  const PIXELS_PER_METER = 1 / 0.09;
+  let finishLine = { x: 0 };
+
+  // ---------- Mort progressive (s'enfonce dans la lave / tombe dans le trou) ----------
+  const DEATH_ANIM_MS = 620;
+  let dying = false;
+  let deathType = null;
+  let deathTimer = 0;
+
+  function resetGame(){
+    obstacles = [];
+    particles = [];
+    coinPickups = [];
+    floatingPlatforms = [];
+    nextPlatformX = W + 380;
+    runCoins = 0;
+    nextCoinX = W + 160;
+    distance = 0;
+    elapsed = 0;
+    currentSpeedMultiplier = (helmetOwned ? 1.05 : 1) * queuedBoost;
+    queuedBoost = 1;
+    speed = selectedLevel.speed * currentSpeedMultiplier;
+    bgOffset = 0;
+    nextSpawnX = W + 300;
+    lastObstacleWidth = 0;
+    patternQueue = selectedLevel.infinite ? [] : LEVEL_PATTERNS[selectedLevel.id].slice();
+    finishLine = { x: selectedLevel.infinite ? -99999 : player.x + WIN_DISTANCE * PIXELS_PER_METER };
+    dying = false;
+    deathType = null;
+    deathTimer = 0;
+    resetPlayer();
+  }
+
+  let lastObstacleWidth = 0;
+
+  function spawnObstacleRandom(){
+    // niveau infini : obstacles générés au hasard, écart resserré peu à peu avec la vitesse
+    const minGapBase = 230;
+    const gap = minGapBase + Math.random()*180 + speed*10;
+    nextSpawnX += lastObstacleWidth + gap;
+
+    const r = Math.random();
+    let type;
+    if(r < 0.34) type = "spike";
+    else if(r < 0.55) type = "lava";
+    else if(r < 0.78) type = "pit";
+    else type = "rock";
+
+    if(type === "spike"){
+      const count = 1 + (Math.random()<0.35 ? 1: 0);
+      obstacles.push({ type, x: nextSpawnX, w: 34*count, h:38, count });
+      lastObstacleWidth = 34*count;
+    } else if(type === "lava"){
+      const w = 90 + Math.random()*70;
+      obstacles.push({ type, x: nextSpawnX, w, h: 26 });
+      lastObstacleWidth = w;
+    } else if(type === "pit"){
+      const w = 100 + Math.random()*60 + speed*4;
+      obstacles.push({ type, x: nextSpawnX, w });
+      lastObstacleWidth = w;
+    } else if(type === "rock"){
+      obstacles.push({ type, x: nextSpawnX, w: 40, h:40, falling:true, dropY: -60, landed:false, warnT: 0 });
+      lastObstacleWidth = 40;
+    }
+  }
+
+  function spawnObstacle(){
+    if(selectedLevel.infinite){
+      spawnObstacleRandom();
+      return;
+    }
+    if(patternQueue.length === 0){
+      // le parcours du niveau reprend depuis le début (toujours identique)
+      patternQueue = LEVEL_PATTERNS[selectedLevel.id].slice();
+    }
+    const entry = patternQueue.shift();
+    nextSpawnX += lastObstacleWidth + entry.gap;
+    const type = entry.type;
+
+    if(type === "spike"){
+      const count = entry.count || 1;
+      obstacles.push({ type, x: nextSpawnX, w: 34*count, h:38, count });
+      lastObstacleWidth = 34*count;
+    } else if(type === "lava"){
+      obstacles.push({ type, x: nextSpawnX, w: entry.w, h: 26 });
+      lastObstacleWidth = entry.w;
+    } else if(type === "pit"){
+      obstacles.push({ type, x: nextSpawnX, w: entry.w });
+      lastObstacleWidth = entry.w;
+    } else if(type === "rock"){
+      // falling rock: telegraph then drop, becomes ground obstacle
+      obstacles.push({ type, x: nextSpawnX, w: 40, h:40, falling:true, dropY: -60, landed:false, warnT: 0 });
+      lastObstacleWidth = 40;
+    }
+  }
+
+  function addTrail(){
+    if(!selectedTrixi) return;
+    const baseX = player.x + player.size*0.25;
+    const baseY = player.y + player.size*0.75;
+
+    if(selectedTrixi.id === "feu"){
+      particles.push({
+        kind:"flame",
+        x: baseX, y: baseY,
+        vx: -speed*0.55 - Math.random()*1.2, vy: -0.6 - Math.random()*0.8,
+        life: 22, maxLife:22, size: 3.5+Math.random()*3,
+        rot: Math.random()*Math.PI*2
+      });
+    } else if(selectedTrixi.id === "eau"){
+      particles.push({
+        kind:"drop",
+        x: baseX, y: baseY + Math.random()*8,
+        vx: -speed*0.5 - Math.random()*1.2, vy: 0.6 + Math.random()*1.4,
+        life: 24, maxLife:24, size: 3+Math.random()*2.2
+      });
+    } else if(selectedTrixi.id === "veg"){
+      const isLeaf = Math.random() < 0.6;
+      particles.push({
+        kind: isLeaf ? "leaf" : "root",
+        x: baseX, y: baseY + (isLeaf ? -6 : 10) + Math.random()*6,
+        vx: -speed*0.55 - Math.random()*1.3, vy: isLeaf ? (-0.4+Math.random()*1.4) : (0.2+Math.random()*0.6),
+        life: 28, maxLife:28, size: 3+Math.random()*3,
+        rot: Math.random()*Math.PI*2, spin: (Math.random()-0.5)*0.3
+      });
+    } else {
+      particles.push({
+        kind:"dot",
+        x: baseX, y: baseY,
+        vx: -speed*0.6 - Math.random()*1.5, vy: (Math.random()-0.5)*1.2,
+        life: 26, maxLife:26, color: selectedTrixi.particle, size: 4+Math.random()*3
+      });
+    }
+  }
+
+  // ---------- Pièces à récupérer ----------
+  function spawnCoinGroup(){
+    const count = 3 + Math.floor(Math.random()*4);
+    const arc = Math.random() < 0.55;
+    for(let i=0;i<count;i++){
+      coinPickups.push({
+        x: nextCoinX + i*42,
+        y: GROUND_Y - 58 - (arc ? Math.sin((i/(Math.max(1,count-1)))*Math.PI)*46 : (i%2)*20),
+        r: 10, taken:false, spin:Math.random()*Math.PI*2
+      });
+    }
+    nextCoinX += count*42 + 220 + Math.random()*260;
+  }
+
+  function updateCoins(dt){
+    nextCoinX -= speed*(dt/16.67);
+    if(nextCoinX < W+180) spawnCoinGroup();
+    for(const c of coinPickups){
+      c.x -= speed*(dt/16.67);
+      c.spin += .12*(dt/16.67);
+      if(!c.taken){
+        const dx=(player.x+player.size/2)-c.x, dy=(player.y+player.size/2)-c.y;
+        if(dx*dx+dy*dy < (player.size*.55+c.r)*(player.size*.55+c.r)){
+          c.taken=true; coins++; runCoins++; updateCoinLabels(); showToast("+1 pièce 🪙");
+        }
+      }
+    }
+    coinPickups = coinPickups.filter(c=>!c.taken && c.x>-30);
+  }
+
+  function drawCoins(){
+    for(const c of coinPickups){
+      ctx.save(); ctx.translate(c.x,c.y); ctx.scale(.65+.35*Math.abs(Math.cos(c.spin)),1);
+      ctx.shadowColor="#fde047";ctx.shadowBlur=14;ctx.fillStyle="#facc15";ctx.strokeStyle="#fff1a8";ctx.lineWidth=2;
+      ctx.beginPath();ctx.arc(0,0,c.r,0,Math.PI*2);ctx.fill();ctx.stroke();
+      ctx.shadowBlur=0;ctx.fillStyle="#a16207";ctx.font="900 11px sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("I",0,1);ctx.restore();
+    }
+  }
+
+  function showToast(text){
+    const el=document.createElement("div");el.className="toast-msg";el.textContent=text;stage.appendChild(el);setTimeout(()=>el.remove(),1550);
+  }
+
+  // ---------- Plates-formes volantes façon jeu de rythme ----------
+  function spawnFloatingPlatform(){
+    nextPlatformX += 330 + Math.random()*220;
+    const w = 72 + Math.random()*58;
+    const y = GROUND_Y - (46 + Math.random()*34);
+    floatingPlatforms.push({x:nextPlatformX,y,w,h:14,pulse:Math.random()*Math.PI*2});
+  }
+
+  function updateFloatingPlatforms(dt){
+    const step = dt/16.67;
+    nextPlatformX -= speed*step;
+    if(nextPlatformX < W + 300) spawnFloatingPlatform();
+    for(const p of floatingPlatforms){
+      p.x -= speed*step;
+      p.pulse += .035*step;
+    }
+    floatingPlatforms = floatingPlatforms.filter(p=>p.x+p.w>-60);
+  }
+
+  function drawFloatingPlatforms(){
+    for(const p of floatingPlatforms){
+      ctx.save();
+      const glow = 12 + Math.sin(p.pulse)*3;
+      ctx.shadowColor = "#f4f1ff";
+      ctx.shadowBlur = glow;
+      ctx.fillStyle = "#090514";
+      ctx.strokeStyle = "#f4f1ff";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.roundRect(p.x,p.y,p.w,p.h,4);
+      ctx.fill(); ctx.stroke();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = "rgba(244,241,255,.28)";
+      ctx.fillRect(p.x+5,p.y+3,Math.max(0,p.w-10),3);
+      ctx.restore();
+    }
+  }
+
+  // ---------- Input ----------
+  function doJump(){
+    if(state !== "playing" || dying) return;
+    if(player.onGround){
+      player.vy = JUMP_VELOCITY;
+      player.onGround = false;
+      player.jumping = true;
+    }
+  }
+
+  window.addEventListener("keydown", (e)=>{
+    if(e.code === "Space" || e.code === "ArrowUp"){
+      e.preventDefault();
+      doJump();
+    }
+  });
+  stage.addEventListener("pointerdown", (e)=>{
+    if(state === "playing") doJump();
+  });
+
+  // ---------- Collision ----------
+  function checkCollisions(){
+    const px1 = player.x, px2 = player.x + player.size;
+    const py1 = player.y, py2 = player.y + player.size;
+
+    for(const o of obstacles){
+      if(o.type === "spike"){
+        const ox1 = o.x, ox2 = o.x + o.w;
+        const oy1 = GROUND_Y - o.h, oy2 = GROUND_Y;
+        if(px2 > ox1+6 && px1 < ox2-6 && py2 > oy1+6 && py1 < oy2){
+          return "spike";
+        }
+      } else if(o.type === "lava"){
+        const ox1 = o.x, ox2 = o.x + o.w;
+        const oy1 = GROUND_Y - o.h, oy2 = GROUND_Y + 40;
+        if(px2 > ox1+4 && px1 < ox2-4 && py2 > oy1+4){
+          return "lava";
+        }
+      } else if(o.type === "pit"){
+        const ox1 = o.x, ox2 = o.x + o.w;
+        if(px2 > ox1+8 && px1 < ox2-8 && py2 >= GROUND_Y){
+          return "pit";
+        }
+      } else if(o.type === "rock" && o.landed){
+        const ox1 = o.x, ox2 = o.x + o.w;
+        const oy1 = GROUND_Y - o.h, oy2 = GROUND_Y;
+        if(px2 > ox1+6 && px1 < ox2-6 && py2 > oy1+6 && py1 < oy2){
+          return "rock";
+        }
+      }
+    }
+    return null;
+  }
+
+  // ---------- Update ----------
+  function update(dt){
+    if(dying){
+      handleDeathAnimation(dt);
+      return;
+    }
+
+    elapsed += dt;
+
+    if(selectedLevel.infinite){
+      // le niveau infini accélère progressivement, sans limite
+      speed = (selectedLevel.speed + Math.min(elapsed/1800, 5.5)) * currentSpeedMultiplier;
+    }
+
+    distance += speed * (dt/16.67) * 0.09;
+    bgOffset -= speed*0.5*(dt/16.67);
+    finishLine.x -= speed * (dt/16.67);
+    updateCoins(dt);
+
+    if(!selectedLevel.infinite && distance >= WIN_DISTANCE){
+      distance = WIN_DISTANCE;
+      winGame();
+      return;
+    }
+
+    // physics + collision avec les plates-formes volantes
+    updateFloatingPlatforms(dt);
+    const previousBottom = player.y + player.size;
+    player.vy += GRAVITY * (dt/16.67);
+    player.y += player.vy * (dt/16.67);
+    let landedOnPlatform = false;
+    if(player.vy >= 0){
+      const newBottom = player.y + player.size;
+      for(const p of floatingPlatforms){
+        const overlapsX = player.x + player.size > p.x + 5 && player.x < p.x + p.w - 5;
+        if(overlapsX && previousBottom <= p.y + 7 && newBottom >= p.y){
+          player.y = p.y - player.size;
+          player.vy = 0;
+          player.onGround = true;
+          player.jumping = false;
+          landedOnPlatform = true;
+          break;
+        }
+      }
+    }
+    if(!landedOnPlatform && player.y >= GROUND_Y - player.size){
+      player.y = GROUND_Y - player.size;
+      player.vy = 0;
+      player.onGround = true;
+      player.jumping = false;
+    } else if(!landedOnPlatform && player.vy !== 0){
+      player.onGround = false;
+    }
+    if(player.jumping){
+      player.rot += 0.22 * (dt/16.67);
+    } else {
+      player.rot = 0;
+    }
+
+    if(Math.random() < 0.5) addTrail();
+
+    // move obstacles
+    for(const o of obstacles){
+      o.x -= speed * (dt/16.67);
+      if(o.type === "rock" && o.falling && !o.landed){
+        o.warnT += dt;
+        if(o.warnT > 550){
+          o.dropY += 9 * (dt/16.67);
+          if(o.dropY >= GROUND_Y - o.h){
+            o.dropY = GROUND_Y - o.h;
+            o.landed = true;
+          }
+        }
+      }
+    }
+    obstacles = obstacles.filter(o => o.x + (o.w||60) > -50);
+
+    // spawn
+    nextSpawnX -= speed * (dt/16.67);
+    if(nextSpawnX < W + 250){
+      spawnObstacle();
+    }
+
+    // particles
+    for(const p of particles){
+      p.x += p.vx*(dt/16.67); p.y += p.vy*(dt/16.67); p.life -= (dt/16.67);
+      if(p.spin) p.rot += p.spin*(dt/16.67);
+    }
+    particles = particles.filter(p=>p.life>0);
+
+    const hitType = checkCollisions();
+    if(hitType === "lava" || hitType === "pit"){
+      dying = true;
+      deathType = hitType;
+      deathTimer = 0;
+      if(hitType === "pit"){
+        player.vy = Math.max(player.vy, 3); // amorce la chute dans le trou
+        player.onGround = false;
+      }
+    } else if(hitType){
+      endGame();
+    }
+  }
+
+  function handleDeathAnimation(dt){
+    deathTimer += dt;
+    if(deathType === "lava"){
+      player.y += 2.3 * (dt/16.67);
+    } else if(deathType === "pit"){
+      player.vy += GRAVITY * 1.3 * (dt/16.67);
+      player.y += player.vy * (dt/16.67);
+    }
+    if(deathTimer >= DEATH_ANIM_MS){
+      dying = false;
+      endGame();
+    }
+  }
+
+  // ---------- Draw ----------
+  function drawBackground(){
+    ctx.clearRect(0,0,W,H);
+    const grad = ctx.createLinearGradient(0,0,0,H);
+    grad.addColorStop(0, "#160b33");
+    grad.addColorStop(1, "#0b0620");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0,0,W,H);
+
+    // distant glow shapes (parallax)
+    ctx.save();
+    ctx.globalAlpha = 0.25;
+    for(let i=0;i<6;i++){
+      const gx = ((i*260 + bgOffset*0.15) % (W+300)) - 150;
+      ctx.beginPath();
+      ctx.fillStyle = i%2===0 ? "#7c3aed" : "#1fb6ff";
+      ctx.arc(gx, 120 + (i%3)*40, 60, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // grid floor lines
+    ctx.strokeStyle = "rgba(255,255,255,0.06)";
+    ctx.lineWidth = 1;
+    const gridSize = 40;
+    const offset = bgOffset % gridSize;
+    for(let x = offset; x < W; x += gridSize){
+      ctx.beginPath(); ctx.moveTo(x, GROUND_Y); ctx.lineTo(x, H); ctx.stroke();
+    }
+
+    // ground base
+    const groundGrad = ctx.createLinearGradient(0, GROUND_Y, 0, H);
+    groundGrad.addColorStop(0, "#2a1b55");
+    groundGrad.addColorStop(1, "#160b33");
+    ctx.fillStyle = groundGrad;
+    ctx.fillRect(0, GROUND_Y, W, H-GROUND_Y);
+    ctx.fillStyle = "rgba(184,173,240,0.5)";
+    ctx.fillRect(0, GROUND_Y, W, 3);
+  }
+
+  function drawGroundGaps(){
+    // erase ground under pits to show void
+    for(const o of obstacles){
+      if(o.type === "pit"){
+        ctx.clearRect(o.x, GROUND_Y, o.w, H-GROUND_Y);
+        const g = ctx.createLinearGradient(0,GROUND_Y,0,H);
+        g.addColorStop(0,"#000"); g.addColorStop(1,"#0b0620");
+        ctx.fillStyle = g;
+        ctx.fillRect(o.x, GROUND_Y, o.w, H-GROUND_Y);
+      }
+    }
+  }
+
+  function drawFinishLine(){
+    const fx = finishLine.x;
+    if(fx < -80 || fx > W + 80) return;
+
+    const poleW = 8;
+    const gateH = 190;
+    const topY = GROUND_Y - gateH;
+    const gateW = 54;
+
+    ctx.save();
+
+    // poles
+    const poleGrad = ctx.createLinearGradient(0, topY, 0, GROUND_Y);
+    poleGrad.addColorStop(0, "#f4f1ff");
+    poleGrad.addColorStop(1, "#b8adf0");
+    ctx.fillStyle = poleGrad;
+    ctx.fillRect(fx - poleW/2, topY, poleW, GROUND_Y - topY);
+    ctx.fillRect(fx + gateW - poleW/2, topY, poleW, GROUND_Y - topY);
+
+    // top beam
+    ctx.fillStyle = "#f4f1ff";
+    ctx.fillRect(fx - 4, topY - 10, gateW + 8, 14);
+
+    // checkered banner
+    const cols = 4, rows = 9;
+    const sqW = gateW / cols, sqH = 22;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(fx, topY, gateW, rows*sqH);
+    ctx.clip();
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        const isDark = (r+c) % 2 === 0;
+        ctx.fillStyle = isDark ? "#0b0620" : "#f4f1ff";
+        ctx.fillRect(fx + c*sqW, topY + r*sqH, sqW, sqH);
+      }
+    }
+    ctx.restore();
+
+    // "ARRIVÉE" flag banner on top
+    ctx.fillStyle = "#fde047";
+    ctx.font = "900 15px 'Segoe UI', sans-serif";
+    ctx.textAlign = "center";
+    ctx.shadowColor = "rgba(253,224,71,0.6)";
+    ctx.shadowBlur = 10;
+    ctx.fillText("ARRIVÉE", fx + gateW/2, topY - 18);
+
+    // checkered strip on the ground
+    ctx.shadowBlur = 0;
+    const stripCols = 3;
+    const stripW = gateW / stripCols;
+    for(let c=0;c<stripCols;c++){
+      ctx.fillStyle = c % 2 === 0 ? "#0b0620" : "#f4f1ff";
+      ctx.fillRect(fx + c*stripW, GROUND_Y - 6, stripW, 6);
+    }
+
+    ctx.restore();
+  }
+
+  function drawObstacles(){
+    for(const o of obstacles){
+      if(o.type === "spike"){
+        ctx.fillStyle = "#e5e7eb";
+        ctx.strokeStyle = "#ff2d55";
+        ctx.lineWidth = 2;
+        const n = o.count || 1;
+        const singleW = o.w / n;
+        for(let i=0;i<n;i++){
+          const sx = o.x + i*singleW;
+          ctx.beginPath();
+          ctx.moveTo(sx, GROUND_Y);
+          ctx.lineTo(sx + singleW/2, GROUND_Y - o.h);
+          ctx.lineTo(sx + singleW, GROUND_Y);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+        }
+      } else if(o.type === "lava"){
+        const y = GROUND_Y - o.h;
+        const g = ctx.createLinearGradient(0,y,0,GROUND_Y+30);
+        g.addColorStop(0, "#ffb703");
+        g.addColorStop(1, "#c2410c");
+        ctx.fillStyle = g;
+        ctx.fillRect(o.x, y, o.w, o.h+40);
+        ctx.fillStyle = "rgba(255,220,120,0.6)";
+        for(let i=0;i<o.w;i+=14){
+          const bubbleY = y + 4 + Math.sin((i+elapsed*0.01))*2;
+          ctx.beginPath();
+          ctx.arc(o.x+i+7, bubbleY, 2.4, 0, Math.PI*2);
+          ctx.fill();
+        }
+      } else if(o.type === "rock"){
+        if(o.warnT <= 550 && !o.landed){
+          // warning shadow on ground
+          ctx.fillStyle = "rgba(0,0,0,0.35)";
+          ctx.beginPath();
+          ctx.ellipse(o.x+o.w/2, GROUND_Y-4, o.w/2, 6, 0, 0, Math.PI*2);
+          ctx.fill();
+        }
+        const ry = o.dropY;
+        ctx.fillStyle = "#8b8378";
+        ctx.strokeStyle = "#4b453d";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(o.x+6, ry+o.h);
+        ctx.lineTo(o.x, ry+o.h*0.4);
+        ctx.lineTo(o.x+o.w*0.3, ry);
+        ctx.lineTo(o.x+o.w*0.75, ry+o.h*0.1);
+        ctx.lineTo(o.x+o.w, ry+o.h*0.5);
+        ctx.lineTo(o.x+o.w-6, ry+o.h);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      }
+    }
+  }
+
+  function drawParticles(){
+    for(const p of particles){
+      const alpha = Math.max(p.life/p.maxLife, 0);
+      ctx.globalAlpha = alpha;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+
+      if(p.kind === "flame"){
+        ctx.rotate(p.rot*0.15);
+        const s = p.size * (0.6 + alpha*0.6);
+        const g = ctx.createLinearGradient(0,-s*1.6,0,s*0.6);
+        g.addColorStop(0, "#fff3b0");
+        g.addColorStop(0.5, "#ff9d2f");
+        g.addColorStop(1, "#ff5e3a");
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.moveTo(0, s*0.6);
+        ctx.quadraticCurveTo(s*0.9, -s*0.2, 0, -s*1.6);
+        ctx.quadraticCurveTo(-s*0.9, -s*0.2, 0, s*0.6);
+        ctx.closePath();
+        ctx.fill();
+
+      } else if(p.kind === "drop"){
+        const s = p.size;
+        ctx.fillStyle = "#4fd6ff";
+        ctx.beginPath();
+        ctx.moveTo(0, -s*1.4);
+        ctx.quadraticCurveTo(s*0.85, s*0.3, 0, s*1.1);
+        ctx.quadraticCurveTo(-s*0.85, s*0.3, 0, -s*1.4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = "rgba(255,255,255,0.55)";
+        ctx.beginPath();
+        ctx.arc(-s*0.25, -s*0.1, s*0.25, 0, Math.PI*2);
+        ctx.fill();
+
+      } else if(p.kind === "leaf"){
+        ctx.rotate(p.rot);
+        const s = p.size;
+        ctx.fillStyle = "#4ade80";
+        ctx.beginPath();
+        ctx.moveTo(0,0);
+        ctx.quadraticCurveTo(s*1.3, -s*0.9, s*2.2, 0);
+        ctx.quadraticCurveTo(s*1.3, s*0.9, 0, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = "rgba(22,101,52,0.7)";
+        ctx.lineWidth = 0.7;
+        ctx.beginPath();
+        ctx.moveTo(0,0); ctx.lineTo(s*2.2,0); ctx.stroke();
+
+      } else if(p.kind === "root"){
+        ctx.rotate(p.rot*0.3);
+        const s = p.size;
+        ctx.strokeStyle = "#8b5a2b";
+        ctx.lineWidth = 1.6;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(-s*1.3, 0);
+        ctx.quadraticCurveTo(0, s*1.1, s*1.3, -s*0.2);
+        ctx.stroke();
+
+      } else {
+        ctx.fillStyle = p.color || "#fff";
+        ctx.beginPath();
+        ctx.arc(0, 0, p.size, 0, Math.PI*2);
+        ctx.fill();
+      }
+
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function drawPlayer(){
+    if(!selectedTrixi) return;
+    ctx.save();
+    const cx = player.x + player.size/2;
+    const cy = player.y + player.size/2;
+    ctx.translate(cx, cy);
+    ctx.rotate(player.rot);
+    ctx.translate(-player.size/2, -player.size/2);
+
+    ctx.shadowColor = selectedTrixi.colorA;
+    ctx.shadowBlur = 22;
+    const g = ctx.createRadialGradient(player.size*0.35,player.size*0.3,4, player.size*0.5,player.size*0.5,player.size*0.7);
+    g.addColorStop(0, selectedTrixi.colorA);
+    g.addColorStop(1, selectedTrixi.colorB);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    const r = 10;
+    ctx.moveTo(r,0);
+    ctx.arcTo(player.size,0,player.size,player.size,r);
+    ctx.arcTo(player.size,player.size,0,player.size,r);
+    ctx.arcTo(0,player.size,0,0,r);
+    ctx.arcTo(0,0,player.size,0,r);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.shadowBlur = 0;
+    if(helmetOwned){
+      ctx.fillStyle="#94a3b8";ctx.strokeStyle="#e2e8f0";ctx.lineWidth=2;
+      ctx.beginPath();ctx.arc(player.size/2,player.size*.22,player.size*.34,Math.PI,Math.PI*2);ctx.lineTo(player.size*.84,player.size*.27);ctx.lineTo(player.size*.16,player.size*.27);ctx.closePath();ctx.fill();ctx.stroke();
+      ctx.fillStyle="#64748b";ctx.fillRect(player.size*.12,player.size*.24,player.size*.76,5);
+    }
+    ctx.fillStyle = "#0b0620";
+    ctx.beginPath(); ctx.arc(player.size*0.62, player.size*0.4, 3.4, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(player.size*0.38, player.size*0.4, 3.4, 0, Math.PI*2); ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawLavaSinkOverlay(){
+    const progress = Math.min(deathTimer / DEATH_ANIM_MS, 1);
+    const sinkH = (player.size + 6) * progress;
+    const y = player.y + player.size - sinkH + 4;
+    ctx.save();
+    ctx.globalAlpha = 0.88;
+    const g = ctx.createLinearGradient(0, y, 0, player.y + player.size + 6);
+    g.addColorStop(0, "#ffb703");
+    g.addColorStop(1, "#c2410c");
+    ctx.fillStyle = g;
+    ctx.fillRect(player.x - 3, y, player.size + 6, sinkH + 6);
+    ctx.restore();
+  }
+
+  function draw(){
+    drawBackground();
+    drawGroundGaps();
+    drawFinishLine();
+    drawFloatingPlatforms();
+    drawObstacles();
+    drawParticles();
+    drawCoins();
+    drawPlayer();
+    if(dying && deathType === "lava") drawLavaSinkOverlay();
+  }
+
+  // ---------- Loop ----------
+  let lastTime = null;
+  function loop(ts){
+    if(lastTime === null) lastTime = ts;
+    let dt = ts - lastTime;
+    lastTime = ts;
+    dt = Math.min(dt, 40);
+
+    if(state === "playing"){
+      update(dt);
+      document.getElementById("scoreLabel").textContent = Math.floor(distance) + " m";
+    }
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  // ---------- Boutique ----------
+  const POWER_ITEMS = [
+    {id:"life",icon:"❤️",name:"Vie supplémentaire",desc:"Reprends immédiatement la course après une défaite.",price:20,type:"power"},
+    {id:"helmet",icon:"⛑️",name:"Mini casque",desc:"Objet permanent : ton Trixi avance 5 % plus vite.",price:100,unique:true,type:"power"},
+    {id:"potion2",icon:"🧪",name:"Potion ×2",desc:"Double la vitesse pendant la prochaine partie.",price:20,type:"power"},
+    {id:"potion3",icon:"⚗️",name:"Potion ×3",desc:"Triple la vitesse pendant la prochaine partie.",price:30,type:"power"}
+  ];
+
+  function getShopItems(){
+    const trixiItems = TRIXIS
+      .filter(t => !["feu","eau","veg"].includes(t.id))
+      .map(t => ({
+        id:"trixi-"+t.id,
+        trixiId:t.id,
+        icon:"✨",
+        name:t.name,
+        desc:t.rarity+" · Débloque immédiatement ce Trixi dans ta collection.",
+        price:t.shopPrice,
+        unique:true,
+        type:"trixi",
+        colorA:t.colorA,
+        colorB:t.colorB
+      }));
+    return [...POWER_ITEMS, ...trixiItems];
+  }
+
+  function itemCount(id){
+    if(id==="life") return extraLives;
+    if(id==="potion2") return potion2;
+    if(id==="potion3") return potion3;
+    if(id==="helmet") return helmetOwned ? 1 : 0;
+    if(id.startsWith("trixi-")) return purchasedTrixis.has(id.slice(6)) ? 1 : 0;
+    return 0;
+  }
+  function updateCoinLabels(){
+    const a=document.getElementById("menuCoinTag"),b=document.getElementById("shopCoinTag"),c=document.getElementById("runCoinLabel");
+    if(a)a.textContent="🪙 Pièces : "+coins;if(b)b.textContent="🪙 Pièces : "+coins;if(c)c.textContent="🪙 "+runCoins;
+  }
+  function renderShop(){
+    const grid=document.getElementById("shopGrid");grid.innerHTML="";
+    getShopItems().forEach(it=>{
+      const owned=(it.id==="helmet"&&helmetOwned)||(it.type==="trixi"&&purchasedTrixis.has(it.trixiId)); const count=itemCount(it.id);
+      const card=document.createElement("div");card.className="shop-card";
+      const canUse=(it.id==="potion2"||it.id==="potion3")&&count>0;
+      card.innerHTML=`<div class="shop-icon" style="${it.type==="trixi"?`background:radial-gradient(circle at 35% 30%,${it.colorA},${it.colorB});box-shadow:0 0 14px ${it.colorA};`:""}">${it.type==="trixi"?'<span style="font-size:1.3rem">●</span>':it.icon}</div><div class="shop-info"><div class="shop-name">${it.name}</div><div class="shop-desc">${it.desc}</div><div class="shop-owned">${owned?"Acheté définitivement":"Possédé : "+count}</div>${queuedBoost===2&&it.id==="potion2"||queuedBoost===3&&it.id==="potion3"?'<div class="active-power">✓ Activée pour la prochaine partie</div>':''}</div><div><button class="buy-btn" ${owned||coins<it.price?'disabled':''}>${owned?'Acheté':it.price+' 🪙'}</button>${canUse?'<button class="use-btn">Utiliser</button>':''}</div>`;
+      card.querySelector(".buy-btn").addEventListener("click",()=>buyItem(it));
+      const use=card.querySelector(".use-btn");if(use)use.addEventListener("click",()=>queuePotion(it.id));
+      grid.appendChild(card);
+    });
+    document.getElementById("activePowerTag").textContent=queuedBoost===1?"Aucun pouvoir activé":"Potion ×"+queuedBoost+" prête";
+    updateCoinLabels();
+  }
+  function buyItem(it){
+    const alreadyOwned = (it.id==="helmet"&&helmetOwned)||(it.type==="trixi"&&purchasedTrixis.has(it.trixiId));
+    if(coins<it.price||alreadyOwned)return;
+    coins-=it.price;
+    if(it.id==="life") extraLives++;
+    else if(it.id==="helmet") helmetOwned=true;
+    else if(it.id==="potion2") potion2++;
+    else if(it.id==="potion3") potion3++;
+    else if(it.type==="trixi"){
+      purchasedTrixis.add(it.trixiId);
+      const trixi = TRIXIS.find(t=>t.id===it.trixiId);
+      if(trixi) trixi.unlocked=true;
+      renderTrixiRow();
+      renderLockerRow();
+    }
+    showToast(it.name+" acheté !");
+    renderShop();
+    saveProgress();
+  }
+  function queuePotion(id){
+    if(id==="potion2"&&potion2>0){potion2--;queuedBoost=2}
+    if(id==="potion3"&&potion3>0){potion3--;queuedBoost=3}
+    renderShop();saveProgress();
+  }
+
+  // ---------- Réglages ----------
+  let brightness = 100;
+  let musicVolume = 70;
+
+  function applySettings(){
+    const darkness = Math.max(0, Math.min(.65, (100-brightness)/100));
+    const layer = document.getElementById("brightnessLayer");
+    if(layer) layer.style.opacity = darkness.toFixed(2);
+    const bv=document.getElementById("brightnessValue"), vv=document.getElementById("volumeValue");
+    const bs=document.getElementById("brightnessSlider"), vs=document.getElementById("volumeSlider");
+    if(bv)bv.textContent=brightness+" %"; if(vv)vv.textContent=musicVolume+" %";
+    if(bs)bs.value=brightness; if(vs)vs.value=musicVolume;
+  }
+  function goSettings(){ state="settings"; applySettings(); showScreen("settingsScreen"); }
+
+  // ---------- Musiques originales générées dans le navigateur ----------
+  let musicMode = 0; // 0 = arrêt, 1 à 3 = morceau choisi
+  let audioCtx = null, musicTimer = null, musicStep = 0;
+  const MUSIC_TRACKS = [
+    {name:"Aventure", tempo:150, wave:"square", notes:[261.63,329.63,392,523.25,392,329.63,293.66,392]},
+    {name:"Néon", tempo:176, wave:"sawtooth", notes:[220,329.63,440,369.99,293.66,440,493.88,369.99]},
+    {name:"Cosmos", tempo:132, wave:"triangle", notes:[196,246.94,293.66,392,349.23,293.66,246.94,220]}
+  ];
+  function ensureAudio(){
+    if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state === "suspended") audioCtx.resume();
+  }
+  function playMusicNote(){
+    if(!musicMode || !audioCtx) return;
+    const tr=MUSIC_TRACKS[musicMode-1], now=audioCtx.currentTime;
+    const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+    osc.type=tr.wave; osc.frequency.value=tr.notes[musicStep%tr.notes.length];
+    gain.gain.setValueAtTime(.0001,now); gain.gain.exponentialRampToValueAtTime(Math.max(.0001,.055*(musicVolume/100)),now+.015); gain.gain.exponentialRampToValueAtTime(.0001,now+.18);
+    osc.connect(gain); gain.connect(audioCtx.destination); osc.start(now); osc.stop(now+.2);
+    if(musicStep%2===0){
+      const bass=audioCtx.createOscillator(), bg=audioCtx.createGain();
+      bass.type="sine"; bass.frequency.value=tr.notes[musicStep%tr.notes.length]/2;
+      bg.gain.setValueAtTime(.0001,now); bg.gain.exponentialRampToValueAtTime(Math.max(.0001,.035*(musicVolume/100)),now+.01); bg.gain.exponentialRampToValueAtTime(.0001,now+.25);
+      bass.connect(bg); bg.connect(audioCtx.destination); bass.start(now); bass.stop(now+.27);
+    }
+    musicStep++;
+  }
+  function restartMusic(){
+    clearInterval(musicTimer); musicTimer=null;
+    if(!musicMode) return;
+    ensureAudio(); musicStep=0; playMusicNote();
+    const delay=60000/MUSIC_TRACKS[musicMode-1].tempo;
+    musicTimer=setInterval(playMusicNote,delay);
+  }
+  function updateMusicButton(){
+    const b=document.getElementById("menuMusicBtn"); if(!b)return;
+    const label=b.querySelector("span:last-child");
+    if(!musicMode){if(label)label.textContent="Musique";b.title="Musique désactivée — cliquer pour activer";b.classList.remove("music-on");}
+    else{if(label)label.textContent=MUSIC_TRACKS[musicMode-1].name;b.title="Musique : "+MUSIC_TRACKS[musicMode-1].name;b.classList.add("music-on");}
+  }
+  function cycleMusic(){
+    musicMode=(musicMode+1)%4;
+    restartMusic(); updateMusicButton(); saveProgress();
+  }
+
+  // ---------- State transitions ----------
+  const SCREENS = ["mainMenu","settingsScreen","shopScreen","lockerScreen","levelScreen","selectScreen","gameOverScreen","victoryScreen"];
+  function showScreen(id){
+    SCREENS.forEach(s=>{
+      document.getElementById(s).classList.toggle("hidden", s !== id);
+    });
+  }
+
+  function goMenu(){
+    state = "menu";
+    document.getElementById("hud").style.display = "none";
+    showScreen("mainMenu");
+  }
+  function goShop(){
+    state = "shop"; renderShop(); showScreen("shopScreen");
+  }
+  function goLocker(){
+    state = "locker";
+    showScreen("lockerScreen");
+  }
+  function goLevels(){
+    state = "levelSelect";
+    showScreen("levelScreen");
+  }
+  function goSelect(){
+    state = "select";
+    showScreen("selectScreen");
+  }
+
+  function startGame(){
+    resetGame();
+    state = "playing";
+    showScreen(null);
+    document.getElementById("hud").style.display = "flex";
+    document.getElementById("bestLabel").textContent = "Meilleur : " + bestScore + " m";
+    const hint = document.getElementById("tapHint");
+    hint.classList.remove("hidden");
+    setTimeout(()=>hint.classList.add("hidden"), 2200);
+  }
+
+  function updateMenuXP(){
+    document.getElementById("menuXpTag").textContent = "✨ XP : " + totalXP;
+    updateCoinLabels();
+  }
+
+  // ---------- Sauvegarde de la progression (par joueur) ----------
+  const STORAGE_KEY = "itrix-progress";
+
+  async function saveProgress(){
+    const payload = JSON.stringify({
+      totalXP, bestScore, selectedLevelId: selectedLevel.id, coins, extraLives, potion2, potion3, helmetOwned, queuedBoost, purchasedTrixis:[...purchasedTrixis], musicMode, brightness, musicVolume
+    });
+    let savedViaClaude = false;
+    try{
+      await window.storage.set(STORAGE_KEY, payload, false);
+      savedViaClaude = true;
+    }catch(e){ /* window.storage indisponible (page ouverte hors de Claude) */ }
+    if(!savedViaClaude){
+      try{ localStorage.setItem(STORAGE_KEY, payload); }catch(e){ /* stockage bloqué par le navigateur */ }
+    }
+  }
+
+  async function loadProgress(){
+    let raw = null;
+    try{
+      const res = await window.storage.get(STORAGE_KEY, false);
+      if(res && res.value) raw = res.value;
+    }catch(e){ /* window.storage indisponible (page ouverte hors de Claude) */ }
+    if(raw === null){
+      try{ raw = localStorage.getItem(STORAGE_KEY); }catch(e){ /* stockage bloqué par le navigateur */ }
+    }
+    if(raw){
+      try{
+        const data = JSON.parse(raw);
+        totalXP = data.totalXP || 0;
+        bestScore = data.bestScore || 0;
+        coins = data.coins || 0; extraLives = data.extraLives || 0; potion2 = data.potion2 || 0; potion3 = data.potion3 || 0; helmetOwned = !!data.helmetOwned; queuedBoost = data.queuedBoost || 1; purchasedTrixis = new Set(Array.isArray(data.purchasedTrixis)?data.purchasedTrixis:[]); purchasedTrixis.forEach(id=>{const t=TRIXIS.find(x=>x.id===id);if(t)t.unlocked=true;}); musicMode = Number.isInteger(data.musicMode) ? data.musicMode : 0; brightness = Number.isFinite(data.brightness) ? data.brightness : 100; musicVolume = Number.isFinite(data.musicVolume) ? data.musicVolume : 70;
+        if(data.selectedLevelId !== undefined && data.selectedLevelId !== null){
+          const lv = LEVELS.find(l=>l.id === data.selectedLevelId);
+          if(lv) selectedLevel = lv;
+        }
+      }catch(e){ /* sauvegarde corrompue, on repart avec les valeurs par défaut */ }
+    }
+    checkUnlocks();
+    renderTrixiRow();
+    renderLockerRow();
+    renderLevelCards();
+    updateMenuXP();
+    renderShop();
+    updateMusicButton();
+    applySettings();
+    if(musicMode) restartMusic();
+    document.getElementById("menuLevelTag").textContent = "Parcours : " + selectedLevel.name;
+  }
+
+  function endGame(){
+    deathSnapshot = {distance, elapsed, speed, bgOffset, finishX:finishLine.x, obstacles:JSON.parse(JSON.stringify(obstacles)), coinPickups:JSON.parse(JSON.stringify(coinPickups)), floatingPlatforms:JSON.parse(JSON.stringify(floatingPlatforms))};
+    state = "gameover";
+    const finalDist = Math.floor(distance);
+    if(finalDist > bestScore){
+      bestScore = finalDist;
+    }
+
+    const xpGain = Math.max(1, Math.floor(finalDist * selectedLevel.xpMult));
+    totalXP += xpGain;
+    updateMenuXP();
+    const newlyUnlocked = checkUnlocks();
+
+    document.getElementById("finalScore").textContent = finalDist;
+    document.getElementById("xpGainLabel").textContent = "+" + xpGain + " XP";
+
+    const toast = document.getElementById("unlockToast");
+    if(newlyUnlocked.length){
+      toast.textContent = "🎉 " + newlyUnlocked.map(t=>t.name).join(", ") + " débloqué !";
+      toast.classList.remove("hidden");
+    } else {
+      toast.classList.add("hidden");
+    }
+
+    document.getElementById("useLifeBtn").disabled = extraLives <= 0;
+    document.getElementById("useLifeBtn").textContent = "❤️ Utiliser une vie ("+extraLives+")";
+    document.getElementById("hud").style.display = "none";
+    showScreen("gameOverScreen");
+    saveProgress();
+  }
+
+  function useExtraLife(){
+    if(extraLives<=0||!deathSnapshot)return;
+    extraLives--; distance=deathSnapshot.distance; elapsed=deathSnapshot.elapsed; speed=deathSnapshot.speed; bgOffset=deathSnapshot.bgOffset; finishLine.x=deathSnapshot.finishX;
+    obstacles=deathSnapshot.obstacles; coinPickups=deathSnapshot.coinPickups; floatingPlatforms=deathSnapshot.floatingPlatforms||[]; dying=false;deathType=null;deathTimer=0;resetPlayer();
+    obstacles=obstacles.filter(o=>o.x>player.x+130);coinPickups=coinPickups.filter(c=>c.x>player.x+50);
+    state="playing";showScreen(null);document.getElementById("hud").style.display="flex";showToast("Vie utilisée ❤️");saveProgress();
+  }
+
+  function winGame(){
+    state = "victory";
+    bestScore = Math.max(bestScore, WIN_DISTANCE);
+    document.getElementById("winFinalScore").textContent = WIN_DISTANCE;
+
+    // bonus d'XP pour avoir terminé le parcours en entier
+    const xpGain = Math.max(1, Math.floor(WIN_DISTANCE * selectedLevel.xpMult * 1.5));
+    totalXP += xpGain;
+    updateMenuXP();
+    const newlyUnlocked = checkUnlocks();
+
+    document.getElementById("winXpGainLabel").textContent = "+" + xpGain + " XP";
+
+    const toast = document.getElementById("winUnlockToast");
+    if(newlyUnlocked.length){
+      toast.textContent = "🎉 " + newlyUnlocked.map(t=>t.name).join(", ") + " débloqué !";
+      toast.classList.remove("hidden");
+    } else {
+      toast.classList.add("hidden");
+    }
+
+    const nextBtn = document.getElementById("nextLevelBtn");
+    if(getNextLevel()){
+      nextBtn.classList.remove("hidden");
+    } else {
+      nextBtn.classList.add("hidden");
+    }
+
+    document.getElementById("hud").style.display = "none";
+    showScreen("victoryScreen");
+    saveProgress();
+  }
+
+  document.getElementById("menuPlayBtn").addEventListener("click", goSelect);
+  document.getElementById("menuShopBtn").addEventListener("click", goShop);
+  document.getElementById("shopBackBtn").addEventListener("click", goMenu);
+  document.getElementById("menuLockerBtn").addEventListener("click", goLocker);
+  document.getElementById("menuLevelsBtn").addEventListener("click", goLevels);
+  document.getElementById("menuMusicBtn").addEventListener("click", cycleMusic);
+  document.getElementById("menuSettingsBtn").addEventListener("click", goSettings);
+  document.getElementById("settingsBackBtn").addEventListener("click", ()=>{saveProgress();goMenu();});
+  document.getElementById("resetSettingsBtn").addEventListener("click", ()=>{brightness=100;musicVolume=70;applySettings();restartMusic();saveProgress();});
+  document.getElementById("brightnessSlider").addEventListener("input", e=>{brightness=Number(e.target.value);applySettings();});
+  document.getElementById("brightnessSlider").addEventListener("change", saveProgress);
+  document.getElementById("volumeSlider").addEventListener("input", e=>{musicVolume=Number(e.target.value);applySettings();});
+  document.getElementById("volumeSlider").addEventListener("change", ()=>{restartMusic();saveProgress();});
+  document.getElementById("lockerBackBtn").addEventListener("click", goMenu);
+  document.getElementById("levelBackBtn").addEventListener("click", goMenu);
+  document.getElementById("selectBackBtn").addEventListener("click", goMenu);
+  document.getElementById("gameOverMenuBtn").addEventListener("click", goMenu);
+  document.getElementById("useLifeBtn").addEventListener("click", useExtraLife);
+  document.getElementById("winMenuBtn").addEventListener("click", goMenu);
+
+  document.getElementById("startBtn").addEventListener("click", ()=>{
+    if(selectedTrixi) startGame();
+  });
+  document.getElementById("retryBtn").addEventListener("click", (e)=>{
+    e.stopPropagation();
+    startGame();
+  });
+  document.getElementById("winRetryBtn").addEventListener("click", (e)=>{
+    e.stopPropagation();
+    startGame();
+  });
+  document.getElementById("nextLevelBtn").addEventListener("click", (e)=>{
+    e.stopPropagation();
+    const next = getNextLevel();
+    if(next){
+      selectedLevel = next;
+      document.getElementById("menuLevelTag").textContent = "Parcours : " + selectedLevel.name;
+      renderLevelCards();
+      saveProgress();
+      startGame();
+    }
+  });
+
+  document.getElementById("menuLevelTag").textContent = "Parcours : " + selectedLevel.name;
+  updateMenuXP();
+  updateCoinLabels();
+  renderShop();
+  updateMusicButton();
+  resetPlayer();
+  goMenu();
+  requestAnimationFrame(loop);
+  loadProgress(); // charge la sauvegarde de ce joueur en arrière-plan, met à jour le menu une fois prête
+})();
+</script>
+
+<style id="novaplay-integration-style">
+#novaplay-return-button{
+  position:fixed;top:12px;left:12px;z-index:2147483647;
+  display:flex;align-items:center;gap:8px;padding:11px 14px;
+  border:1px solid rgba(255,255,255,.22);border-radius:14px;
+  color:#fff;background:rgba(8,14,29,.88);backdrop-filter:blur(12px);
+  box-shadow:0 10px 30px rgba(0,0,0,.28);font:800 14px Arial,sans-serif;
+  cursor:pointer
+}
+#novaplay-return-button:hover{transform:translateY(-1px)}
+</style>
+<button id="novaplay-return-button" type="button">← NovaPlay</button>
+<script>
+(function(){
+  const GAME_KEY = "itrixi";
+  const start = Date.now();
+
+  function saveElapsed(){
+    try{
+      const elapsed = Math.max(0, Math.floor((Date.now()-start)/1000));
+      const raw = JSON.parse(localStorage.getItem("novaplay-state") || "{}");
+      raw.gameTimes = Object.assign({itrixi:0,collectrix:0}, raw.gameTimes || {});
+      raw.gameTimes[GAME_KEY] = (raw.gameTimes[GAME_KEY] || 0) + elapsed;
+      localStorage.setItem("novaplay-state", JSON.stringify(raw));
+      localStorage.removeItem("novaplay-pending-session");
+    }catch(e){}
+  }
+
+  document.getElementById("novaplay-return-button").addEventListener("click", function(){
+    saveElapsed();
+    location.href = "../../index.html";
+  });
+
+  window.addEventListener("pagehide", saveElapsed, {once:true});
+})();
+</script>
+
+
+</body>
+</html>

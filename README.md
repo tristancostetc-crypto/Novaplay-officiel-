@@ -1,12 +1,27 @@
-# NovaPlay v11 — Reconstruction propre
+# NovaPlay v12 — Restauration Itrixi
 
-- Itrixi entièrement reconstruit
-- 30 Trixis réellement présents
-- boutique réelle et fonctionnelle
-- sauvegarde locale
-- jeu responsive 16:9
-- commandes tactiles saut et boost
-- badge Itrixi v11
-- Collectrix conservé
+Cette version remet Itrixi comme avant la reconstruction v11.
 
-Importe tous les fichiers et le dossier games dans GitHub, puis valide les modifications.
+## Restauré
+- ancien gameplay d’Itrixi ;
+- anciens graphismes ;
+- ancien personnage ;
+- anciens obstacles ;
+- anciennes animations ;
+- ancienne boutique ;
+- anciennes commandes ;
+- progression et sauvegarde de l’ancien jeu.
+
+## Conservé
+- plateforme NovaPlay ;
+- Collectrix ;
+- profil, statistiques, succès et Nova Coins ;
+- bouton de retour vers NovaPlay ;
+- système anti-cache de la plateforme.
+
+## Installation
+1. Décompresse le ZIP.
+2. Sur GitHub, clique sur `+` puis `Upload files`.
+3. Glisse tous les fichiers et le dossier `games`.
+4. Clique sur `Commit changes`.
+5. Attends environ une minute, puis recharge le site.
