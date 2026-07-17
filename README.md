@@ -1,24 +1,28 @@
-# NovaPlay v3
+# NovaPlay v4 — GitHub Edition
 
-Cette version inclut :
+Version prête pour GitHub Pages.
 
-- Itrixi et Collectrix
-- Temps de jeu séparé pour chaque jeu
-- Temps total de jeu
-- Nombre de lancements par jeu
+## Installation facile
+
+1. Décompresse le fichier ZIP.
+2. Ouvre le dossier obtenu.
+3. Sur GitHub, clique sur `+`.
+4. Choisis `Téléchargement des fichiers`.
+5. Glisse tous les fichiers et dossiers sur la page.
+6. Clique sur `Valider les modifications`.
+
+## Contenu
+
+- Itrixi
+- Collectrix
+- Temps de jeu par jeu
+- Temps total
+- Nombre de parties
 - Dernier jeu joué
 - Jeu préféré
-- Bouton Continuer à jouer
-- Récompense quotidienne de 50 Nova Coins
-- Sept succès
+- Nova Coins
+- Récompense quotidienne
+- Succès
+- Profil
 - Page d'aide
-- Bouton Retour à NovaPlay dans chaque jeu
-- Sauvegarde locale dans le navigateur
-
-## Ouvrir le site
-
-Ouvre `novaplay/index.html`.
-
-## Publication GitHub Pages
-
-Envoie le contenu du dossier `novaplay` dans ton dépôt GitHub, puis active GitHub Pages depuis la branche principale.
+- Bouton Retour à NovaPlay
