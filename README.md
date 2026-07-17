@@ -1,24 +1,35 @@
-# NovaPlay v9 — Boutique complète
+# NovaPlay v10 — Édition officielle complète
 
-Cette version contient réellement le nouveau code demandé.
+## Nouveautés de la plateforme
+- Accueil, jeux, profil, statistiques, succès et paramètres
+- Temps de jeu et dernier jeu lancé
+- Nova Coins et récompense quotidienne
+- Bouton Continuer
+- Mode sombre et animations
+- Bouton « Actualiser les jeux » pour éviter le cache du téléphone
+- Liens de jeux versionnés pour toujours charger la dernière version
 
-## Itrixi
+## Itrixi v10
+- 30 Trixis
+- 5 raretés
+- 27 Trixis achetables ou déblocables
+- Boutique avec Trixis et objets
+- Sauvegarde des achats, pièces et XP
+- Démarrage automatique après sélection
+- Badge « Itrixi v10 »
+- Affichage mobile corrigé
+- Menus défilables au doigt
+- Retour vers NovaPlay
 
-- 30 Trixis dans la collection ;
-- 3 Trixis gratuits au départ ;
-- 27 Trixis achetables dans la boutique ;
-- raretés : Commun, Rare, Épique, Légendaire et Mythique ;
-- achat immédiat avec les pièces ;
-- achats sauvegardés dans le navigateur ;
-- déblocage alternatif grâce à l'XP ;
-- les 4 objets de pouvoir restent disponibles ;
-- lancement automatique après avoir touché un Trixi ;
-- correctifs mobiles conservés.
+## Collectrix
+- Jeu conservé
+- Compatible mobile
+- Retour vers NovaPlay
 
-## Installation GitHub
-
+## Installation
 1. Décompresse le ZIP.
-2. Ouvre ton dépôt GitHub.
-3. Clique sur `+`, puis `Upload files`.
-4. Glisse tout le contenu du dossier.
-5. Clique sur `Commit changes`.
+2. Sur GitHub : `+` puis `Upload files`.
+3. Glisse tous les fichiers et le dossier `games`.
+4. Clique sur `Commit changes`.
+5. Attends environ une minute.
+6. Dans NovaPlay, va dans Paramètres et touche `Actualiser les jeux`.

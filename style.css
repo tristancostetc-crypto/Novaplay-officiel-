@@ -799,3 +799,18 @@ body.no-animations *::after {
     display: none;
   }
 }
+
+/* NovaPlay v10 */
+.update-line {
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.update-line small {
+  display: block;
+  margin-top: 4px;
+}
+@media (max-width: 620px) {
+  .update-line .secondary-button {
+    width: 100%;
+  }
+}

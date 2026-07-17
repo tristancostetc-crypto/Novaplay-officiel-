@@ -1,4 +1,5 @@
 const STORAGE_KEY = "novaplay-state";
+const NOVAPLAY_BUILD = "10.1";
 
 const defaultState = {
   username: "Joueur Nova",
@@ -162,6 +163,11 @@ function render() {
   saveState();
 }
 
+function versionedGameUrl(url) {
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}build=${encodeURIComponent(NOVAPLAY_BUILD)}&t=${Date.now()}`;
+}
+
 function launchGame(game, gameKey, url) {
   state.launches += 1;
   state.gameLaunches[gameKey] += 1;
@@ -180,7 +186,7 @@ function launchGame(game, gameKey, url) {
   }));
 
   saveState();
-  window.location.href = url;
+  window.location.href = versionedGameUrl(url);
 }
 
 document.querySelectorAll(".play-button").forEach(button => {
@@ -231,5 +237,21 @@ window.addEventListener("pageshow", render);
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) render();
 });
+
+
+const forceUpdateButton = document.querySelector("#forceUpdateButton");
+if (forceUpdateButton) {
+  forceUpdateButton.addEventListener("click", async () => {
+    try {
+      if ("caches" in window) {
+        const cacheNames = await caches.keys();
+        await Promise.all(cacheNames.map(name => caches.delete(name)));
+      }
+      showToast("✅ Mise à jour prête. Relance un jeu.");
+    } catch {
+      showToast("Recharge la page puis relance le jeu.");
+    }
+  });
+}
 
 render();

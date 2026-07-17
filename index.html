@@ -55,7 +55,7 @@
             <p class="eyebrow">BIBLIOTHÈQUE</p>
             <h2>Choisis ton jeu</h2>
           </div>
-          <span class="small-badge">NovaPlay v4 · GitHub Edition</span>
+          <span class="small-badge">NovaPlay v10 · Édition officielle</span>
         </div>
 
         <div class="games-grid">
@@ -71,7 +71,7 @@
                 <span>⏱️ <strong id="itrixiTime">0 min</strong></span>
                 <span>Parties : <strong id="itrixiLaunches">0</strong></span>
               </div>
-              <button class="play-button" data-game="Itrixi" data-key="itrixi" data-url="games/itrixi/index.html">
+              <button class="play-button" data-game="Itrixi" data-key="itrixi" data-url="games/itrixi/index.html?v=10.1">
                 Jouer
               </button>
             </div>
@@ -89,7 +89,7 @@
                 <span>⏱️ <strong id="collectrixTime">0 min</strong></span>
                 <span>Parties : <strong id="collectrixLaunches">0</strong></span>
               </div>
-              <button class="play-button" data-game="Collectrix" data-key="collectrix" data-url="games/collectrix/index.html">
+              <button class="play-button" data-game="Collectrix" data-key="collectrix" data-url="games/collectrix/index.html?v=10.1">
                 Jouer
               </button>
             </div>
@@ -312,6 +312,14 @@
             </span>
             <input id="darkModeToggle" type="checkbox" checked />
           </label>
+
+          <div class="setting-line update-line">
+            <span>
+              <strong>Mise à jour des jeux</strong>
+              <small>Efface l’ancienne copie enregistrée par le téléphone.</small>
+            </span>
+            <button id="forceUpdateButton" class="secondary-button" type="button">Actualiser les jeux</button>
+          </div>
 
           <button id="resetProgress" class="danger-button">Réinitialiser la progression</button>
         </div>
