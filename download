@@ -629,6 +629,20 @@ body::-webkit-scrollbar-thumb,
 }
 #itrixi-version-badge{position:fixed;right:8px;bottom:8px;z-index:9999;padding:5px 8px;border-radius:999px;background:rgba(124,58,237,.85);color:white;font:700 11px system-ui;pointer-events:none;}
 
+
+/* ===== NovaPlay v13 : cadre 16:9 avec bandes décoratives ===== */
+html, body {
+  width: 100%; height: 100%; overflow: hidden !important;
+  background: radial-gradient(circle at 18% 18%, rgba(168,85,247,.45), transparent 30%), radial-gradient(circle at 82% 80%, rgba(37,99,235,.38), transparent 32%), linear-gradient(135deg, #32105f 0%, #6736aa 46%, #29104f 100%) !important;
+}
+#app { position:fixed !important; inset:0 !important; width:100vw !important; height:100dvh !important; display:flex !important; align-items:center !important; justify-content:center !important; overflow:hidden !important; }
+#stage { position:relative !important; left:auto !important; top:auto !important; width:900px !important; height:506px !important; min-width:900px !important; min-height:506px !important; max-width:none !important; max-height:none !important; aspect-ratio:auto !important; transform-origin:center center !important; overflow:hidden !important; border-radius:16px !important; box-shadow:0 0 0 2px rgba(255,255,255,.15),0 24px 70px rgba(0,0,0,.45),0 0 60px rgba(124,58,237,.30) !important; }
+#game { position:absolute !important; inset:0 !important; width:900px !important; height:506px !important; object-fit:fill !important; }
+.overlay { position:absolute !important; inset:0 !important; width:900px !important; height:506px !important; min-height:0 !important; overflow-x:hidden !important; overflow-y:auto !important; -webkit-overflow-scrolling:touch; touch-action:pan-y; padding:18px 22px 28px !important; scrollbar-width:thin; scrollbar-color:rgba(196,181,253,.9) rgba(255,255,255,.08); }
+.overlay::-webkit-scrollbar{width:8px}.overlay::-webkit-scrollbar-track{background:rgba(255,255,255,.08)}.overlay::-webkit-scrollbar-thumb{background:linear-gradient(#d8b4fe,#7c3aed);border-radius:999px}
+.hud,.top-left-controls,#novaplay-return-button{position:absolute !important}
+@media (max-width:700px),(max-height:560px){#stage{border-radius:10px !important}}
+
 </style>
 </head>
 <body>
@@ -2144,6 +2158,23 @@ body::-webkit-scrollbar-thumb,
 })();
 </script>
 
-<div id="itrixi-version-badge">Itrixi v10</div>
+
+
+<script>
+(() => {
+  const LOGICAL_WIDTH = 900, LOGICAL_HEIGHT = 506, SAFE_MARGIN = 8;
+  function fitItrixiToScreen(){
+    const stage=document.getElementById('stage'); if(!stage) return;
+    const aw=Math.max(1,window.innerWidth-SAFE_MARGIN*2);
+    const ah=Math.max(1,window.innerHeight-SAFE_MARGIN*2);
+    stage.style.transform=`scale(${Math.min(aw/LOGICAL_WIDTH,ah/LOGICAL_HEIGHT)})`;
+  }
+  window.addEventListener('resize',fitItrixiToScreen,{passive:true});
+  window.addEventListener('orientationchange',()=>setTimeout(fitItrixiToScreen,120),{passive:true});
+  document.addEventListener('DOMContentLoaded',fitItrixiToScreen);
+  fitItrixiToScreen();
+})();
+</script>
+
 </body>
 </html>
