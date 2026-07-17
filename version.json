@@ -1,14 +1,14 @@
 {
-  "novaplay": "20",
+  "novaplay": "21",
+  "fixes": [
+    "ancien temps erroné réinitialisé une seule fois",
+    "compteur actif uniquement quand un jeu est affiché",
+    "pause automatique quand l'onglet est masqué",
+    "pause automatique quand la fenêtre perd le focus",
+    "protection contre les longues suspensions"
+  ],
   "paths": {
     "itrixi": "Jeux/Itrixi/index.html",
     "collectrix": "Jeux/Collectrix/index.html"
-  },
-  "features": [
-    "ascenseur gauche sur l'accueil",
-    "ascenseur droit sur l'accueil",
-    "flèches haut et bas",
-    "curseur coulissant",
-    "ascenseurs Itrixi conservés"
-  ]
+  }
 }

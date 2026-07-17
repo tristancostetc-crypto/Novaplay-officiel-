@@ -1,12 +1,9 @@
-# NovaPlay v20 — Ascenseurs sur l'accueil
+# NovaPlay v21 — Temps de jeu corrigé
 
-Ajout de deux ascenseurs sur la page d'accueil NovaPlay :
+- L'ancien total faux est remis à zéro une seule fois.
+- Le compteur tourne seulement quand un jeu est réellement affiché.
+- Il se met en pause quand l'onglet est caché.
+- Il se met en pause quand la fenêtre perd le focus.
+- Il ignore les longues suspensions du navigateur.
 
-- ascenseur à gauche ;
-- ascenseur à droite ;
-- flèche haut ;
-- flèche bas ;
-- curseur coulissant ;
-- appui prolongé pour faire défiler en continu.
-
-Les ascenseurs d'Itrixi restent présents.
+Les Nova Coins restent inchangés.

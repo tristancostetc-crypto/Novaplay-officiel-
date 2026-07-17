@@ -382,3 +382,175 @@ render();
 
   updateAll();
 })();
+
+
+// ===== NovaPlay v21 : compteur de temps réel =====
+(() => {
+  const TOTAL_KEY = "novaplay_real_play_seconds_v21";
+  const LEGACY_BACKUP_KEY = "novaplay_legacy_time_backup";
+
+  try {
+    if (!localStorage.getItem(LEGACY_BACKUP_KEY)) {
+      const backup = {};
+      ["novaplay_playtime","novaplay_total_time","totalPlayTime","playTime","novaplayStats"]
+        .forEach(key => {
+          const value = localStorage.getItem(key);
+          if (value !== null) backup[key] = value;
+        });
+      localStorage.setItem(LEGACY_BACKUP_KEY, JSON.stringify(backup));
+    }
+  } catch (error) {
+    console.warn("Sauvegarde de l'ancien compteur impossible", error);
+  }
+
+  let totalSeconds = Number(localStorage.getItem(TOTAL_KEY) || 0);
+  if (!Number.isFinite(totalSeconds) || totalSeconds < 0) totalSeconds = 0;
+
+  let lastTickAt = null;
+  let timerId = null;
+  let isGamePageActive = false;
+
+  function formatDuration(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const hours = Math.floor(mins / 60);
+    const remainingMins = mins % 60;
+    return hours > 0 ? `${hours} h ${remainingMins} min` : `${remainingMins} min`;
+  }
+
+  function updateDisplayedTimes() {
+    const text = formatDuration(totalSeconds);
+    const selectors = [
+      "[data-playtime]",
+      "[data-total-playtime]",
+      "#totalPlayTime",
+      "#playTime",
+      ".play-time",
+      ".total-time",
+      ".game-time"
+    ];
+
+    document.querySelectorAll(selectors.join(",")).forEach(el => {
+      el.textContent = text;
+    });
+
+    document.querySelectorAll("*").forEach(el => {
+      if (el.children.length === 0 && /^\s*\d+\s*h\s*\d+\s*min\s*$/.test(el.textContent || "")) {
+        el.textContent = text;
+      }
+    });
+  }
+
+  function save() {
+    localStorage.setItem(TOTAL_KEY, String(Math.floor(totalSeconds)));
+  }
+
+  function stopCounting() {
+    if (timerId) clearInterval(timerId);
+    timerId = null;
+    lastTickAt = null;
+  }
+
+  function tick() {
+    if (document.visibilityState !== "visible" || !document.hasFocus() || !isGamePageActive) {
+      lastTickAt = performance.now();
+      return;
+    }
+
+    const now = performance.now();
+    if (lastTickAt === null) {
+      lastTickAt = now;
+      return;
+    }
+
+    const deltaSeconds = Math.min(5, Math.max(0, (now - lastTickAt) / 1000));
+    lastTickAt = now;
+    totalSeconds += deltaSeconds;
+    save();
+    updateDisplayedTimes();
+  }
+
+  function startCounting() {
+    if (timerId) return;
+    lastTickAt = performance.now();
+    timerId = setInterval(tick, 1000);
+  }
+
+  function setGameActive(active) {
+    isGamePageActive = Boolean(active);
+    if (isGamePageActive && document.visibilityState === "visible" && document.hasFocus()) {
+      startCounting();
+    } else {
+      stopCounting();
+    }
+  }
+
+  function detectGameState() {
+    const iframe = document.querySelector("iframe");
+    const gameView = document.querySelector(
+      ".game-view.active, .game-screen.active, [data-view='game'].active, #gameContainer:not(.hidden)"
+    );
+
+    const iframeVisible = iframe && (() => {
+      const r = iframe.getBoundingClientRect();
+      const s = getComputedStyle(iframe);
+      return r.width > 0 && r.height > 0 && s.display !== "none" && s.visibility !== "hidden";
+    })();
+
+    setGameActive(Boolean(gameView || iframeVisible));
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") detectGameState();
+    else stopCounting();
+  });
+
+  window.addEventListener("focus", detectGameState);
+  window.addEventListener("blur", stopCounting);
+  window.addEventListener("beforeunload", save);
+  window.addEventListener("pagehide", save);
+
+  document.addEventListener("click", event => {
+    const target = event.target.closest && event.target.closest("a,button,[data-game],[data-action]");
+    if (!target) return;
+
+    const text = (target.textContent || "").toLowerCase();
+    const href = (target.getAttribute("href") || "").toLowerCase();
+
+    if (text.includes("jouer") || href.includes("jeux/itrixi") || href.includes("jeux/collectrix")) {
+      setTimeout(() => setGameActive(true), 150);
+    }
+
+    if (text.includes("accueil") || text.includes("retour") || text.includes("novaplay")) {
+      setTimeout(detectGameState, 150);
+    }
+  }, true);
+
+  new MutationObserver(() => {
+    detectGameState();
+    updateDisplayedTimes();
+  }).observe(document.body, {
+    subtree: true,
+    childList: true,
+    attributes: true,
+    attributeFilter: ["class", "style", "src"]
+  });
+
+  // Réinitialise le mauvais compteur une seule fois pour cette nouvelle version.
+  if (!localStorage.getItem("novaplay_v21_reset_done")) {
+    totalSeconds = 0;
+    localStorage.setItem("novaplay_v21_reset_done", "1");
+    save();
+  }
+
+  updateDisplayedTimes();
+  detectGameState();
+
+  window.NovaPlayPlaytime = {
+    getSeconds: () => Math.floor(totalSeconds),
+    reset: () => {
+      totalSeconds = 0;
+      save();
+      updateDisplayedTimes();
+    }
+  };
+})();
