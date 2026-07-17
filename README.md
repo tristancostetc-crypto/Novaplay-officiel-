@@ -1,16 +1,24 @@
-# NovaPlay v6 — Correctif mobile avec défilement
+# NovaPlay v9 — Boutique complète
 
-Cette version ajoute dans Itrixi :
+Cette version contient réellement le nouveau code demandé.
 
-- une barre de défilement visible à droite des menus ;
-- le défilement vertical avec le doigt ;
-- un écran adapté au mode portrait ;
-- un accès au bouton Jouer et aux éléments situés plus bas.
+## Itrixi
 
-## Installation
+- 30 Trixis dans la collection ;
+- 3 Trixis gratuits au départ ;
+- 27 Trixis achetables dans la boutique ;
+- raretés : Commun, Rare, Épique, Légendaire et Mythique ;
+- achat immédiat avec les pièces ;
+- achats sauvegardés dans le navigateur ;
+- déblocage alternatif grâce à l'XP ;
+- les 4 objets de pouvoir restent disponibles ;
+- lancement automatique après avoir touché un Trixi ;
+- correctifs mobiles conservés.
+
+## Installation GitHub
 
 1. Décompresse le ZIP.
-2. Sur le dépôt GitHub NovaPlay, clique sur `+`, puis `Upload files`.
-3. Glisse tous les fichiers et dossiers décompressés.
-4. Accepte le remplacement des anciens fichiers.
+2. Ouvre ton dépôt GitHub.
+3. Clique sur `+`, puis `Upload files`.
+4. Glisse tout le contenu du dossier.
 5. Clique sur `Commit changes`.
