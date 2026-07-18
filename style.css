@@ -269,7 +269,7 @@ h2 {
 
 .games-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
@@ -299,6 +299,14 @@ h2 {
 .game-two .game-art {
   background: linear-gradient(135deg, #087f86, #25c486);
 }
+
+
+.game-three .game-art {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(138,245,141,.42), transparent 30%),
+    linear-gradient(135deg, #0c5f50, #12364f 55%, #071522);
+}
+
 
 .game-symbol {
   font-size: 5.6rem;

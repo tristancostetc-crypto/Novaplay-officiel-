@@ -1,9 +1,14 @@
-# NovaPlay v21 — Temps de jeu corrigé
+# NovaPlay v22 — Snake Évolutif
 
-- L'ancien total faux est remis à zéro une seule fois.
-- Le compteur tourne seulement quand un jeu est réellement affiché.
-- Il se met en pause quand l'onglet est caché.
-- Il se met en pause quand la fenêtre perd le focus.
-- Il ignore les longues suspensions du navigateur.
+## Nouveau jeu
+- Snake Évolutif est ajouté dans `Jeux/Snake-Evolutif/index.html`.
+- Une nouvelle carte apparaît dans la bibliothèque NovaPlay.
+- Le temps de jeu et le nombre de lancements sont affichés.
+- Un bouton permet de revenir à NovaPlay depuis le jeu.
 
-Les Nova Coins restent inchangés.
+## Installation
+1. Extrais le ZIP.
+2. Téléverse tout son contenu à la racine de ton dépôt GitHub.
+3. Vérifie que `Jeux/Snake-Evolutif/index.html` apparaît dans les fichiers ajoutés.
+4. Valide avec **Commit changes**.
+5. Recharge NovaPlay avec **Ctrl + F5**.

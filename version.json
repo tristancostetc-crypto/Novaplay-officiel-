@@ -1,14 +1,14 @@
 {
-  "novaplay": "21",
-  "fixes": [
-    "ancien temps erroné réinitialisé une seule fois",
-    "compteur actif uniquement quand un jeu est affiché",
-    "pause automatique quand l'onglet est masqué",
-    "pause automatique quand la fenêtre perd le focus",
-    "protection contre les longues suspensions"
-  ],
-  "paths": {
+  "novaplay": "22",
+  "games": {
     "itrixi": "Jeux/Itrixi/index.html",
-    "collectrix": "Jeux/Collectrix/index.html"
-  }
+    "collectrix": "Jeux/Collectrix/index.html",
+    "snake": "Jeux/Snake-Evolutif/index.html"
+  },
+  "new": [
+    "Snake Évolutif ajouté",
+    "carte d'accueil ajoutée",
+    "temps et lancements suivis",
+    "bouton Retour à NovaPlay ajouté au jeu"
+  ]
 }

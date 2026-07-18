@@ -1,5 +1,5 @@
 const STORAGE_KEY = "novaplay-state";
-const NOVAPLAY_BUILD = "10.1";
+const NOVAPLAY_BUILD = "22";
 
 const defaultState = {
   username: "Joueur Nova",
@@ -8,8 +8,8 @@ const defaultState = {
   achievements: [],
   darkMode: true,
   animations: true,
-  gameTimes: { itrixi: 0, collectrix: 0 },
-  gameLaunches: { itrixi: 0, collectrix: 0 },
+  gameTimes: { itrixi: 0, collectrix: 0, snake: 0 },
+  gameLaunches: { itrixi: 0, collectrix: 0, snake: 0 },
   lastGame: null,
   lastGameKey: null,
   lastGameUrl: null,
@@ -46,8 +46,10 @@ const elements = {
   lastGame: document.querySelector("#lastGame"),
   itrixiTime: document.querySelector("#itrixiTime"),
   collectrixTime: document.querySelector("#collectrixTime"),
+  snakeTime: document.querySelector("#snakeTime"),
   itrixiLaunches: document.querySelector("#itrixiLaunches"),
   collectrixLaunches: document.querySelector("#collectrixLaunches"),
+  snakeLaunches: document.querySelector("#snakeLaunches"),
   continueButton: document.querySelector("#continueButton"),
   dailyRewardButton: document.querySelector("#dailyRewardButton"),
   dailyStatus: document.querySelector("#dailyStatus"),
@@ -93,9 +95,10 @@ function checkAchievements() {
   if (state.launches >= 1) unlockAchievement("first-launch", true);
   if (state.gameLaunches.itrixi >= 1) unlockAchievement("itrixi-launch", true);
   if (state.gameLaunches.collectrix >= 1) unlockAchievement("collectrix-launch", true);
+  if (state.gameLaunches.snake >= 1) unlockAchievement("snake-launch", true);
   if (state.gameLaunches.itrixi >= 1 && state.gameLaunches.collectrix >= 1) unlockAchievement("both-games", true);
   if (state.launches >= 5) unlockAchievement("five-launches", true);
-  if ((state.gameTimes.itrixi + state.gameTimes.collectrix) >= 3600) unlockAchievement("one-hour", true);
+  if ((state.gameTimes.itrixi + state.gameTimes.collectrix + state.gameTimes.snake) >= 3600) unlockAchievement("one-hour", true);
   if (state.lastDailyReward) unlockAchievement("daily-reward", true);
 }
 
@@ -114,13 +117,24 @@ function render() {
   importSessionTime();
   checkAchievements();
 
-  const totalSeconds = state.gameTimes.itrixi + state.gameTimes.collectrix;
+  const gameNames = {
+    itrixi: "Itrixi",
+    collectrix: "Collectrix",
+    snake: "Snake Évolutif"
+  };
+
+  const totalSeconds =
+    state.gameTimes.itrixi +
+    state.gameTimes.collectrix +
+    state.gameTimes.snake;
+
+  const favoriteEntry = Object.entries(state.gameTimes)
+    .sort((a, b) => b[1] - a[1])[0];
+
   const favorite =
-    state.gameTimes.itrixi === 0 && state.gameTimes.collectrix === 0
+    !favoriteEntry || favoriteEntry[1] <= 0
       ? "Aucun"
-      : state.gameTimes.itrixi >= state.gameTimes.collectrix
-        ? "Itrixi"
-        : "Collectrix";
+      : gameNames[favoriteEntry[0]] || favoriteEntry[0];
 
   elements.coinCount.textContent = state.coins;
   elements.username.value = state.username;
@@ -132,8 +146,10 @@ function render() {
   elements.lastGame.textContent = state.lastGame || "Aucun";
   elements.itrixiTime.textContent = formatTime(state.gameTimes.itrixi);
   elements.collectrixTime.textContent = formatTime(state.gameTimes.collectrix);
+  elements.snakeTime.textContent = formatTime(state.gameTimes.snake);
   elements.itrixiLaunches.textContent = state.gameLaunches.itrixi;
   elements.collectrixLaunches.textContent = state.gameLaunches.collectrix;
+  elements.snakeLaunches.textContent = state.gameLaunches.snake;
   elements.darkModeToggle.checked = state.darkMode;
   elements.animationsToggle.checked = state.animations;
 
@@ -179,6 +195,7 @@ function launchGame(game, gameKey, url) {
   unlockAchievement("first-launch");
   if (gameKey === "itrixi") unlockAchievement("itrixi-launch");
   if (gameKey === "collectrix") unlockAchievement("collectrix-launch");
+  if (gameKey === "snake") unlockAchievement("snake-launch");
 
   localStorage.setItem("novaplay-pending-session", JSON.stringify({
     gameKey,
