@@ -454,13 +454,10 @@ render();
     ];
 
     document.querySelectorAll(selectors.join(",")).forEach(el => {
-      el.textContent = text;
-    });
-
-    document.querySelectorAll("*").forEach(el => {
-      if (el.children.length === 0 && /^\s*\d+\s*h\s*\d+\s*min\s*$/.test(el.textContent || "")) {
-        el.textContent = text;
-      }
+      // Ne touche au DOM que si le texte change réellement. Sans ce test,
+      // le MutationObserver ci-dessous détectait sa propre modification et
+      // relançait cette fonction en boucle jusqu'à bloquer le navigateur.
+      if (el.textContent !== text) el.textContent = text;
     });
   }
 
@@ -549,9 +546,15 @@ render();
     }
   }, true);
 
+  let refreshQueued = false;
   new MutationObserver(() => {
-    detectGameState();
-    updateDisplayedTimes();
+    if (refreshQueued) return;
+    refreshQueued = true;
+    requestAnimationFrame(() => {
+      refreshQueued = false;
+      detectGameState();
+      updateDisplayedTimes();
+    });
   }).observe(document.body, {
     subtree: true,
     childList: true,
