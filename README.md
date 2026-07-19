@@ -1,14 +1,8 @@
-# NovaPlay v22 — Snake Évolutif
+# NovaPlay v23 — Survivor 2.0
 
-## Nouveau jeu
-- Snake Évolutif est ajouté dans `Jeux/Snake-Evolutif/index.html`.
-- Une nouvelle carte apparaît dans la bibliothèque NovaPlay.
-- Le temps de jeu et le nombre de lancements sont affichés.
-- Un bouton permet de revenir à NovaPlay depuis le jeu.
+Survivor 2.0 a été ajouté dans `Jeux/Survivor-2/index.html`.
 
-## Installation
-1. Extrais le ZIP.
-2. Téléverse tout son contenu à la racine de ton dépôt GitHub.
-3. Vérifie que `Jeux/Snake-Evolutif/index.html` apparaît dans les fichiers ajoutés.
-4. Valide avec **Commit changes**.
-5. Recharge NovaPlay avec **Ctrl + F5**.
+- nouvelle carte sur l'accueil ;
+- bouton Jouer ;
+- temps de jeu et lancements suivis ;
+- bouton ← NovaPlay dans le jeu.

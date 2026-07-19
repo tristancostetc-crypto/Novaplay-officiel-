@@ -1,5 +1,5 @@
 const STORAGE_KEY = "novaplay-state";
-const NOVAPLAY_BUILD = "22";
+const NOVAPLAY_BUILD = "23";
 
 const defaultState = {
   username: "Joueur Nova",
@@ -8,8 +8,8 @@ const defaultState = {
   achievements: [],
   darkMode: true,
   animations: true,
-  gameTimes: { itrixi: 0, collectrix: 0, snake: 0 },
-  gameLaunches: { itrixi: 0, collectrix: 0, snake: 0 },
+  gameTimes: { itrixi: 0, collectrix: 0, snake: 0, survivor: 0 },
+  gameLaunches: { itrixi: 0, collectrix: 0, snake: 0, survivor: 0 },
   lastGame: null,
   lastGameKey: null,
   lastGameUrl: null,
@@ -47,9 +47,11 @@ const elements = {
   itrixiTime: document.querySelector("#itrixiTime"),
   collectrixTime: document.querySelector("#collectrixTime"),
   snakeTime: document.querySelector("#snakeTime"),
+  survivorTime: document.querySelector("#survivorTime"),
   itrixiLaunches: document.querySelector("#itrixiLaunches"),
   collectrixLaunches: document.querySelector("#collectrixLaunches"),
   snakeLaunches: document.querySelector("#snakeLaunches"),
+  survivorLaunches: document.querySelector("#survivorLaunches"),
   continueButton: document.querySelector("#continueButton"),
   dailyRewardButton: document.querySelector("#dailyRewardButton"),
   dailyStatus: document.querySelector("#dailyStatus"),
@@ -120,13 +122,15 @@ function render() {
   const gameNames = {
     itrixi: "Itrixi",
     collectrix: "Collectrix",
-    snake: "Snake Évolutif"
+    snake: "Snake Évolutif",
+    survivor: "Survivor 2.0"
   };
 
   const totalSeconds =
     state.gameTimes.itrixi +
     state.gameTimes.collectrix +
-    state.gameTimes.snake;
+    state.gameTimes.snake +
+    state.gameTimes.survivor;
 
   const favoriteEntry = Object.entries(state.gameTimes)
     .sort((a, b) => b[1] - a[1])[0];
@@ -147,9 +151,11 @@ function render() {
   elements.itrixiTime.textContent = formatTime(state.gameTimes.itrixi);
   elements.collectrixTime.textContent = formatTime(state.gameTimes.collectrix);
   elements.snakeTime.textContent = formatTime(state.gameTimes.snake);
+  elements.survivorTime.textContent = formatTime(state.gameTimes.survivor);
   elements.itrixiLaunches.textContent = state.gameLaunches.itrixi;
   elements.collectrixLaunches.textContent = state.gameLaunches.collectrix;
   elements.snakeLaunches.textContent = state.gameLaunches.snake;
+  elements.survivorLaunches.textContent = state.gameLaunches.survivor;
   elements.darkModeToggle.checked = state.darkMode;
   elements.animationsToggle.checked = state.animations;
 
@@ -196,6 +202,7 @@ function launchGame(game, gameKey, url) {
   if (gameKey === "itrixi") unlockAchievement("itrixi-launch");
   if (gameKey === "collectrix") unlockAchievement("collectrix-launch");
   if (gameKey === "snake") unlockAchievement("snake-launch");
+  if (gameKey === "survivor") unlockAchievement("survivor-launch");
 
   localStorage.setItem("novaplay-pending-session", JSON.stringify({
     gameKey,

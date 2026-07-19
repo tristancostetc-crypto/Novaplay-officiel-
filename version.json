@@ -1,14 +1,9 @@
 {
-  "novaplay": "22",
+  "novaplay": "23",
   "games": {
     "itrixi": "Jeux/Itrixi/index.html",
     "collectrix": "Jeux/Collectrix/index.html",
-    "snake": "Jeux/Snake-Evolutif/index.html"
-  },
-  "new": [
-    "Snake Évolutif ajouté",
-    "carte d'accueil ajoutée",
-    "temps et lancements suivis",
-    "bouton Retour à NovaPlay ajouté au jeu"
-  ]
+    "snake": "Jeux/Snake-Evolutif/index.html",
+    "survivor": "Jeux/Survivor-2/index.html"
+  }
 }
