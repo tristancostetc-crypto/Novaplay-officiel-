@@ -1,8 +1,16 @@
-# NovaPlay v23 — Survivor 2.0
+# NovaPlay v25 — Rolly Adventure
 
-Survivor 2.0 a été ajouté dans `Jeux/Survivor-2/index.html`.
+Rolly Adventure est ajouté dans `Jeux/Rolly-Adventure/index.html`.
 
 - nouvelle carte sur l'accueil ;
 - bouton Jouer ;
-- temps de jeu et lancements suivis ;
-- bouton ← NovaPlay dans le jeu.
+- suivi du temps et des lancements ;
+- bouton ← NovaPlay dans le jeu ;
+- six jeux disponibles sur NovaPlay.
+
+## Installation
+1. Extrais le ZIP.
+2. Téléverse tout son contenu à la racine du dépôt GitHub.
+3. Vérifie que `Jeux/Rolly-Adventure/index.html` apparaît dans les fichiers ajoutés.
+4. Clique sur **Commit changes**.
+5. Recharge NovaPlay avec **Ctrl + F5**.

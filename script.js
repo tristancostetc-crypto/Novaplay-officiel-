@@ -1,5 +1,5 @@
 const STORAGE_KEY = "novaplay-state";
-const NOVAPLAY_BUILD = "23";
+const NOVAPLAY_BUILD = "25";
 
 const defaultState = {
   username: "Joueur Nova",
@@ -8,8 +8,8 @@ const defaultState = {
   achievements: [],
   darkMode: true,
   animations: true,
-  gameTimes: { itrixi: 0, collectrix: 0, snake: 0, survivor: 0 },
-  gameLaunches: { itrixi: 0, collectrix: 0, snake: 0, survivor: 0 },
+  gameTimes: { itrixi: 0, collectrix: 0, snake: 0, survivor: 0, tower: 0, rolly: 0 },
+  gameLaunches: { itrixi: 0, collectrix: 0, snake: 0, survivor: 0, tower: 0, rolly: 0 },
   lastGame: null,
   lastGameKey: null,
   lastGameUrl: null,
@@ -48,10 +48,14 @@ const elements = {
   collectrixTime: document.querySelector("#collectrixTime"),
   snakeTime: document.querySelector("#snakeTime"),
   survivorTime: document.querySelector("#survivorTime"),
+  towerTime: document.querySelector("#towerTime"),
+  rollyTime: document.querySelector("#rollyTime"),
   itrixiLaunches: document.querySelector("#itrixiLaunches"),
   collectrixLaunches: document.querySelector("#collectrixLaunches"),
   snakeLaunches: document.querySelector("#snakeLaunches"),
   survivorLaunches: document.querySelector("#survivorLaunches"),
+  towerLaunches: document.querySelector("#towerLaunches"),
+  rollyLaunches: document.querySelector("#rollyLaunches"),
   continueButton: document.querySelector("#continueButton"),
   dailyRewardButton: document.querySelector("#dailyRewardButton"),
   dailyStatus: document.querySelector("#dailyStatus"),
@@ -123,14 +127,18 @@ function render() {
     itrixi: "Itrixi",
     collectrix: "Collectrix",
     snake: "Snake Évolutif",
-    survivor: "Survivor 2.0"
+    survivor: "Survivor 2.0",
+    tower: "Tower Clash",
+    rolly: "Rolly Adventure"
   };
 
   const totalSeconds =
     state.gameTimes.itrixi +
     state.gameTimes.collectrix +
     state.gameTimes.snake +
-    state.gameTimes.survivor;
+    state.gameTimes.survivor +
+    state.gameTimes.tower +
+    state.gameTimes.rolly;
 
   const favoriteEntry = Object.entries(state.gameTimes)
     .sort((a, b) => b[1] - a[1])[0];
@@ -152,10 +160,14 @@ function render() {
   elements.collectrixTime.textContent = formatTime(state.gameTimes.collectrix);
   elements.snakeTime.textContent = formatTime(state.gameTimes.snake);
   elements.survivorTime.textContent = formatTime(state.gameTimes.survivor);
+  elements.towerTime.textContent = formatTime(state.gameTimes.tower);
+  elements.rollyTime.textContent = formatTime(state.gameTimes.rolly);
   elements.itrixiLaunches.textContent = state.gameLaunches.itrixi;
   elements.collectrixLaunches.textContent = state.gameLaunches.collectrix;
   elements.snakeLaunches.textContent = state.gameLaunches.snake;
   elements.survivorLaunches.textContent = state.gameLaunches.survivor;
+  elements.towerLaunches.textContent = state.gameLaunches.tower;
+  elements.rollyLaunches.textContent = state.gameLaunches.rolly;
   elements.darkModeToggle.checked = state.darkMode;
   elements.animationsToggle.checked = state.animations;
 
@@ -203,6 +215,8 @@ function launchGame(game, gameKey, url) {
   if (gameKey === "collectrix") unlockAchievement("collectrix-launch");
   if (gameKey === "snake") unlockAchievement("snake-launch");
   if (gameKey === "survivor") unlockAchievement("survivor-launch");
+  if (gameKey === "tower") unlockAchievement("tower-launch");
+  if (gameKey === "rolly") unlockAchievement("rolly-launch");
 
   localStorage.setItem("novaplay-pending-session", JSON.stringify({
     gameKey,
@@ -454,10 +468,13 @@ render();
     ];
 
     document.querySelectorAll(selectors.join(",")).forEach(el => {
-      // Ne touche au DOM que si le texte change réellement. Sans ce test,
-      // le MutationObserver ci-dessous détectait sa propre modification et
-      // relançait cette fonction en boucle jusqu'à bloquer le navigateur.
-      if (el.textContent !== text) el.textContent = text;
+      el.textContent = text;
+    });
+
+    document.querySelectorAll("*").forEach(el => {
+      if (el.children.length === 0 && /^\s*\d+\s*h\s*\d+\s*min\s*$/.test(el.textContent || "")) {
+        el.textContent = text;
+      }
     });
   }
 
@@ -546,15 +563,9 @@ render();
     }
   }, true);
 
-  let refreshQueued = false;
   new MutationObserver(() => {
-    if (refreshQueued) return;
-    refreshQueued = true;
-    requestAnimationFrame(() => {
-      refreshQueued = false;
-      detectGameState();
-      updateDisplayedTimes();
-    });
+    detectGameState();
+    updateDisplayedTimes();
   }).observe(document.body, {
     subtree: true,
     childList: true,

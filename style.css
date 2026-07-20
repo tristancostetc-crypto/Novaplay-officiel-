@@ -269,7 +269,7 @@ h2 {
 
 .games-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 24px;
 }
 
@@ -917,4 +917,18 @@ body.no-animations *::after {
 
 .game-four .game-art{background:radial-gradient(circle at 50% 35%,rgba(255,207,69,.34),transparent 30%),linear-gradient(135deg,#2a3473,#171c45 55%,#080b18)}
 @media(max-width:1100px){.games-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.games-grid{grid-template-columns:1fr}}
+
+.game-five .game-art{background:radial-gradient(circle at 50% 35%,rgba(85,198,255,.38),transparent 30%),linear-gradient(135deg,#2788d8,#174b96 55%,#10213b)}
+@media(max-width:1350px){.games-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:950px){.games-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.games-grid{grid-template-columns:1fr}}
+
+.game-six .game-art{
+  background:
+    radial-gradient(circle at 50% 35%,rgba(255,214,74,.38),transparent 30%),
+    linear-gradient(135deg,#4f91db,#24558e 55%,#12233b)
+}
+@media(max-width:1550px){.games-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:950px){.games-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.games-grid{grid-template-columns:1fr}}

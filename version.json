@@ -1,9 +1,17 @@
 {
-  "novaplay": "23",
+  "novaplay": "25",
   "games": {
     "itrixi": "Jeux/Itrixi/index.html",
     "collectrix": "Jeux/Collectrix/index.html",
     "snake": "Jeux/Snake-Evolutif/index.html",
-    "survivor": "Jeux/Survivor-2/index.html"
-  }
+    "survivor": "Jeux/Survivor-2/index.html",
+    "tower": "Jeux/Tower-Clash/index.html",
+    "rolly": "Jeux/Rolly-Adventure/index.html"
+  },
+  "new": [
+    "Rolly Adventure ajouté",
+    "carte d'accueil ajoutée",
+    "temps et lancements suivis",
+    "bouton Retour à NovaPlay ajouté"
+  ]
 }
