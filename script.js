@@ -468,8 +468,13 @@ render();
     ];
 
     document.querySelectorAll(selectors.join(",")).forEach(el => {
-      // Évite que le compteur déclenche son propre MutationObserver en boucle.
-      if (el.textContent !== text) el.textContent = text;
+      el.textContent = text;
+    });
+
+    document.querySelectorAll("*").forEach(el => {
+      if (el.children.length === 0 && /^\s*\d+\s*h\s*\d+\s*min\s*$/.test(el.textContent || "")) {
+        el.textContent = text;
+      }
     });
   }
 
@@ -558,15 +563,9 @@ render();
     }
   }, true);
 
-  let refreshQueued = false;
   new MutationObserver(() => {
-    if (refreshQueued) return;
-    refreshQueued = true;
-    requestAnimationFrame(() => {
-      refreshQueued = false;
-      detectGameState();
-      updateDisplayedTimes();
-    });
+    detectGameState();
+    updateDisplayedTimes();
   }).observe(document.body, {
     subtree: true,
     childList: true,

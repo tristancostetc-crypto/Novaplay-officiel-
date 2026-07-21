@@ -1,5 +1,11 @@
 {
-  "novaplay": "25",
+  "novaplay": "26",
+  "fixes": [
+    "accueil Itrixi défilable sur mobile",
+    "ascenseurs ciblent menuScreen",
+    "casier et sélection toujours fonctionnels",
+    "aucun autre script modifié"
+  ],
   "games": {
     "itrixi": "Jeux/Itrixi/index.html",
     "collectrix": "Jeux/Collectrix/index.html",
@@ -7,11 +13,5 @@
     "survivor": "Jeux/Survivor-2/index.html",
     "tower": "Jeux/Tower-Clash/index.html",
     "rolly": "Jeux/Rolly-Adventure/index.html"
-  },
-  "new": [
-    "Rolly Adventure ajouté",
-    "carte d'accueil ajoutée",
-    "temps et lancements suivis",
-    "bouton Retour à NovaPlay ajouté"
-  ]
+  }
 }

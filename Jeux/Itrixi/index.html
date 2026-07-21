@@ -882,6 +882,36 @@ body::-webkit-scrollbar-thumb,
   }
 }
 
+
+/* ===== NovaPlay v26 : accueil Itrixi défilable sur mobile ===== */
+@media (max-width:700px), (orientation:portrait), (max-height:560px) {
+  #menuScreen {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    box-sizing: border-box !important;
+    padding-top: 72px !important;
+    padding-bottom: 180px !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+    overscroll-behavior: contain !important;
+  }
+
+  #menuScreen > * {
+    flex-shrink: 0 !important;
+  }
+
+  #menuScreen .menu-btns,
+  #menuScreen .logo,
+  #menuScreen .subtitle,
+  #menuScreen .level-tag {
+    flex: 0 0 auto !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2411,6 +2441,11 @@ body::-webkit-scrollbar-thumb,
   const elevators = [];
 
   function target() {
+    const menu = document.getElementById('menuScreen');
+    if (menu && !menu.classList.contains('hidden')) {
+      return menu;
+    }
+
     const locker = document.getElementById('lockerScreen');
     if (locker && !locker.classList.contains('hidden')) {
       return locker;
@@ -2672,6 +2707,46 @@ body::-webkit-scrollbar-thumb,
       setTimeout(refreshLockerScroll, 180);
     }
   }, true);
+})();
+</script>
+
+
+<script>
+(() => {
+  const menu = document.getElementById('menuScreen');
+  if (!menu) return;
+
+  function refreshMenuScroll() {
+    if (menu.classList.contains('hidden')) return;
+    menu.style.overflowY = 'auto';
+
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new Event('resize'));
+      menu.dispatchEvent(new Event('scroll'));
+    });
+
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+      menu.dispatchEvent(new Event('scroll'));
+    }, 120);
+  }
+
+  new MutationObserver(refreshMenuScroll).observe(menu, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+
+  document.addEventListener('click', event => {
+    const target = event.target.closest && event.target.closest(
+      '#selectBackBtn, #lockerBackBtn, #novaplay-return-button, .back-btn'
+    );
+    if (target) {
+      setTimeout(refreshMenuScroll, 30);
+      setTimeout(refreshMenuScroll, 160);
+    }
+  }, true);
+
+  refreshMenuScroll();
 })();
 </script>
 

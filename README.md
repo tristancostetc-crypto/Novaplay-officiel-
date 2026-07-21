@@ -1,16 +1,16 @@
-# NovaPlay v25 — Rolly Adventure
+# NovaPlay v26 — Accueil Itrixi corrigé
 
-Rolly Adventure est ajouté dans `Jeux/Rolly-Adventure/index.html`.
+Correction ciblée :
 
-- nouvelle carte sur l'accueil ;
-- bouton Jouer ;
-- suivi du temps et des lancements ;
-- bouton ← NovaPlay dans le jeu ;
-- six jeux disponibles sur NovaPlay.
+- l'accueil d'Itrixi peut maintenant défiler sur téléphone ;
+- les ascenseurs contrôlent directement `menuScreen` ;
+- tous les boutons de l'accueil deviennent accessibles ;
+- les correctifs du Casier et de la sélection restent actifs ;
+- aucun autre script de jeu n'a été modifié.
 
 ## Installation
 1. Extrais le ZIP.
-2. Téléverse tout son contenu à la racine du dépôt GitHub.
-3. Vérifie que `Jeux/Rolly-Adventure/index.html` apparaît dans les fichiers ajoutés.
+2. Téléverse tout le contenu à la racine du dépôt GitHub.
+3. Vérifie que `Jeux/Itrixi/index.html` est bien modifié.
 4. Clique sur **Commit changes**.
-5. Recharge NovaPlay avec **Ctrl + F5**.
+5. Recharge le site avec **Ctrl + F5**.
