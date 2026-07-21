@@ -386,7 +386,7 @@
     border-radius:999px;
   }
   .overlay::-webkit-scrollbar-thumb:active { background:#d8b4fe; }
-  #menuScreen, #gameOverScreen, #winScreen {
+  #mainMenu, #gameOverScreen, #winScreen {
     justify-content:center;
   }
   #selectScreen, #levelScreen, #lockerScreen, #shopScreen, #settingsScreen {
@@ -539,7 +539,7 @@ body::-webkit-scrollbar-thumb,
     padding-bottom: 110px !important;
   }
 
-  #menuScreen, #gameOverScreen, #winScreen {
+  #mainMenu, #gameOverScreen, #winScreen {
     justify-content: center !important;
   }
 
@@ -666,13 +666,13 @@ body::-webkit-scrollbar-thumb,
 /* ===== NovaPlay v15 : correction Casier + écran Jouer ===== */
 @media (max-width:700px), (orientation:portrait), (max-height:560px) {
   /* Les éléments ne doivent plus se compresser pour rentrer artificiellement. */
-  #menuScreen > *,
+  #mainMenu > *,
   #lockerScreen > * {
     flex-shrink: 0 !important;
   }
 
   /* Ces deux écrans deviennent de vrais conteneurs défilables. */
-  #menuScreen,
+  #mainMenu,
   #lockerScreen {
     justify-content: flex-start !important;
     overflow-y: auto !important;
@@ -684,7 +684,7 @@ body::-webkit-scrollbar-thumb,
     touch-action: pan-y !important;
   }
 
-  #menuScreen {
+  #mainMenu {
     padding-top: 78px !important;
     padding-bottom: 115px !important;
   }
@@ -701,10 +701,10 @@ body::-webkit-scrollbar-thumb,
     padding-bottom: 18px !important;
   }
 
-  #menuScreen .menu-btns,
-  #menuScreen .logo,
-  #menuScreen .subtitle,
-  #menuScreen .level-tag {
+  #mainMenu .menu-btns,
+  #mainMenu .logo,
+  #mainMenu .subtitle,
+  #mainMenu .level-tag {
     flex: 0 0 auto !important;
   }
 }
@@ -885,7 +885,7 @@ body::-webkit-scrollbar-thumb,
 
 /* ===== NovaPlay v26 : accueil Itrixi défilable sur mobile ===== */
 @media (max-width:700px), (orientation:portrait), (max-height:560px) {
-  #menuScreen {
+  #mainMenu {
     overflow-y: auto !important;
     overflow-x: hidden !important;
     justify-content: flex-start !important;
@@ -900,15 +900,52 @@ body::-webkit-scrollbar-thumb,
     overscroll-behavior: contain !important;
   }
 
-  #menuScreen > * {
+  #mainMenu > * {
     flex-shrink: 0 !important;
   }
 
-  #menuScreen .menu-btns,
-  #menuScreen .logo,
-  #menuScreen .subtitle,
-  #menuScreen .level-tag {
+  #mainMenu .menu-btns,
+  #mainMenu .logo,
+  #mainMenu .subtitle,
+  #mainMenu .level-tag {
     flex: 0 0 auto !important;
+  }
+}
+
+
+/* ===== NovaPlay v28 : vrai accueil Itrixi (mainMenu) ===== */
+#mainMenu {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  padding-top: 72px !important;
+  padding-bottom: 240px !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+  overscroll-behavior: contain !important;
+}
+
+#mainMenu > * {
+  flex-shrink: 0 !important;
+}
+
+#mainMenu .menu-btns {
+  flex: 0 0 auto !important;
+  padding-bottom: 140px !important;
+}
+
+@media (max-width:700px), (orientation:portrait), (max-height:560px) {
+  #mainMenu {
+    padding-top: 70px !important;
+    padding-bottom: 300px !important;
+  }
+
+  #mainMenu .menu-btns {
+    padding-bottom: 180px !important;
   }
 }
 
@@ -2441,9 +2478,9 @@ body::-webkit-scrollbar-thumb,
   const elevators = [];
 
   function target() {
-    const menu = document.getElementById('menuScreen');
-    if (menu && !menu.classList.contains('hidden')) {
-      return menu;
+    const mainMenu = document.getElementById('mainMenu');
+    if (mainMenu && !mainMenu.classList.contains('hidden')) {
+      return mainMenu;
     }
 
     const locker = document.getElementById('lockerScreen');
@@ -2713,10 +2750,10 @@ body::-webkit-scrollbar-thumb,
 
 <script>
 (() => {
-  const menu = document.getElementById('menuScreen');
+  const menu = document.getElementById('mainMenu');
   if (!menu) return;
 
-  function refreshMenuScroll() {
+  function refreshMainMenuScroll() {
     if (menu.classList.contains('hidden')) return;
     menu.style.overflowY = 'auto';
 
@@ -2731,7 +2768,7 @@ body::-webkit-scrollbar-thumb,
     }, 120);
   }
 
-  new MutationObserver(refreshMenuScroll).observe(menu, {
+  new MutationObserver(refreshMainMenuScroll).observe(menu, {
     attributes: true,
     attributeFilter: ['class']
   });
@@ -2741,12 +2778,52 @@ body::-webkit-scrollbar-thumb,
       '#selectBackBtn, #lockerBackBtn, #novaplay-return-button, .back-btn'
     );
     if (target) {
-      setTimeout(refreshMenuScroll, 30);
-      setTimeout(refreshMenuScroll, 160);
+      setTimeout(refreshMainMenuScroll, 30);
+      setTimeout(refreshMainMenuScroll, 160);
     }
   }, true);
 
-  refreshMenuScroll();
+  refreshMainMenuScroll();
+})();
+</script>
+
+
+<script>
+(() => {
+  const mainMenu = document.getElementById('mainMenu');
+  if (!mainMenu) return;
+
+  function refreshMainMenuScroll() {
+    if (mainMenu.classList.contains('hidden')) return;
+    mainMenu.style.overflowY = 'auto';
+
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new Event('resize'));
+      mainMenu.dispatchEvent(new Event('scroll'));
+    });
+
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+      mainMenu.dispatchEvent(new Event('scroll'));
+    }, 150);
+  }
+
+  new MutationObserver(refreshMainMenuScroll).observe(mainMenu, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+
+  document.addEventListener('click', event => {
+    const target = event.target.closest && event.target.closest(
+      '#selectBackBtn,#lockerBackBtn,#gameOverMenuBtn,#winMenuBtn'
+    );
+    if (target) {
+      setTimeout(refreshMainMenuScroll, 30);
+      setTimeout(refreshMainMenuScroll, 180);
+    }
+  }, true);
+
+  refreshMainMenuScroll();
 })();
 </script>
 

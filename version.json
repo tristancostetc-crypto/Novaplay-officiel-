@@ -1,18 +1,10 @@
 {
-  "novaplay": "27",
-  "script": "NovaPlay-script-corrige(1).js",
-  "fixes_conserved": [
-    "accueil Itrixi défilable",
-    "ascenseurs Itrixi",
-    "casier de Trixis",
-    "sélection des Trixis"
-  ],
-  "games": {
-    "itrixi": "Jeux/Itrixi/index.html",
-    "collectrix": "Jeux/Collectrix/index.html",
-    "snake": "Jeux/Snake-Evolutif/index.html",
-    "survivor": "Jeux/Survivor-2/index.html",
-    "tower": "Jeux/Tower-Clash/index.html",
-    "rolly": "Jeux/Rolly-Adventure/index.html"
-  }
+  "novaplay": "28",
+  "root_cause": "le vrai identifiant de l'accueil Itrixi est mainMenu",
+  "fixes": [
+    "ascenseurs ciblent mainMenu",
+    "mainMenu est réellement défilable",
+    "boutons du bas accessibles sur mobile",
+    "script NovaPlay corrigé conservé"
+  ]
 }

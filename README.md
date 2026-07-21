@@ -1,19 +1,8 @@
-# NovaPlay v27 — Script corrigé
+# NovaPlay v28 — Accueil Itrixi réparé
 
-Cette version utilise exactement le fichier `NovaPlay-script-corrige(1).js`
-fourni par l'utilisateur.
+La cause était un mauvais identifiant :
+- `menuScreen` n'existe pas ;
+- le vrai accueil est `mainMenu`.
 
-Conservé :
-- les 6 jeux ;
-- les ascenseurs NovaPlay ;
-- la correction du temps ;
-- la correction de l'accueil Itrixi ;
-- le Casier et la sélection des Trixis.
-
-## Installation
-1. Extrais le ZIP.
-2. Téléverse tout le contenu à la racine du dépôt.
-3. Vérifie que `script.js` est bien modifié.
-4. Vérifie aussi `Jeux/Itrixi/index.html`.
-5. Clique sur **Commit changes**.
-6. Recharge avec **Ctrl + F5**.
+Cette version cible correctement `mainMenu` avec les ascenseurs et conserve
+le script NovaPlay corrigé ainsi que tous les autres jeux.
