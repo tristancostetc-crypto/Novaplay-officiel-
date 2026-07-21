@@ -1,10 +1,11 @@
 {
-  "novaplay": "26",
-  "fixes": [
-    "accueil Itrixi défilable sur mobile",
-    "ascenseurs ciblent menuScreen",
-    "casier et sélection toujours fonctionnels",
-    "aucun autre script modifié"
+  "novaplay": "27",
+  "script": "NovaPlay-script-corrige(1).js",
+  "fixes_conserved": [
+    "accueil Itrixi défilable",
+    "ascenseurs Itrixi",
+    "casier de Trixis",
+    "sélection des Trixis"
   ],
   "games": {
     "itrixi": "Jeux/Itrixi/index.html",

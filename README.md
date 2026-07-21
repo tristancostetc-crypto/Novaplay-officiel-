@@ -1,16 +1,19 @@
-# NovaPlay v26 — Accueil Itrixi corrigé
+# NovaPlay v27 — Script corrigé
 
-Correction ciblée :
+Cette version utilise exactement le fichier `NovaPlay-script-corrige(1).js`
+fourni par l'utilisateur.
 
-- l'accueil d'Itrixi peut maintenant défiler sur téléphone ;
-- les ascenseurs contrôlent directement `menuScreen` ;
-- tous les boutons de l'accueil deviennent accessibles ;
-- les correctifs du Casier et de la sélection restent actifs ;
-- aucun autre script de jeu n'a été modifié.
+Conservé :
+- les 6 jeux ;
+- les ascenseurs NovaPlay ;
+- la correction du temps ;
+- la correction de l'accueil Itrixi ;
+- le Casier et la sélection des Trixis.
 
 ## Installation
 1. Extrais le ZIP.
-2. Téléverse tout le contenu à la racine du dépôt GitHub.
-3. Vérifie que `Jeux/Itrixi/index.html` est bien modifié.
-4. Clique sur **Commit changes**.
-5. Recharge le site avec **Ctrl + F5**.
+2. Téléverse tout le contenu à la racine du dépôt.
+3. Vérifie que `script.js` est bien modifié.
+4. Vérifie aussi `Jeux/Itrixi/index.html`.
+5. Clique sur **Commit changes**.
+6. Recharge avec **Ctrl + F5**.
